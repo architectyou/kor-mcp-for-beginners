@@ -1,52 +1,52 @@
-# 🌐 Module 2: MCP with AI Toolkit Fundamentals
+# 🌐 모듈 2: AI 툴킷 기본 사항을 활용한 MCP
 
 [![Duration](https://img.shields.io/badge/Duration-20%20minutes-blue.svg)]()
 [![Difficulty](https://img.shields.io/badge/Difficulty-Intermediate-yellow.svg)]()
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-Module%201%20Complete-orange.svg)]()
 
-## 📋 Learning Objectives
+## 📋 학습 목표
 
-By the end of this module, you will be able to:
-- ✅ Understand Model Context Protocol (MCP) architecture and benefits
-- ✅ Explore Microsoft's MCP server ecosystem
-- ✅ Integrate MCP servers with AI Toolkit Agent Builder
-- ✅ Build a functional browser automation agent using Playwright MCP
-- ✅ Configure and test MCP tools within your agents
-- ✅ Export and deploy MCP-powered agents for production use
+이 모듈을 마치면 다음을 할 수 있습니다:
+- ✅ MCP(모델 컨텍스트 프로토콜) 아키텍처 및 이점 이해
+- ✅ Microsoft의 MCP 서버 생태계 탐색
+- ✅ AI 툴킷 에이전트 빌더와 MCP 서버 통합
+- ✅ Playwright MCP를 사용하여 기능적인 브라우저 자동화 에이전트 구축
+- ✅ 에이전트 내에서 MCP 도구 구성 및 테스트
+- ✅ 프로덕션 사용을 위해 MCP 기반 에이전트 내보내기 및 배포
 
-## 🎯 Building on Module 1
+## 🎯 모듈 1 기반 구축
 
-In Module 1, we mastered AI Toolkit basics and created our first Python Agent. Now we'll **supercharge** your agents by connecting them to external tools and services through the revolutionary **Model Context Protocol (MCP)**. 
+모듈 1에서는 AI 툴킷의 기본 사항을 익히고 첫 번째 Python 에이전트를 만들었습니다. 이제 혁신적인 **MCP(모델 컨텍스트 프로토콜)**를 통해 에이전트를 외부 도구 및 서비스에 연결하여 에이전트를 **강력하게** 만들 것입니다.
 
-Think of this as upgrading from a basic calculator to a full computer - your AI agents will gain the ability to:
-- 🌐 Browse and interact with websites
-- 📁 Access and manipulate files
-- 🔧 Integrate with enterprise systems
-- 📊 Process real-time data from APIs
+이것은 기본 계산기에서 완전한 컴퓨터로 업그레이드하는 것과 같습니다. AI 에이전트는 다음 기능을 얻게 됩니다:
+- 🌐 웹사이트 탐색 및 상호 작용
+- 📁 파일 액세스 및 조작
+- 🔧 엔터프라이즈 시스템과 통합
+- 📊 API에서 실시간 데이터 처리
 
-## 🧠 Understanding Model Context Protocol (MCP)
+## 🧠 MCP(모델 컨텍스트 프로토콜) 이해
 
-### 🔍 What is MCP?
+### 🔍 MCP란 무엇인가요?
 
-Model Context Protocol (MCP) is the **"USB-C for AI applications"** - a revolutionary open standard that connects Large Language Models (LLMs) to external tools, data sources, and services. Just as USB-C eliminated cable chaos by providing one universal connector, MCP eliminates AI integration complexity with one standardized protocol.
+모델 컨텍스트 프로토콜(MCP)은 **"AI 애플리케이션을 위한 USB-C"**입니다. 즉, LLM(대규모 언어 모델)을 외부 도구, 데이터 소스 및 서비스에 연결하는 혁신적인 개방형 표준입니다. USB-C가 하나의 범용 커넥터를 제공하여 케이블 혼란을 없앤 것처럼, MCP는 하나의 표준화된 프로토콜로 AI 통합 복잡성을 제거합니다.
 
-### 🎯 The Problem MCP Solves
+### 🎯 MCP가 해결하는 문제
 
-**Before MCP:**
-- 🔧 Custom integrations for every tool
-- 🔄 Vendor lock-in with proprietary solutions  
-- 🔒 Security vulnerabilities from ad-hoc connections
-- ⏱️ Months of development for basic integrations
+**MCP 이전:**
+- 🔧 모든 도구에 대한 사용자 지정 통합
+- 🔄 독점 솔루션으로 인한 공급업체 종속
+- 🔒 임시 연결로 인한 보안 취약성
+- ⏱️ 기본 통합을 위한 수개월의 개발 시간
 
-**With MCP:**
-- ⚡ Plug-and-play tool integration
-- 🔄 Vendor-agnostic architecture
-- 🛡️ Built-in security best practices
-- 🚀 Minutes to add new capabilities
+**MCP 사용 시:**
+- ⚡ 플러그 앤 플레이 도구 통합
+- 🔄 공급업체에 구애받지 않는 아키텍처
+- 🛡️ 내장된 보안 모범 사례
+- 🚀 몇 분 만에 새로운 기능 추가
 
-### 🏗️ MCP Architecture Deep Dive
+### 🏗️ MCP 아키텍처 심층 분석
 
-MCP follows a **client-server architecture** that creates a secure, scalable ecosystem:
+MCP는 안전하고 확장 가능한 생태계를 만드는 **클라이언트-서버 아키텍처**를 따릅니다:
 
 ```mermaid
 graph TB
@@ -62,310 +62,310 @@ graph TB
     F --> J[Enterprise Systems]
 ```
 
-**🔧 Core Components:**
+**🔧 핵심 구성 요소:**
 
-| Component | Role | Examples |
+| 구성 요소 | 역할 | 예시 |
 |-----------|------|----------|
-| **MCP Hosts** | Applications that consume MCP services | Claude Desktop, VS Code, AI Toolkit |
-| **MCP Clients** | Protocol handlers (1:1 with servers) | Built into host applications |
-| **MCP Servers** | Expose capabilities via standard protocol | Playwright, Files, Azure, GitHub |
-| **Transport Layer** | Communication methods | stdio, HTTP, WebSockets |
+| **MCP 호스트** | MCP 서비스를 사용하는 애플리케이션 | Claude Desktop, VS Code, AI Toolkit |
+| **MCP 클라이언트** | 프로토콜 핸들러 (서버와 1:1) | 호스트 애플리케이션에 내장 |
+| **MCP 서버** | 표준 프로토콜을 통해 기능 노출 | Playwright, Files, Azure, GitHub |
+| **전송 계층** | 통신 방법 | stdio, HTTP, WebSockets |
 
 
-## 🏢 Microsoft's MCP Server Ecosystem
+## 🏢 Microsoft의 MCP 서버 생태계
 
-Microsoft leads the MCP ecosystem with a comprehensive suite of enterprise-grade servers that address real-world business needs.
+Microsoft는 실제 비즈니스 요구 사항을 해결하는 포괄적인 엔터프라이즈급 서버 제품군으로 MCP 생태계를 선도합니다.
 
-### 🌟 Featured Microsoft MCP Servers
+### 🌟 주요 Microsoft MCP 서버
 
-#### 1. ☁️ Azure MCP Server
-**🔗 Repository**: [azure/azure-mcp](https://github.com/azure/azure-mcp)
-**🎯 Purpose**: Comprehensive Azure resource management with AI integration
+#### 1. ☁️ Azure MCP 서버
+**🔗 저장소**: [azure/azure-mcp](https://github.com/azure/azure-mcp)
+**🎯 목적**: AI 통합을 통한 포괄적인 Azure 리소스 관리
 
-**✨ Key Features:**
-- Declarative infrastructure provisioning
-- Real-time resource monitoring
-- Cost optimization recommendations
-- Security compliance checking
+**✨ 주요 기능:**
+- 선언적 인프라 프로비저닝
+- 실시간 리소스 모니터링
+- 비용 최적화 권장 사항
+- 보안 규정 준수 확인
 
-**🚀 Use Cases:**
-- Infrastructure-as-Code with AI assistance
-- Automated resource scaling
-- Cloud cost optimization
-- DevOps workflow automation
+**🚀 사용 사례:**
+- AI 지원을 통한 코드형 인프라
+- 자동화된 리소스 스케일링
+- 클라우드 비용 최적화
+- DevOps 워크플로 자동화
 
 #### 2. 📊 Microsoft Dataverse MCP
-**📚 Documentation**: [Microsoft Dataverse Integration](https://go.microsoft.com/fwlink/?linkid=2320176)
-**🎯 Purpose**: Natural language interface for business data
+**📚 문서**: [Microsoft Dataverse 통합](https://go.microsoft.com/fwlink/?linkid=2320176)
+**🎯 목적**: 비즈니스 데이터를 위한 자연어 인터페이스
 
-**✨ Key Features:**
-- Natural language database queries
-- Business context understanding
-- Custom prompt templates
-- Enterprise data governance
+**✨ 주요 기능:**
+- 자연어 데이터베이스 쿼리
+- 비즈니스 컨텍스트 이해
+- 사용자 지정 프롬프트 템플릿
+- 엔터프라이즈 데이터 거버넌스
 
-**🚀 Use Cases:**
-- Business intelligence reporting
-- Customer data analysis
-- Sales pipeline insights
-- Compliance data queries
+**🚀 사용 사례:**
+- 비즈니스 인텔리전스 보고
+- 고객 데이터 분석
+- 영업 파이프라인 통찰력
+- 규정 준수 데이터 쿼리
 
-#### 3. 🌐 Playwright MCP Server
-**🔗 Repository**: [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
-**🎯 Purpose**: Browser automation and web interaction capabilities
+#### 3. 🌐 Playwright MCP 서버
+**🔗 저장소**: [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)
+**🎯 목적**: 브라우저 자동화 및 웹 상호 작용 기능
 
-**✨ Key Features:**
-- Cross-browser automation (Chrome, Firefox, Safari)
-- Intelligent element detection
-- Screenshot and PDF generation
-- Network traffic monitoring
+**✨ 주요 기능:**
+- 크로스 브라우저 자동화 (Chrome, Firefox, Safari)
+- 지능형 요소 감지
+- 스크린샷 및 PDF 생성
+- 네트워크 트래픽 모니터링
 
-**🚀 Use Cases:**
-- Automated testing workflows
-- Web scraping and data extraction
-- UI/UX monitoring
-- Competitive analysis automation
+**🚀 사용 사례:**
+- 자동화된 테스트 워크플로
+- 웹 스크래핑 및 데이터 추출
+- UI/UX 모니터링
+- 경쟁 분석 자동화
 
-#### 4. 📁 Files MCP Server
-**🔗 Repository**: [microsoft/files-mcp-server](https://github.com/microsoft/files-mcp-server)
-**🎯 Purpose**: Intelligent file system operations
+#### 4. 📁 Files MCP 서버
+**🔗 저장소**: [microsoft/files-mcp-server](https://github.com/microsoft/files-mcp-server)
+**🎯 목적**: 지능형 파일 시스템 작업
 
-**✨ Key Features:**
-- Declarative file management
-- Content synchronization
-- Version control integration
-- Metadata extraction
+**✨ 주요 기능:**
+- 선언적 파일 관리
+- 콘텐츠 동기화
+- 버전 제어 통합
+- 메타데이터 추출
 
-**🚀 Use Cases:**
-- Documentation management
-- Code repository organization
-- Content publishing workflows
-- Data pipeline file handling
+**🚀 사용 사례:**
+- 문서 관리
+- 코드 저장소 구성
+- 콘텐츠 게시 워크플로
+- 데이터 파이프라인 파일 처리
 
-#### 5. 📝 MarkItDown MCP Server
-**🔗 Repository**: [microsoft/markitdown](https://github.com/microsoft/markitdown)
-**🎯 Purpose**: Advanced Markdown processing and manipulation
+#### 5. 📝 MarkItDown MCP 서버
+**🔗 저장소**: [microsoft/markitdown](https://github.com/microsoft/markitdown)
+**🎯 목적**: 고급 마크다운 처리 및 조작
 
-**✨ Key Features:**
-- Rich Markdown parsing
-- Format conversion (MD ↔ HTML ↔ PDF)
-- Content structure analysis
-- Template processing
+**✨ 주요 기능:**
+- 풍부한 마크다운 구문 분석
+- 형식 변환 (MD ↔ HTML ↔ PDF)
+- 콘텐츠 구조 분석
+- 템플릿 처리
 
-**🚀 Use Cases:**
-- Technical documentation workflows
-- Content management systems
-- Report generation
-- Knowledge base automation
+**🚀 사용 사례:**
+- 기술 문서 워크플로
+- 콘텐츠 관리 시스템
+- 보고서 생성
+- 지식 기반 자동화
 
-#### 6. 📈 Clarity MCP Server
-**📦 Package**: [@microsoft/clarity-mcp-server](https://www.npmjs.com/package/@microsoft/clarity-mcp-server)
-**🎯 Purpose**: Web analytics and user behavior insights
+#### 6. 📈 Clarity MCP 서버
+**📦 패키지**: [@microsoft/clarity-mcp-server](https://www.npmjs.com/package/@microsoft/clarity-mcp-server)
+**🎯 목적**: 웹 분석 및 사용자 행동 통찰력
 
-**✨ Key Features:**
-- Heatmap data analysis
-- User session recordings
-- Performance metrics
-- Conversion funnel analysis
+**✨ 주요 기능:**
+- 히트맵 데이터 분석
+- 사용자 세션 기록
+- 성능 지표
+- 전환 깔때기 분석
 
-**🚀 Use Cases:**
-- Website optimization
-- User experience research
-- A/B testing analysis
-- Business intelligence dashboards
+**🚀 사용 사례:**
+- 웹사이트 최적화
+- 사용자 경험 연구
+- A/B 테스트 분석
+- 비즈니스 인텔리전스 대시보드
 
-### 🌍 Community Ecosystem
+### 🌍 커뮤니티 생태계
 
-Beyond Microsoft's servers, the MCP ecosystem includes:
-- **🐙 GitHub MCP**: Repository management and code analysis
-- **🗄️ Database MCPs**: PostgreSQL, MySQL, MongoDB integrations
-- **☁️ Cloud Provider MCPs**: AWS, GCP, Digital Ocean tools
-- **📧 Communication MCPs**: Slack, Teams, Email integrations
+Microsoft 서버 외에도 MCP 생태계에는 다음이 포함됩니다:
+- **🐙 GitHub MCP**: 저장소 관리 및 코드 분석
+- **🗄️ 데이터베이스 MCP**: PostgreSQL, MySQL, MongoDB 통합
+- **☁️ 클라우드 공급자 MCP**: AWS, GCP, Digital Ocean 도구
+- **📧 통신 MCP**: Slack, Teams, 이메일 통합
 
-## 🛠️ Hands-On Lab: Building a Browser Automation Agent
+## 🛠️ 실습: 브라우저 자동화 에이전트 구축
 
-**🎯 Project Goal**: Create an intelligent browser automation agent using Playwright MCP server that can navigate websites, extract information, and perform complex web interactions.
+**🎯 프로젝트 목표**: 웹사이트를 탐색하고, 정보를 추출하고, 복잡한 웹 상호 작용을 수행할 수 있는 Playwright MCP 서버를 사용하는 지능형 브라우저 자동화 에이전트 만들기.
 
-### 🚀 Phase 1: Agent Foundation Setup
+### 🚀 1단계: 에이전트 기본 설정
 
-#### Step 1: Initialize Your Agent
-1. **Open AI Toolkit Agent Builder**
-2. **Create New Agent** with the following configuration:
-   - **Name**: `BrowserAgent`
-   - **Model**: Choose GPT-4o 
+#### 1단계: 에이전트 초기화
+1. **AI 툴킷 에이전트 빌더 열기**
+2. 다음 구성으로 **새 에이전트 만들기**:
+   - **이름**: `BrowserAgent`
+   - **모델**: GPT-4o 선택
 
 ![BrowserAgent](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/BrowserAgent.png)
 
 
-### 🔧 Phase 2: MCP Integration Workflow
+### 🔧 2단계: MCP 통합 워크플로
 
-#### Step 3: Add MCP Server Integration
-1. **Navigate to Tools Section** in Agent Builder
-2. **Click "Add Tool"** to open the integration menu
-3. **Select "MCP Server"** from available options
+#### 3단계: MCP 서버 통합 추가
+1. 에이전트 빌더의 **도구 섹션으로 이동**
+2. 통합 메뉴를 열려면 **"도구 추가" 클릭**
+3. 사용 가능한 옵션에서 **"MCP 서버" 선택**
 
 ![AddMCP](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/AddMCP.png)
 
-**🔍 Understanding Tool Types:**
-- **Built-in Tools**: Pre-configured AI Toolkit functions
-- **MCP Servers**: External service integrations
-- **Custom APIs**: Your own service endpoints
-- **Function Calling**: Direct model function access
+**🔍 도구 유형 이해:**
+- **내장 도구**: 미리 구성된 AI 툴킷 기능
+- **MCP 서버**: 외부 서비스 통합
+- **사용자 지정 API**: 사용자 자신의 서비스 엔드포인트
+- **함수 호출**: 직접 모델 함수 액세스
 
-#### Step 4: MCP Server Selection
-1. **Choose "MCP Server"** option to proceed
+#### 4단계: MCP 서버 선택
+1. 계속하려면 **"MCP 서버" 옵션 선택**
 ![AddMCPServer](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/AddMCPServer.png)
 
-2. **Browse MCP Catalog** to explore available integrations
+2. 사용 가능한 통합을 탐색하려면 **MCP 카탈로그 찾아보기**
 ![MCPCatalog](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/MCPCatalog.png)
 
 
-### 🎮 Phase 3: Playwright MCP Configuration
+### 🎮 3단계: Playwright MCP 구성
 
-#### Step 5: Select and Configure Playwright
-1. **Click "Use Featured MCP Servers"** to access Microsoft's verified servers
-2. **Select "Playwright"** from the featured list
-3. **Accept Default MCP ID** or customize for your environment
+#### 5단계: Playwright 선택 및 구성
+1. Microsoft의 검증된 서버에 액세스하려면 **"주요 MCP 서버 사용" 클릭**
+2. 주요 목록에서 **"Playwright" 선택**
+3. **기본 MCP ID 수락** 또는 환경에 맞게 사용자 지정
 
 ![MCPID](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/MCPID.png)
 
-#### Step 6: Enable Playwright Capabilities
-**🔑 Critical Step**: Select **ALL** available Playwright methods for maximum functionality
+#### 6단계: Playwright 기능 활성화
+**🔑 중요 단계**: 최대 기능을 위해 사용 가능한 **모든** Playwright 메서드를 선택합니다.
 
 ![Tools](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/Tools.png)
 
-**🛠️ Essential Playwright Tools:**
-- **Navigation**: `goto`, `goBack`, `goForward`, `reload`
-- **Interaction**: `click`, `fill`, `press`, `hover`, `drag`
-- **Extraction**: `textContent`, `innerHTML`, `getAttribute`
-- **Validation**: `isVisible`, `isEnabled`, `waitForSelector`
-- **Capture**: `screenshot`, `pdf`, `video`
-- **Network**: `setExtraHTTPHeaders`, `route`, `waitForResponse`
+**🛠️ 필수 Playwright 도구:**
+- **탐색**: `goto`, `goBack`, `goForward`, `reload`
+- **상호 작용**: `click`, `fill`, `press`, `hover`, `drag`
+- **추출**: `textContent`, `innerHTML`, `getAttribute`
+- **유효성 검사**: `isVisible`, `isEnabled`, `waitForSelector`
+- **캡처**: `screenshot`, `pdf`, `video`
+- **네트워크**: `setExtraHTTPHeaders`, `route`, `waitForResponse`
 
-#### Step 7: Verify Integration Success
-**✅ Success Indicators:**
-- All tools appear in Agent Builder interface
-- No error messages in the integration panel
-- Playwright server status shows "Connected"
+#### 7단계: 통합 성공 확인
+**✅ 성공 지표:**
+- 모든 도구가 에이전트 빌더 인터페이스에 나타남
+- 통합 패널에 오류 메시지 없음
+- Playwright 서버 상태가 "연결됨"으로 표시됨
 
 ![AgentTools](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/AgentTools.png)
 
-**🔧 Troubleshooting Common Issues:**
-- **Connection Failed**: Check internet connectivity and firewall settings
-- **Missing Tools**: Ensure all capabilities were selected during setup
-- **Permission Errors**: Verify VS Code has necessary system permissions
+**🔧 일반적인 문제 해결:**
+- **연결 실패**: 인터넷 연결 및 방화벽 설정 확인
+- **누락된 도구**: 설정 중에 모든 기능이 선택되었는지 확인
+- **권한 오류**: VS Code에 필요한 시스템 권한이 있는지 확인
 
-### 🎯 Phase 4: Advanced Prompt Engineering
+### 🎯 4단계: 고급 프롬프트 엔지니어링
 
-#### Step 8: Design Intelligent System Prompts
-Create sophisticated prompts that leverage Playwright's full capabilities:
+#### 8단계: 지능형 시스템 프롬프트 설계
+Playwright의 모든 기능을 활용하는 정교한 프롬프트 만들기:
 
 ```markdown
-# Web Automation Expert System Prompt
+# 웹 자동화 전문가 시스템 프롬프트
 
-## Core Identity
-You are an advanced web automation specialist with deep expertise in browser automation, web scraping, and user experience analysis. You have access to Playwright tools for comprehensive browser control.
+## 핵심 정체성
+당신은 브라우저 자동화, 웹 스크래핑 및 사용자 경험 분석에 대한 깊은 전문 지식을 갖춘 고급 웹 자동화 전문가입니다. 포괄적인 브라우저 제어를 위해 Playwright 도구에 액세스할 수 있습니다.
 
-## Capabilities & Approach
-### Navigation Strategy
-- Always start with screenshots to understand page layout
-- Use semantic selectors (text content, labels) when possible
-- Implement wait strategies for dynamic content
-- Handle single-page applications (SPAs) effectively
+## 기능 및 접근 방식
+### 탐색 전략
+- 항상 스크린샷으로 시작하여 페이지 레이아웃 이해
+- 가능한 경우 의미론적 선택기(텍스트 콘텐츠, 레이블) 사용
+- 동적 콘텐츠에 대한 대기 전략 구현
+- 단일 페이지 애플리케이션(SPA)을 효과적으로 처리
 
-### Error Handling
-- Retry failed operations with exponential backoff
-- Provide clear error descriptions and solutions
-- Suggest alternative approaches when primary methods fail
-- Always capture diagnostic screenshots on errors
+### 오류 처리
+- 지수 백오프를 사용하여 실패한 작업 재시도
+- 명확한 오류 설명 및 해결책 제공
+- 기본 방법이 실패할 경우 대체 접근 방식 제안
+- 오류 발생 시 항상 진단 스크린샷 캡처
 
-### Data Extraction
-- Extract structured data in JSON format when possible
-- Provide confidence scores for extracted information
-- Validate data completeness and accuracy
-- Handle pagination and infinite scroll scenarios
+### 데이터 추출
+- 가능한 경우 JSON 형식으로 구조화된 데이터 추출
+- 추출된 정보에 대한 신뢰도 점수 제공
+- 데이터 완전성 및 정확성 검증
+- 페이지 매김 및 무한 스크롤 시나리오 처리
 
-### Reporting
-- Include step-by-step execution logs
-- Provide before/after screenshots for verification
-- Suggest optimizations and alternative approaches
-- Document any limitations or edge cases encountered
+### 보고
+- 단계별 실행 로그 포함
+- 확인을 위한 전/후 스크린샷 제공
+- 최적화 및 대체 접근 방식 제안
+- 발생한 제한 사항 또는 예외 사례 문서화
 
-## Ethical Guidelines
-- Respect robots.txt and rate limiting
-- Avoid overloading target servers
-- Only extract publicly available information
-- Follow website terms of service
+## 윤리적 지침
+- robots.txt 및 속도 제한 준수
+- 대상 서버 과부하 방지
+- 공개적으로 사용 가능한 정보만 추출
+- 웹사이트 서비스 약관 준수
 ```
 
-#### Step 9: Create Dynamic User Prompts
-Design prompts that demonstrate various capabilities:
+#### 9단계: 동적 사용자 프롬프트 만들기
+다양한 기능을 보여주는 프롬프트 설계:
 
-**🌐 Web Analysis Example:**
+**🌐 웹 분석 예시:**
 ```markdown
-Navigate to github.com/kinfey and provide a comprehensive analysis including:
-1. Repository structure and organization
-2. Recent activity and contribution patterns  
-3. Documentation quality assessment
-4. Technology stack identification
-5. Community engagement metrics
-6. Notable projects and their purposes
+github.com/kinfey로 이동하여 다음을 포함한 포괄적인 분석을 제공합니다:
+1. 저장소 구조 및 구성
+2. 최근 활동 및 기여 패턴
+3. 문서 품질 평가
+4. 기술 스택 식별
+5. 커뮤니티 참여 지표
+6. 주목할 만한 프로젝트 및 목적
 
-Include screenshots at key steps and provide actionable insights.
+주요 단계에서 스크린샷을 포함하고 실행 가능한 통찰력을 제공합니다.
 ```
 
 ![Prompt](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/Prompt.png)
 
-### 🚀 Phase 5: Execution and Testing
+### 🚀 5단계: 실행 및 테스트
 
-#### Step 10: Execute Your First Automation
-1. **Click "Run"** to launch the automation sequence
-2. **Monitor Real-time Execution**:
-   - Chrome browser launches automatically
-   - Agent navigates to target website
-   - Screenshots capture each major step
-   - Analysis results stream in real-time
+#### 10단계: 첫 번째 자동화 실행
+1. 자동화 시퀀스를 시작하려면 **"실행" 클릭**
+2. **실시간 실행 모니터링**:
+   - Chrome 브라우저가 자동으로 실행됨
+   - 에이전트가 대상 웹사이트로 이동
+   - 스크린샷이 각 주요 단계를 캡처함
+   - 분석 결과가 실시간으로 스트리밍됨
 
 ![Browser](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/Browser.png)
 
-#### Step 11: Analyze Results and Insights
-Review comprehensive analysis in Agent Builder's interface:
+#### 11단계: 결과 및 통찰력 분석
+에이전트 빌더 인터페이스에서 포괄적인 분석 검토:
 
 ![Result](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/Result.png)
 
-### 🌟 Phase 6: Advanced Capabilities and Deployment
+### 🌟 6단계: 고급 기능 및 배포
 
-#### Step 12: Export and Production Deployment
-Agent Builder supports multiple deployment options:
+#### 12단계: 내보내기 및 프로덕션 배포
+에이전트 빌더는 여러 배포 옵션을 지원합니다:
 
 ![Code](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab2/Code.png)
 
-## 🎓 Module 2 Summary & Next Steps
+## 🎓 모듈 2 요약 및 다음 단계
 
-### 🏆 Achievement Unlocked: MCP Integration Master
+### 🏆 달성 완료: MCP 통합 마스터
 
-**✅ Skills Mastered:**
-- [ ] Understanding MCP architecture and benefits
-- [ ] Navigating Microsoft's MCP server ecosystem
-- [ ] Integrating Playwright MCP with AI Toolkit
-- [ ] Building sophisticated browser automation agents
-- [ ] Advanced prompt engineering for web automation
+**✅ 숙련된 기술:**
+- [ ] MCP 아키텍처 및 이점 이해
+- [ ] Microsoft의 MCP 서버 생태계 탐색
+- [ ] AI 툴킷과 Playwright MCP 통합
+- [ ] 정교한 브라우저 자동화 에이전트 구축
+- [ ] 웹 자동화를 위한 고급 프롬프트 엔지니어링
 
-### 📚 Additional Resources
+### 📚 추가 자료
 
-- **🔗 MCP Specification**: [Official Protocol Documentation](https://modelcontextprotocol.io/)
-- **🛠️ Playwright API**: [Complete Method Reference](https://playwright.dev/docs/api/class-playwright)
-- **🏢 Microsoft MCP Servers**: [Enterprise Integration Guide](https://github.com/microsoft/mcp-servers)
-- **🌍 Community Examples**: [MCP Server Gallery](https://github.com/modelcontextprotocol/servers)
+- **🔗 MCP 사양**: [공식 프로토콜 문서](https://modelcontextprotocol.io/)
+- **🛠️ Playwright API**: [전체 메서드 참조](https://playwright.dev/docs/api/class-playwright)
+- **🏢 Microsoft MCP 서버**: [엔터프라이즈 통합 가이드](https://github.com/microsoft/mcp-servers)
+- **🌍 커뮤니티 예시**: [MCP 서버 갤러리](https://github.com/modelcontextprotocol/servers)
 
-**🎉 Congratulations!** You've successfully mastered MCP integration and can now build production-ready AI agents with external tool capabilities!
+**🎉 축하합니다!** MCP 통합을 성공적으로 마스터했으며 이제 외부 도구 기능을 갖춘 프로덕션 준비 AI 에이전트를 구축할 수 있습니다!
 
 
-### 🔜 Continue to Next Module
+### 🔜 다음 모듈로 계속
 
-Ready to take your MCP skills to the next level? Proceed to **[Module 3: Advanced MCP Development with AI Toolkit](../lab3/README.md)** where you'll learn how to:
-- Create your own custom MCP servers
-- Configure and use the latest MCP Python SDK
-- Set up the MCP Inspector for debugging
-- Master advanced MCP server development workflows
-- Build a Weather MCP Server from scratch
+MCP 기술을 다음 단계로 끌어올릴 준비가 되셨나요? **[모듈 3: AI 툴킷을 사용한 고급 MCP 개발](../lab3/README.md)**로 진행하여 다음을 배우게 됩니다:
+- 사용자 지정 MCP 서버 만들기
+- 최신 MCP Python SDK 구성 및 사용
+- 디버깅을 위한 MCP 검사기 설정
+- 고급 MCP 서버 개발 워크플로 마스터
+- 처음부터 날씨 MCP 서버 구축

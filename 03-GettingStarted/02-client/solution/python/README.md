@@ -1,45 +1,45 @@
-# Running this sample
+# 이 샘플 실행하기
 
-You're recommended to install `uv` but it's not a must, see [instructions](https://docs.astral.sh/uv/#highlights)
+`uv`를 설치하는 것이 좋지만 필수는 아닙니다. [지침](https://docs.astral.sh/uv/#highlights)을 참조하세요.
 
-## -0- Create a virtual environment
+## -0- 가상 환경 만들기
 
 ```bash
 python -m venv venv
 ```
 
-## -1- Activate the virtual environment
+## -1- 가상 환경 활성화
 
 ```bash
 venv\Scrips\activate
 ```
 
-## -2- Install the dependencies
+## -2- 종속성 설치
 
 ```bash
 pip install "mcp[cli]"
 ```
 
-## -3- Run the sample
+## -3- 샘플 실행
 
 
 ```bash
 python client.py
 ```
 
-You should see an output similar to:
+다음과 유사한 출력이 표시되어야 합니다.
 
 ```text
-LISTING RESOURCES
-Resource:  ('meta', None)
-Resource:  ('nextCursor', None)
-Resource:  ('resources', [])
-                    INFO     Processing request of type ListToolsRequest                                                                               server.py:534
-LISTING TOOLS
-Tool:  add
-READING RESOURCE
-                    INFO     Processing request of type ReadResourceRequest                                                                            server.py:534
-CALL TOOL
-                    INFO     Processing request of type CallToolRequest                                                                                server.py:534
+리소스 나열
+리소스: ('meta', None)
+리소스: ('nextCursor', None)
+리소스: ('resources', [])
+                    INFO     ListToolsRequest 유형의 요청 처리                                                                               server.py:534
+도구 나열
+도구: add
+리소스 읽기
+                    INFO     ReadResourceRequest 유형의 요청 처리                                                                            server.py:534
+도구 호출
+                    INFO     CallToolRequest 유형의 요청 처리                                                                                server.py:534
 [TextContent(type='text', text='8', annotations=None)]
 ```

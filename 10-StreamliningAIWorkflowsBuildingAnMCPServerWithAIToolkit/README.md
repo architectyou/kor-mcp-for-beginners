@@ -1,189 +1,189 @@
-# Streamlining AI Workflows: Building an MCP Server with AI Toolkit
+# AI 워크플로우 간소화: AI 툴킷으로 MCP 서버 구축하기
  
 [![MCP Version](https://img.shields.io/badge/MCP-1.9.3-blue.svg)](https://modelcontextprotocol.io/)
 [![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://python.org)
 [![VS Code](https://img.shields.io/badge/VS%20Code-Latest-orange.svg)](https://code.visualstudio.com/)
 
-![logo](../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/logo.png)
+![로고](../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/logo.png)
 
-## 🎯  Overview
+## 🎯 개요
 
-Welcome to the **Model Context Protocol (MCP) Workshop**! This comprehensive hands-on workshop combines two cutting-edge technologies to revolutionize AI application development:
+**모델 컨텍스트 프로토콜(MCP) 워크숍**에 오신 것을 환영합니다! 이 포괄적인 실습 워크숍은 AI 애플리케이션 개발을 혁신할 두 가지 최첨단 기술을 결합합니다:
 
-- **🔗 Model Context Protocol (MCP)**: An open standard for seamless AI-tool integration
-- **🛠️ AI Toolkit for Visual Studio Code (AITK)**: Microsoft's powerful AI development extension
+- **🔗 모델 컨텍스트 프로토콜(MCP)**: 원활한 AI-도구 통합을 위한 개방형 표준
+- **🛠️ Visual Studio Code용 AI 툴킷(AITK)**: Microsoft의 강력한 AI 개발 확장 프로그램
 
-### 🎓 What You'll Learn
+### 🎓 학습 내용
 
-By the end of this workshop, you'll master the art of building intelligent applications that bridge AI models with real-world tools and services. From automated testing to custom API integrations, you'll gain practical skills to solve complex business challenges.
+이 워크숍을 마치면 AI 모델과 실제 도구 및 서비스를 연결하는 지능형 애플리케이션을 구축하는 기술을 마스터하게 됩니다. 자동화된 테스트부터 맞춤형 API 통합에 이르기까지 복잡한 비즈니스 문제를 해결하기 위한 실용적인 기술을 습득할 것입니다.
 
-## 🏗️ Technology Stack
+## 🏗️ 기술 스택
 
-### 🔌 Model Context Protocol (MCP)
+### 🔌 모델 컨텍스트 프로토콜(MCP)
 
-MCP is the **"USB-C for AI"** - a universal standard that connects AI models to external tools and data sources.
+MCP는 **"AI를 위한 USB-C"**입니다. AI 모델을 외부 도구 및 데이터 소스에 연결하는 범용 표준입니다.
 
-**✨ Key Features:**
-- 🔄 **Standardized Integration**: Universal interface for AI-tool connections
-- 🏛️ **Flexible Architecture**: Local & remote servers via stdio/SSE transport
-- 🧰 **Rich Ecosystem**: Tools, prompts, and resources in one protocol
-- 🔒 **Enterprise-Ready**: Built-in security and reliability
+**✨ 주요 기능:**
+- 🔄 **표준화된 통합**: AI-도구 연결을 위한 범용 인터페이스
+- 🏛️ **유연한 아키텍처**: stdio/SSE 전송을 통한 로컬 및 원격 서버
+- 🧰 **풍부한 생태계**: 하나의 프로토콜에 도구, 프롬프트 및 리소스
+- 🔒 **엔터프라이즈 준비**: 내장된 보안 및 안정성
 
-**🎯 Why MCP Matters:**
-Just like USB-C eliminated cable chaos, MCP eliminates the complexity of AI integrations. One protocol, infinite possibilities.
+**🎯 MCP가 중요한 이유:**
+USB-C가 케이블 혼란을 없앤 것처럼, MCP는 AI 통합의 복잡성을 제거합니다. 하나의 프로토콜, 무한한 가능성.
 
-### 🤖 AI Toolkit for Visual Studio Code (AITK)
+### 🤖 AI 툴킷 for Visual Studio Code (AITK)
 
-Microsoft's flagship AI development extension that transforms VS Code into an AI powerhouse.
+VS Code를 AI 강국으로 변화시키는 Microsoft의 대표적인 AI 개발 확장 프로그램입니다.
 
-**🚀 Core Capabilities:**
-- 📦 **Model Catalog**: Access models from Azure AI, GitHub, Hugging Face, Ollama
-- ⚡ **Local Inference**: ONNX-optimized CPU/GPU/NPU execution
-- 🏗️ **Agent Builder**: Visual AI agent development with MCP integration
-- 🎭 **Multi-Modal**: Text, vision, and structured output support
+**🚀 핵심 기능:**
+- 📦 **모델 카탈로그**: Azure AI, GitHub, Hugging Face, Ollama의 모델에 액세스
+- ⚡ **로컬 추론**: ONNX 최적화된 CPU/GPU/NPU 실행
+- 🏗️ **에이전트 빌더**: MCP 통합을 통한 시각적 AI 에이전트 개발
+- 🎭 **멀티모달**: 텍스트, 비전 및 구조화된 출력 지원
 
-**💡 Development Benefits:**
-- Zero-config model deployment
-- Visual prompt engineering
-- Real-time testing playground
-- Seamless MCP server integration
+**💡 개발 이점:**
+- 제로 구성 모델 배포
+- 시각적 프롬프트 엔지니어링
+- 실시간 테스트 플레이그라운드
+- 원활한 MCP 서버 통합
 
-## 📚 Learning Journey
+## 📚 학습 여정
 
-### [🚀 Module 1: AI Toolkit Fundamentals](./lab1/README.md)
-**Duration**: 15 minutes
-- 🛠️ Install and configure AI Toolkit for VS Code
-- 🗂️ Explore the Model Catalog (100+ models from GitHub, ONNX, OpenAI, Anthropic, Google)
-- 🎮 Master the Interactive Playground for real-time model testing
-- 🤖 Build your first AI agent with Agent Builder
-- 📊 Evaluate model performance with built-in metrics (F1, relevance, similarity, coherence)
-- ⚡ Learn batch processing and multi-modal support capabilities
+### [🚀 모듈 1: AI 툴킷 기본 사항](./lab1/README.md)
+**기간**: 15분
+- 🛠️ VS Code용 AI 툴킷 설치 및 구성
+- 🗂️ 모델 카탈로그 탐색 (GitHub, ONNX, OpenAI, Anthropic, Google의 100개 이상 모델)
+- 🎮 실시간 모델 테스트를 위한 대화형 플레이그라운드 마스터
+- 🤖 에이전트 빌더로 첫 AI 에이전트 구축
+- 📊 내장된 지표(F1, 관련성, 유사성, 일관성)로 모델 성능 평가
+- ⚡ 배치 처리 및 멀티모달 지원 기능 학습
 
-**🎯 Learning Outcome**: Create a functional AI agent with comprehensive understanding of AITK capabilities
+**🎯 학습 결과**: AITK 기능에 대한 포괄적인 이해를 바탕으로 기능적인 AI 에이전트 생성
 
-### [🌐 Module 2: MCP with AI Toolkit Fundamentals](./lab2/README.md)
-**Duration**: 20 minutes
-- 🧠 Master Model Context Protocol (MCP) architecture and concepts
-- 🌐 Explore Microsoft's MCP server ecosystem 
-- 🤖 Build a browser automation agent using Playwright MCP server
-- 🔧 Integrate MCP servers with AI Toolkit Agent Builder
-- 📊 Configure and test MCP tools within your agents
-- 🚀 Export and deploy MCP-powered agents for production use
+### [🌐 모듈 2: AI 툴킷을 사용한 MCP 기본 사항](./lab2/README.md)
+**기간**: 20분
+- 🧠 모델 컨텍스트 프로토콜(MCP) 아키텍처 및 개념 마스터
+- 🌐 Microsoft의 MCP 서버 생태계 탐색
+- 🤖 Playwright MCP 서버를 사용하여 브라우저 자동화 에이전트 구축
+- 🔧 AI 툴킷 에이전트 빌더와 MCP 서버 통합
+- 📊 에이전트 내에서 MCP 도구 구성 및 테스트
+- 🚀 프로덕션 사용을 위한 MCP 기반 에이전트 내보내기 및 배포
 
-**🎯 Learning Outcome**: Deploy an AI agent supercharged with external tools through MCP
+**🎯 학습 결과**: MCP를 통해 외부 도구로 강화된 AI 에이전트 배포
 
-### [🔧 Module 3: Advanced MCP Development with AI Toolkit](./lab3/README.md)
-**Duration**: 20 minutes
-- 💻 Create custom MCP servers using AI Toolkit
-- 🐍 Configure and use the latest MCP Python SDK (v1.9.3)
-- 🔍 Set up and utilize MCP Inspector for debugging
-- 🛠️ Build a Weather MCP Server with professional debugging workflows
-- 🧪 Debug MCP servers in both Agent Builder and Inspector environments
+### [🔧 모듈 3: AI 툴킷을 사용한 고급 MCP 개발](./lab3/README.md)
+**기간**: 20분
+- 💻 AI 툴킷을 사용하여 사용자 지정 MCP 서버 생성
+- 🐍 최신 MCP Python SDK(v1.9.3) 구성 및 사용
+- 🔍 디버깅을 위한 MCP Inspector 설정 및 활용
+- 🛠️ 전문적인 디버깅 워크플로우를 사용하여 날씨 MCP 서버 구축
+- 🧪 에이전트 빌더 및 Inspector 환경 모두에서 MCP 서버 디버그
 
-**🎯 Learning Outcome**: Develop and debug custom MCP servers with modern tooling
+**🎯 학습 결과**: 최신 도구를 사용하여 사용자 지정 MCP 서버 개발 및 디버그
 
-### [🐙 Module 4: Practical MCP Development - Custom GitHub Clone Server](./lab4/README.md)
-**Duration**: 30 minutes
-- 🏗️ Build a real-world GitHub Clone MCP Server for development workflows
-- 🔄 Implement smart repository cloning with validation and error handling
-- 📁 Create intelligent directory management and VS Code integration
-- 🤖 Use GitHub Copilot Agent Mode with custom MCP tools
-- 🛡️ Apply production-ready reliability and cross-platform compatibility
+### [🐙 모듈 4: 실제 MCP 개발 - 사용자 지정 GitHub 클론 서버](./lab4/README.md)
+**기간**: 30분
+- 🏗️ 개발 워크플로우를 위한 실제 GitHub 클론 MCP 서버 구축
+- 🔄 유효성 검사 및 오류 처리를 통한 스마트 리포지토리 클론 구현
+- 📁 지능형 디렉토리 관리 및 VS Code 통합 생성
+- 🤖 사용자 지정 MCP 도구와 함께 GitHub Copilot 에이전트 모드 사용
+- 🛡️ 프로덕션 준비된 안정성 및 교차 플랫폼 호환성 적용
 
-**🎯 Learning Outcome**: Deploy a production-ready MCP server that streamlines real development workflows
-
-
-## 💡 Real-World Applications & Impact
-
-### 🏢 Enterprise Use Cases
-
-#### 🔄 DevOps Automation
-Transform your development workflow with intelligent automation:
-- **Smart Repository Management**: AI-driven code review and merge decisions
-- **Intelligent CI/CD**: Automated pipeline optimization based on code changes
-- **Issue Triage**: Automatic bug classification and assignment
-
-#### 🧪 Quality Assurance Revolution
-Elevate testing with AI-powered automation:
-- **Intelligent Test Generation**: Create comprehensive test suites automatically
-- **Visual Regression Testing**: AI-powered UI change detection
-- **Performance Monitoring**: Proactive issue identification and resolution
-
-#### 📊 Data Pipeline Intelligence
-Build smarter data processing workflows:
-- **Adaptive ETL Processes**: Self-optimizing data transformations
-- **Anomaly Detection**: Real-time data quality monitoring
-- **Intelligent Routing**: Smart data flow management
-
-#### 🎧 Customer Experience Enhancement
-Create exceptional customer interactions:
-- **Context-Aware Support**: AI agents with access to customer history
-- **Proactive Issue Resolution**: Predictive customer service
-- **Multi-Channel Integration**: Unified AI experience across platforms
+**🎯 학습 결과**: 실제 개발 워크플로우를 간소화하는 프로덕션 준비된 MCP 서버 배포
 
 
-## 🛠️ Prerequisites & Setup
+## 💡 실제 애플리케이션 및 영향
 
-### 💻 System Requirements
+### 🏢 엔터프라이즈 사용 사례
 
-| Component | Requirement | Notes |
+#### 🔄 DevOps 자동화
+지능형 자동화로 개발 워크플로우 혁신:
+- **스마트 리포지토리 관리**: AI 기반 코드 검토 및 병합 결정
+- **지능형 CI/CD**: 코드 변경에 기반한 자동화된 파이프라인 최적화
+- **이슈 분류**: 자동 버그 분류 및 할당
+
+#### 🧪 품질 보증 혁명
+AI 기반 자동화로 테스트 향상:
+- **지능형 테스트 생성**: 포괄적인 테스트 스위트 자동 생성
+- **시각적 회귀 테스트**: AI 기반 UI 변경 감지
+- **성능 모니터링**: 사전 예방적 문제 식별 및 해결
+
+#### 📊 데이터 파이프라인 인텔리전스
+더 스마트한 데이터 처리 워크플로우 구축:
+- **적응형 ETL 프로세스**: 자체 최적화 데이터 변환
+- **이상 감지**: 실시간 데이터 품질 모니터링
+- **지능형 라우팅**: 스마트 데이터 흐름 관리
+
+#### 🎧 고객 경험 향상
+탁월한 고객 상호 작용 생성:
+- **상황 인식 지원**: 고객 기록에 액세스하는 AI 에이전트
+- **사전 예방적 문제 해결**: 예측 고객 서비스
+- **멀티 채널 통합**: 플랫폼 전반에 걸친 통합 AI 경험
+
+
+## 🛠️ 전제 조건 및 설정
+
+### 💻 시스템 요구 사항
+
+| 구성 요소 | 요구 사항 | 참고 사항 |
 |-----------|-------------|-------|
-| **Operating System** | Windows 10+, macOS 10.15+, Linux | Any modern OS |
-| **Visual Studio Code** | Latest stable version | Required for AITK |
-| **Node.js** | v18.0+ and npm | For MCP server development |
-| **Python** | 3.10+ | Optional for Python MCP servers |
-| **Memory** | 8GB RAM minimum | 16GB recommended for local models |
+| **운영 체제** | Windows 10+, macOS 10.15+, Linux | 모든 최신 OS |
+| **Visual Studio Code** | 최신 안정 버전 | AITK에 필요 |
+| **Node.js** | v18.0+ 및 npm | MCP 서버 개발용 |
+| **Python** | 3.10+ | Python MCP 서버용 (선택 사항) |
+| **메모리** | 최소 8GB RAM | 로컬 모델의 경우 16GB 권장 |
 
-### 🔧 Development Environment
+### 🔧 개발 환경
 
-#### Recommended VS Code Extensions
+#### 권장 VS Code 확장 프로그램
 - **AI Toolkit** (ms-windows-ai-studio.windows-ai-studio)
 - **Python** (ms-python.python)
 - **Python Debugger** (ms-python.debugpy)
-- **GitHub Copilot** (GitHub.copilot) - Optional but helpful
+- **GitHub Copilot** (GitHub.copilot) - 선택 사항이지만 유용함
 
-#### Optional Tools
-- **uv**: Modern Python package manager
-- **MCP Inspector**: Visual debugging tool for MCP servers
-- **Playwright**: For web automation examples
+#### 선택적 도구
+- **uv**: 최신 Python 패키지 관리자
+- **MCP Inspector**: MCP 서버용 시각적 디버깅 도구
+- **Playwright**: 웹 자동화 예제용
 
 
-## 🎖️ Learning Outcomes & Certification Path
+## 🎖️ 학습 결과 및 인증 경로
 
-### 🏆 Skill Mastery Checklist
+### 🏆 기술 숙련도 체크리스트
 
-By completing this workshop, you will achieve mastery in:
+이 워크숍을 완료하면 다음 분야에서 숙련도를 달성하게 됩니다:
 
-#### 🎯 Core Competencies
-- [ ] **MCP Protocol Mastery**: Deep understanding of architecture and implementation patterns
-- [ ] **AITK Proficiency**: Expert-level usage of AI Toolkit for rapid development
-- [ ] **Custom Server Development**: Build, deploy, and maintain production MCP servers
-- [ ] **Tool Integration Excellence**: Seamlessly connect AI with existing development workflows
-- [ ] **Problem-Solving Application**: Apply learned skills to real business challenges
+#### 🎯 핵심 역량
+- [ ] **MCP 프로토콜 숙련도**: 아키텍처 및 구현 패턴에 대한 깊은 이해
+- [ ] **AITK 숙련도**: 신속한 개발을 위한 AI 툴킷의 전문가 수준 사용
+- [ ] **사용자 지정 서버 개발**: 프로덕션 MCP 서버 구축, 배포 및 유지 관리
+- [ ] **도구 통합 우수성**: AI를 기존 개발 워크플로우와 원활하게 연결
+- [ ] **문제 해결 적용**: 학습한 기술을 실제 비즈니스 문제에 적용
 
-#### 🔧 Technical Skills
-- [ ] Set up and configure AI Toolkit in VS Code
-- [ ] Design and implement custom MCP servers
-- [ ] Integrate GitHub Models with MCP architecture
-- [ ] Build automated testing workflows with Playwright
-- [ ] Deploy AI agents for production use
-- [ ] Debug and optimize MCP server performance
+#### 🔧 기술 능력
+- [ ] VS Code에서 AI 툴킷 설정 및 구성
+- [ ] 사용자 지정 MCP 서버 설계 및 구현
+- [ ] GitHub 모델을 MCP 아키텍처와 통합
+- [ ] Playwright로 자동화된 테스트 워크플로우 구축
+- [ ] 프로덕션 사용을 위한 AI 에이전트 배포
+- [ ] MCP 서버 성능 디버그 및 최적화
 
-#### 🚀 Advanced Capabilities
-- [ ] Architect enterprise-scale AI integrations
-- [ ] Implement security best practices for AI applications
-- [ ] Design scalable MCP server architectures
-- [ ] Create custom tool chains for specific domains
-- [ ] Mentor others in AI-native development
+#### 🚀 고급 기능
+- [ ] 엔터프라이즈 규모 AI 통합 아키텍처 설계
+- [ ] AI 애플리케이션을 위한 보안 모범 사례 구현
+- [ ] 확장 가능한 MCP 서버 아키텍처 설계
+- [ ] 특정 도메인을 위한 사용자 지정 도구 체인 생성
+- [ ] AI 네이티브 개발에서 다른 사람 멘토링
 
-## 📖 Additional Resources
-- [MCP Specification](https://modelcontextprotocol.io/docs)
-- [AI Toolkit GitHub Repository](https://github.com/microsoft/vscode-ai-toolkit)
-- [Sample MCP Servers Collection](https://github.com/modelcontextprotocol/servers)
-- [Best Practices Guide](https://modelcontextprotocol.io/docs/best-practices)
+## 📖 추가 자료
+- [MCP 사양](https://modelcontextprotocol.io/docs)
+- [AI 툴킷 GitHub 리포지토리](https://github.com/microsoft/vscode-ai-toolkit)
+- [샘플 MCP 서버 컬렉션](https://github.com/modelcontextprotocol/servers)
+- [모범 사례 가이드](https://modelcontextprotocol.io/docs/best-practices)
 
 ---
 
-**🚀 Ready to revolutionize your AI development workflow?** 
+**🚀 AI 개발 워크플로우를 혁신할 준비가 되셨습니까?** 
 
-Let's build the future of intelligent applications together with MCP and AI Toolkit!
+MCP와 AI 툴킷으로 지능형 애플리케이션의 미래를 함께 만들어 갑시다!

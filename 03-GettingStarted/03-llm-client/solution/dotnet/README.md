@@ -1,7 +1,7 @@
-# Run this sample
+# 이 샘플 실행
 
 > [!NOTE]
-> This sample assumes you're using a GitHub Codespaces instance. If you want to run this locally, you need to set up a personal access token (PAT) on GitHub.
+> 이 샘플은 GitHub Codespaces 인스턴스를 사용한다고 가정합니다. 로컬에서 실행하려면 GitHub에서 개인용 액세스 토큰(PAT)을 설정해야 합니다.
 >
 > ```bash
 > # zsh/bash
@@ -13,33 +13,34 @@
 > $env:GITHUB_TOKEN = "{{YOUR_GITHUB_PAT}}"
 > ```
 
-## Install libraries
+## 라이브러리 설치
 
 ```sh
 dotnet restore
 ```
 
-Should install the following libraries: Azure AI Inference, Azure Identity, Microsoft.Extension, Model.Hosting, ModelContextProtcol 
+다음 라이브러리가 설치되어야 합니다: Azure AI Inference, Azure Identity, Microsoft.Extension, Model.Hosting, ModelContextProtcol
 
-## Run
+## 실행
 
 ```sh 
 dotnet run
 ```
 
-You should see an output similar to:
+다음과 유사한 출력이 표시되어야 합니다.
 
 ```text
-Setting up stdio transport
-Listing tools
-Connected to server with tools: Add
-Tool description: Adds two numbers
-Tool parameters: {"title":"Add","description":"Adds two numbers","type":"object","properties":{"a":{"type":"integer"},"b":{"type":"integer"}},"required":["a","b"]}
-Tool definition: Azure.AI.Inference.ChatCompletionsToolDefinition
-Properties: {"a":{"type":"integer"},"b":{"type":"integer"}}
-MCP Tools def: 0: Azure.AI.Inference.ChatCompletionsToolDefinition
-Tool call 0: Add with arguments {"a":2,"b":4}
-Sum 6
+stdio 전송 설정 중
+도구 나열
+도구가 있는 서버에 연결됨: 추가
+도구 설명: 두 숫자를 더합니다
+도구 매개변수: {"title":"Add","description":"두 숫자를 더합니다","type":"object","properties":{"a":{"type":"integer"},"b":{"type":"integer"}},"required":["a","b"]}
+도구 정의: Azure.AI.Inference.ChatCompletionsToolDefinition
+속성: {"a":{"type":"integer"},"b":{"type":"integer"}}
+MCP 도구 정의: 0: Azure.AI.Inference.ChatCompletionsToolDefinition
+도구 호출 0: 인수가 있는 추가 {"a":2,"b":4}
+합계 6
 ```
 
-A lot of the output us just debugging but what's important is that you are listing tools from the MCP Server, turn those into LLM tools and you end up with an MCP client response "Sum 6".
+출력의 대부분은 디버깅이지만 중요한 것은 MCP 서버에서 도구를 나열하고, 이를 LLM 도구로 변환하고, 최종적으로 MCP 클라이언트 응답 "합계 6"을 얻는다는 것입니다.
+

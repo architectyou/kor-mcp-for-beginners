@@ -1,49 +1,49 @@
-# Running this sample
+# 이 샘플 실행하기
 
-## -1- Install the dependencies
+## -1- 종속성 설치
 
 ```bash
 dotnet restore
 ```
 
-## -3- Run the sample
+## -3- 샘플 실행
 
 
 ```bash
 dotnet run
 ```
 
-## -4- Test the sample
+## -4- 샘플 테스트
 
-With the server running in one terminal, open another terminal and run the following command:
+한 터미널에서 서버를 실행한 상태에서 다른 터미널을 열고 다음 명령을 실행합니다.
 
 ```bash
 npx @modelcontextprotocol/inspector dotnet run
 ```
 
-This should start a web server with a visual interface allowing you to test the sample.
+이렇게 하면 샘플을 테스트할 수 있는 시각적 인터페이스가 있는 웹 서버가 시작됩니다.
 
-Once the server is connected: 
+서버가 연결되면:
 
-- try listing tools and run `add`, with args 2 and 4, you should see 6 in the result.
-- go to resources and resource template and call "greeting", type in a name and you should see a greeting with the name you provided.
+- 도구 목록을 나열하고 `add`를 실행해 보세요. 인수 2와 4를 사용하면 결과에서 6을 볼 수 있습니다.
+- 리소스 및 리소스 템플릿으로 이동하여 "greeting"을 호출하고 이름을 입력하면 제공한 이름으로 인사말이 표시됩니다.
 
-### Testing in CLI mode
+### CLI 모드에서 테스트하기
 
-You can launch it directly in CLI mode by running the following command:
+다음 명령을 실행하여 CLI 모드에서 직접 시작할 수 있습니다.
 
 ```bash
 npx @modelcontextprotocol/inspector --cli dotnet run --method tools/list
 ```
 
-This will list all the tools available in the server. You should see the following output:
+그러면 서버에서 사용 가능한 모든 도구가 나열됩니다. 다음과 같은 출력이 표시되어야 합니다.
 
 ```text
 {
   "tools": [
     {
       "name": "Add",
-      "description": "Adds two numbers",
+      "description": "두 숫자를 더합니다",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -55,7 +55,7 @@ This will list all the tools available in the server. You should see the followi
           }
         },
         "title": "Add",
-        "description": "Adds two numbers",
+        "description": "두 숫자를 더합니다",
         "required": [
           "a",
           "b"
@@ -66,13 +66,13 @@ This will list all the tools available in the server. You should see the followi
 }
 ```
 
-To invoke a tool type:
+도구 유형을 호출하려면 다음을 입력하십시오.
 
 ```bash
 npx @modelcontextprotocol/inspector --cli dotnet run --method tools/call --tool-name Add --tool-arg a=1 --tool-arg b=2
 ```
 
-You should see the following output:
+다음과 같은 출력이 표시되어야 합니다.
 
 ```text
 {
@@ -87,5 +87,5 @@ You should see the following output:
 ```
 
 > ![!TIP]
-> It's usually a lot faster to run the inspector in CLI mode than in the browser.
-> Read more about the inspector [here](https://github.com/modelcontextprotocol/inspector).
+> 일반적으로 브라우저보다 CLI 모드에서 검사기를 실행하는 것이 훨씬 빠릅니다.
+> 검사기에 대한 자세한 내용은 [여기](https://github.com/modelcontextprotocol/inspector)에서 확인하세요.

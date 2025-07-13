@@ -1,33 +1,33 @@
-# Creating a client
+# 클라이언트 만들기
 
-Clients are custom applications or scripts that communicate directly with an MCP Server to request resources, tools, and prompts. Unlike using the inspector tool, which provides a graphical interface for interacting with the server, writing your own client allows for programmatic and automated interactions. This enables developers to integrate MCP capabilities into their own workflows, automate tasks, and build custom solutions tailored to specific needs.
+클라이언트는 MCP 서버와 직접 통신하여 리소스, 도구 및 프롬프트를 요청하는 사용자 지정 애플리케이션 또는 스크립트입니다. 서버와 상호 작용하기 위한 그래픽 인터페이스를 제공하는 검사기 도구를 사용하는 것과 달리, 자체 클라이언트를 작성하면 프로그래밍 방식 및 자동화된 상호 작용이 가능합니다. 이를 통해 개발자는 MCP 기능을 자체 워크플로에 통합하고, 작업을 자동화하고, 특정 요구에 맞는 사용자 지정 솔루션을 구축할 수 있습니다.
 
-## Overview
+## 개요
 
-This lesson introduces the concept of clients within the Model Context Protocol (MCP) ecosystem. You'll learn how to write your own client and have it connect to an MCP Server.
+이 단원에서는 모델 컨텍스트 프로토콜(MCP) 생태계 내의 클라이언트 개념을 소개합니다. 자체 클라이언트를 작성하고 MCP 서버에 연결하는 방법을 배웁니다.
  
-## Learning Objectives
+## 학습 목표
 
-By the end of this lesson, you will be able to:
+이 단원을 마치면 다음을 수행할 수 있습니다.
 
-- Understand what a client can do.
-- Write your own client.
-- Connect and test the client with an MCP server to ensure the latter works as expected.
+- 클라이언트가 할 수 있는 일을 이해합니다.
+- 자체 클라이언트를 작성합니다.
+- 클라이언트를 MCP 서버에 연결하고 테스트하여 후자가 예상대로 작동하는지 확인합니다.
 
-## What goes into writing a client?
+## 클라이언트 작성에 포함되는 내용
 
-To write a client, you'll need to do the following:
+클라이언트를 작성하려면 다음을 수행해야 합니다.
 
-- **Import the correct libraries**. You'll be using the same library as before, just different constructs.
-- **Instantiate a client**. This will involve creating a client instance and connect it to the chosen transport method.
-- **Decide on what resources to list**. Your MCP server comes with resources, tools and prompts, you need to decide which one to list.
-- **Integrate the client to a host application**. Once you know the capabilities of the server you need to integrate this your host application so that if a user types a prompt or other command the corresponding server feature is invoked.
+- **올바른 라이브러리 가져오기**. 이전과 동일한 라이브러리를 사용하지만 다른 구문을 사용합니다.
+- **클라이언트 인스턴스화**. 여기에는 클라이언트 인스턴스를 만들고 선택한 전송 방법에 연결하는 작업이 포함됩니다.
+- **나열할 리소스 결정**. MCP 서버에는 리소스, 도구 및 프롬프트가 제공되므로 나열할 리소스를 결정해야 합니다.
+- **클라이언트를 호스트 애플리케이션에 통합**. 서버의 기능을 알게 되면 사용자가 프롬프트나 다른 명령을 입력하면 해당 서버 기능이 호출되도록 호스트 애플리케이션에 통합해야 합니다.
 
-Now that we understand at high level what we're about to do, let's look at an example next.
+이제 우리가 하려는 일을 높은 수준에서 이해했으므로 다음 예제를 살펴보겠습니다.
 
-### An example client
+### 예제 클라이언트
 
-Let's have a look at this example client:
+이 예제 클라이언트를 살펴보겠습니다.
 
 <details>
 <summary>TypeScript</summary>
@@ -50,10 +50,10 @@ const client = new Client(
 
 await client.connect(transport);
 
-// List prompts
+// 프롬프트 나열
 const prompts = await client.listPrompts();
 
-// Get a prompt
+// 프롬프트 가져오기
 const prompt = await client.getPrompt({
   name: "example-prompt",
   arguments: {
@@ -61,15 +61,15 @@ const prompt = await client.getPrompt({
   }
 });
 
-// List resources
+// 리소스 나열
 const resources = await client.listResources();
 
-// Read a resource
+// 리소스 읽기
 const resource = await client.readResource({
   uri: "file:///example.txt"
 });
 
-// Call a tool
+// 도구 호출
 const result = await client.callTool({
   name: "example-tool",
   arguments: {
@@ -80,23 +80,23 @@ const result = await client.callTool({
 
 </details>
 
-In the preceding code we:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Import the libraries
-- Create an instance of a client and connect it using stdio for transport.
-- List prompts, resources and tools and invoke them all.
+- 라이브러리 가져오기
+- 클라이언트 인스턴스를 만들고 전송을 위해 stdio를 사용하여 연결합니다.
+- 프롬프트, 리소스 및 도구를 나열하고 모두 호출합니다.
 
-There you have it, a client that can talk to an MCP Server.
+이제 MCP 서버와 통신할 수 있는 클라이언트가 생겼습니다.
 
-Let's take our time in the next exercise section and break down each code snippet and explain what's going on.
+다음 연습 섹션에서 시간을 내어 각 코드 조각을 분석하고 무슨 일이 일어나고 있는지 설명하겠습니다.
 
-## Exercise: Writing a client
+## 연습: 클라이언트 작성
 
-As said above, let's take our time explaining the code, and by all means code along if you want.
+위에서 말했듯이 코드를 설명하는 데 시간을 할애하고 원한다면 코드를 따라 작성하십시오.
 
-### -1- Import the libraries
+### -1- 라이브러리 가져오기
 
-Let's import the libraries we need, we will need references to a client and to our chosen transport protocol, stdio. stdio is a protocol for things meant to run on your local machine. SSE is another transport protocol we will show in future chapters but that's your other option. For now though, let's continue with stdio. 
+필요한 라이브러리를 가져오겠습니다. 클라이언트 및 선택한 전송 프로토콜인 stdio에 대한 참조가 필요합니다. stdio는 로컬 컴퓨터에서 실행되도록 설계된 프로토콜입니다. SSE는 향후 장에서 보여줄 또 다른 전송 프로토콜이지만 다른 옵션입니다. 하지만 지금은 stdio로 계속 진행하겠습니다.
 
 <details>
 <summary>TypeScript</summary>
@@ -134,7 +134,7 @@ using ModelContextProtocol.Protocol.Transport;
 <details>
 <summary>Java</summary>
 
-For Java, you'll create a client that connects to the MCP server from the previous exercise. Using the same Java Spring Boot project structure from [Getting Started with MCP Server](../01-first-server/solution/java), create a new Java class called `SDKClient` in the `src/main/java/com/microsoft/mcp/sample/client/` folder and add the following imports:
+Java의 경우 이전 연습에서 MCP 서버에 연결하는 클라이언트를 만듭니다. [MCP 서버 시작하기](../01-first-server/solution/java)의 동일한 Java Spring Boot 프로젝트 구조를 사용하여 `src/main/java/com/microsoft/mcp/sample/client/` 폴더에 `SDKClient`라는 새 Java 클래스를 만들고 다음 가져오기를 추가합니다.
 
 ```java
 import java.util.Map;
@@ -149,11 +149,11 @@ import io.modelcontextprotocol.spec.McpSchema.ListToolsResult;
 
 </details>
 
-Let's move on to instantiation.
+인스턴스화로 넘어 갑시다.
 
-### -2- Instantiating client and transport
+### -2- 클라이언트 및 전송 인스턴스화
 
-We will need to create an instance of the transport and that of our client:
+전송 및 클라이언트 인스턴스를 만들어야 합니다.
 
 <details>
 <summary>TypeScript</summary>
@@ -174,9 +174,9 @@ const client = new Client(
 await client.connect(transport);
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Created an stdio transport instance. Note how it specifices command and args for how to find and start up the server as that's something we will need to do as we create the client.
+- stdio 전송 인스턴스를 만들었습니다. 클라이언트를 만들 때 서버를 찾고 시작하는 방법을 지정하는 명령 및 인수를 지정하는 방법을 확인하십시오.
 
     ```typescript
     const transport = new StdioClientTransport({
@@ -185,7 +185,7 @@ In the preceding code we've:
     });
     ```
 
-- Instantiated a client by giving it a name and version.
+- 이름과 버전을 지정하여 클라이언트를 인스턴스화했습니다.
 
     ```typescript
     const client = new Client(
@@ -195,7 +195,7 @@ In the preceding code we've:
     });
     ```
 
-- Connected the client to the chosen transport.
+- 클라이언트를 선택한 전송에 연결했습니다.
 
     ```typescript
     await client.connect(transport);
@@ -210,11 +210,11 @@ In the preceding code we've:
 from mcp import ClientSession, StdioServerParameters, types
 from mcp.client.stdio import stdio_client
 
-# Create server parameters for stdio connection
+# stdio 연결을 위한 서버 매개변수 만들기
 server_params = StdioServerParameters(
-    command="mcp",  # Executable
-    args=["run", "server.py"],  # Optional command line arguments
-    env=None,  # Optional environment variables
+    command="mcp",  # 실행 파일
+    args=["run", "server.py"],  # 선택적 명령줄 인수
+    env=None,  # 선택적 환경 변수
 )
 
 async def run():
@@ -222,7 +222,7 @@ async def run():
         async with ClientSession(
             read, write
         ) as session:
-            # Initialize the connection
+            # 연결 초기화
             await session.initialize()
 
           
@@ -233,12 +233,12 @@ if __name__ == "__main__":
     asyncio.run(run())
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Imported the needed libraries
-- Instantiated a server parameters object as we will use this to run the server so we can connect to it with our client.
-- Defined a method `run` that in turn calls `stdio_client` which starts a client session. 
-- Created an entry point where we provide the `run` method to `asyncio.run`.
+- 필요한 라이브러리를 가져왔습니다.
+- 클라이언트로 연결할 수 있도록 서버를 실행하는 데 사용할 서버 매개변수 개체를 인스턴스화했습니다.
+- 클라이언트 세션을 시작하는 `stdio_client`를 차례로 호출하는 `run` 메서드를 정의했습니다.
+- `asyncio.run`에 `run` 메서드를 제공하는 진입점을 만들었습니다.
 
 </details>
 
@@ -270,12 +270,12 @@ var clientTransport = new StdioClientTransport(new()
 await using var mcpClient = await McpClientFactory.CreateAsync(clientTransport);
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Imported the needed libraries.
-- Create an stdio transport and created a client `mcpClient`. The latter is something we will use to list and invoke features on the MCP Server.
+- 필요한 라이브러리를 가져왔습니다.
+- stdio 전송을 만들고 클라이언트 `mcpClient`를 만들었습니다. 후자는 MCP 서버의 기능을 나열하고 호출하는 데 사용할 것입니다.
 
-Note, in "Arguments", you can either point to the *.csproj* or to the executable.
+참고로 "Arguments"에서 *.csproj* 또는 실행 파일을 가리킬 수 있습니다.
 
 </details>
 
@@ -300,35 +300,35 @@ public class SDKClient {
         var client = McpClient.sync(this.transport).build();
         client.initialize();
         
-        // Your client logic goes here
+        // 여기에 클라이언트 로직을 작성합니다.
     }
 }
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Created a main method that sets up an SSE transport pointing to `http://localhost:8080` where our MCP server will be running.
-- Created a client class that takes the transport as a constructor parameter.
-- In the `run` method, we create a synchronous MCP client using the transport and initialize the connection.
-- Used SSE (Server-Sent Events) transport which is suitable for HTTP-based communication with Java Spring Boot MCP servers.
+- MCP 서버가 실행될 `http://localhost:8080`을 가리키는 SSE 전송을 설정하는 기본 메서드를 만들었습니다.
+- 전송을 생성자 매개변수로 사용하는 클라이언트 클래스를 만들었습니다.
+- `run` 메서드에서 전송을 사용하여 동기 MCP 클라이언트를 만들고 연결을 초기화합니다.
+- Java Spring Boot MCP 서버와 HTTP 기반 통신에 적합한 SSE(Server-Sent Events) 전송을 사용했습니다.
 
 </details>
 
-### -3- Listing the server features
+### -3- 서버 기능 나열
 
-Now, we have a client that can connect to should the program be run. However, it doesn't actually list its features so let's do that next:
+이제 프로그램이 실행되어야 연결할 수 있는 클라이언트가 있습니다. 그러나 실제로는 기능을 나열하지 않으므로 다음에 수행하겠습니다.
 
 <details>
 <summary>TypeScript</summary>
 
 ```typescript
-// List prompts
+// 프롬프트 나열
 const prompts = await client.listPrompts();
 
-// List resources
+// 리소스 나열
 const resources = await client.listResources();
 
-// list tools
+// 도구 나열
 const tools = await client.listTools();
 ```
 
@@ -338,20 +338,20 @@ const tools = await client.listTools();
 <summary>Python</summary>
 
 ```python
-# List available resources
-resources = await session.list_resources()
-print("LISTING RESOURCES")
+# 사용 가능한 리소스 나열
+resources = await session.list_resources();
+print("리소스 나열");
 for resource in resources:
-    print("Resource: ", resource)
+    print("리소스: ", resource);
 
-# List available tools
-tools = await session.list_tools()
-print("LISTING TOOLS")
+# 사용 가능한 도구 나열
+tools = await session.list_tools();
+print("도구 나열");
 for tool in tools.tools:
-    print("Tool: ", tool.name)
+    print("도구: ", tool.name);
 ```
 
-Here we list the available resources, `list_resources()` and tools, `list_tools` and print them out.
+여기서는 사용 가능한 리소스, `list_resources()` 및 도구, `list_tools`를 나열하고 출력합니다.
 
 </details>
 
@@ -365,7 +365,7 @@ foreach (var tool in await client.ListToolsAsync())
 }
 ```
 
-Above is an example how we can list the tools on the server. For each tool, we then print out its name.
+위는 서버의 도구를 나열하는 방법의 예입니다. 각 도구에 대해 이름을 출력합니다.
 
 </details>
 
@@ -373,39 +373,39 @@ Above is an example how we can list the tools on the server. For each tool, we t
 <summary>Java</summary>
 
 ```java
-// List and demonstrate tools
+// 도구 나열 및 시연
 ListToolsResult toolsList = client.listTools();
-System.out.println("Available Tools = " + toolsList);
+System.out.println("사용 가능한 도구 = " + toolsList);
 
-// You can also ping the server to verify connection
+// 서버에 핑을 보내 연결을 확인할 수도 있습니다.
 client.ping();
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Called `listTools()` to get all available tools from the MCP server.
-- Used `ping()` to verify that the connection to the server is working.
-- The `ListToolsResult` contains information about all tools including their names, descriptions, and input schemas.
+- MCP 서버에서 사용 가능한 모든 도구를 가져오기 위해 `listTools()`를 호출했습니다.
+- 서버에 대한 연결이 작동하는지 확인하기 위해 `ping()`을 사용했습니다.
+- `ListToolsResult`에는 이름, 설명 및 입력 스키마를 포함한 모든 도구에 대한 정보가 포함되어 있습니다.
 
 </details>
 
-Great, now we've captures all the features. Now the question is when do we use them? Well, this client is pretty simple, simple in the sense that we will need to explicitly call the features when we want them. In the next chapter, we will create a more advanced client that has access to it's own large language model, LLM. For now though, let's see how we can invoke the features on the server:
+좋습니다. 이제 모든 기능을 캡처했습니다. 이제 문제는 언제 사용하느냐입니다. 음, 이 클라이언트는 매우 간단합니다. 간단하다는 의미는 우리가 원할 때 기능을 명시적으로 호출해야 한다는 것입니다. 다음 장에서는 자체 대규모 언어 모델인 LLM에 액세스할 수 있는 더 고급 클라이언트를 만들 것입니다. 하지만 지금은 서버에서 기능을 호출하는 방법을 살펴보겠습니다.
 
-### -4- Invoke features
+### -4- 기능 호출
 
-To invoke the features we need to ensure we specify the correct arguments and in some cases the name of what we're trying to invoke.
+기능을 호출하려면 올바른 인수를 지정하고 경우에 따라 호출하려는 항목의 이름을 지정해야 합니다.
 
 <details>
 <summary>TypeScript</summary>
 
 ```typescript
 
-// Read a resource
+// 리소스 읽기
 const resource = await client.readResource({
   uri: "file:///example.txt"
 });
 
-// Call a tool
+// 도구 호출
 const result = await client.callTool({
   name: "example-tool",
   arguments: {
@@ -413,7 +413,7 @@ const result = await client.callTool({
   }
 });
 
-// call prompt
+// 프롬프트 호출
 const promptResult = await client.getPrompt({
     name: "review-code",
     arguments: {
@@ -422,9 +422,9 @@ const promptResult = await client.getPrompt({
 })
 ```
 
-In the preceding code we:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Read a resource, we call the resource by calling `readResource()` specifying `uri`. Here's what it most likely look like on the server side:
+- 리소스를 읽고, `uri`를 지정하여 `readResource()`를 호출하여 리소스를 호출합니다. 서버 측에서는 다음과 같이 보일 가능성이 높습니다.
 
     ```typescript
     server.resource(
@@ -433,15 +433,15 @@ In the preceding code we:
         async (uri, { name }) => ({
           contents: [{
             uri: uri.href,
-            text: `Hello, ${name}!`
+            text: `안녕하세요, ${name}님!`
           }]
         })
     );
     ```
 
-    Our `uri` value `file://example.txt` matches `file://{name}` on the server. `example.txt` will be mapped to `name`.
+    `uri` 값 `file://example.txt`는 서버의 `file://{name}`과 일치합니다. `example.txt`는 `name`에 매핑됩니다.
 
-- Call a tool, we call it by specifying its `name` and its `arguments` like so:
+- 도구를 호출하고, `name`과 `arguments`를 다음과 같이 지정하여 호출합니다.
 
     ```typescript
     const result = await client.callTool({
@@ -452,7 +452,7 @@ In the preceding code we:
     });
     ```
 
-- Get prompt, to get a prompt, you call `getPrompt()` with `name` and `arguments`. The server code looks like so:
+- 프롬프트를 가져오고, `name`과 `arguments`를 사용하여 `getPrompt()`를 호출합니다. 서버 코드는 다음과 같습니다.
 
     ```typescript
     server.prompt(
@@ -463,14 +463,14 @@ In the preceding code we:
             role: "user",
             content: {
                 type: "text",
-                text: `Please review this code:\n\n${code}`
+                text: `이 코드를 검토해 주세요:\n\n${code}`
             }
             }]
         })
     );
     ```
 
-    and your resulting client code therefore looks like so to match what's declared on the server:
+    따라서 결과 클라이언트 코드는 서버에 선언된 것과 일치하도록 다음과 같이 보입니다.
 
     ```typescript
     const promptResult = await client.getPrompt({
@@ -487,27 +487,27 @@ In the preceding code we:
 <summary>Python</summary>
 
 ```python
-# Read a resource
-print("READING RESOURCE")
-content, mime_type = await session.read_resource("greeting://hello")
+# 리소스 읽기
+print("리소스 읽기");
+content, mime_type = await session.read_resource("greeting://hello");
 
-# Call a tool
-print("CALL TOOL")
-result = await session.call_tool("add", arguments={"a": 1, "b": 7})
-print(result.content)
+# 도구 호출
+print("도구 호출");
+result = await session.call_tool("add", arguments={"a": 1, "b": 7});
+print(result.content);
 ```
 
-In the preceding code, we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Called a resource called `greeting` using `read_resource`.
-- Invoked a tool called `add` using `call_tool`.
+- `read_resource`를 사용하여 `greeting`이라는 리소스를 호출했습니다.
+- `call_tool`을 사용하여 `add`라는 도구를 호출했습니다.
 
 </details>
 
 <details>
 <summary>C#</summary>
 
-1. Let's add some code to call a tool:
+1. 도구를 호출하는 코드를 추가해 보겠습니다.
 
   ```csharp
   var result = await mcpClient.CallToolAsync(
@@ -516,11 +516,11 @@ In the preceding code, we've:
       cancellationToken:CancellationToken.None);
   ```
 
-1. To print out the result, here's some code to handle that:
+1. 결과를 출력하려면 다음 코드를 처리합니다.
 
   ```csharp
   Console.WriteLine(result.Content.First(c => c.Type == "text").Text);
-  // Sum 4
+  // 합계 4
   ```
 
 </details>
@@ -529,40 +529,40 @@ In the preceding code, we've:
 <summary>Java</summary>
 
 ```java
-// Call various calculator tools
+// 다양한 계산기 도구 호출
 CallToolResult resultAdd = client.callTool(new CallToolRequest("add", Map.of("a", 5.0, "b", 3.0)));
-System.out.println("Add Result = " + resultAdd);
+System.out.println("더하기 결과 = " + resultAdd);
 
 CallToolResult resultSubtract = client.callTool(new CallToolRequest("subtract", Map.of("a", 10.0, "b", 4.0)));
-System.out.println("Subtract Result = " + resultSubtract);
+System.out.println("빼기 결과 = " + resultSubtract);
 
 CallToolResult resultMultiply = client.callTool(new CallToolRequest("multiply", Map.of("a", 6.0, "b", 7.0)));
-System.out.println("Multiply Result = " + resultMultiply);
+System.out.println("곱하기 결과 = " + resultMultiply);
 
 CallToolResult resultDivide = client.callTool(new CallToolRequest("divide", Map.of("a", 20.0, "b", 4.0)));
-System.out.println("Divide Result = " + resultDivide);
+System.out.println("나누기 결과 = " + resultDivide);
 
 CallToolResult resultHelp = client.callTool(new CallToolRequest("help", Map.of()));
-System.out.println("Help = " + resultHelp);
+System.out.println("도움말 = " + resultHelp);
 ```
 
-In the preceding code we've:
+앞의 코드에서는 다음을 수행했습니다.
 
-- Called multiple calculator tools using `callTool()` method with `CallToolRequest` objects.
-- Each tool call specifies the tool name and a `Map` of arguments required by that tool.
-- The server tools expect specific parameter names (like "a", "b" for mathematical operations).
-- Results are returned as `CallToolResult` objects containing the response from the server.
+- `CallToolRequest` 개체를 사용하여 `callTool()` 메서드로 여러 계산기 도구를 호출했습니다.
+- 각 도구 호출은 도구 이름과 해당 도구에 필요한 인수 `Map`을 지정합니다.
+- 서버 도구는 특정 매개변수 이름(예: 수학 연산의 경우 "a", "b")을 예상합니다.
+- 결과는 서버의 응답을 포함하는 `CallToolResult` 개체로 반환됩니다.
 
 </details>
 
-### -5- Run the client
+### -5- 클라이언트 실행
 
-To run the client, type the following command in the terminal:
+터미널에 다음 명령을 입력하여 클라이언트를 실행합니다.
 
 <details>
 <summary>TypeScript</summary>
 
-Add the following entry to your "scripts" section in *package.json*:
+*package.json*의 "scripts" 섹션에 다음 항목을 추가합니다.
 
 ```json
 "client": "tsx && node build/client.js"
@@ -577,7 +577,7 @@ npm run client
 <details>
 <summary>Python</summary>
 
-Call the client with the following command:
+다음 명령으로 클라이언트를 호출합니다.
 
 ```sh
 python client.py
@@ -597,34 +597,34 @@ dotnet run
 <details>
 <summary>Java</summary>
 
-First, ensure your MCP server is running on `http://localhost:8080`. Then run the client:
+먼저 MCP 서버가 `http://localhost:8080`에서 실행 중인지 확인합니다. 그런 다음 클라이언트를 실행합니다.
 
 ```bash
-# Build you project
+# 프로젝트 빌드
 ./mvnw clean compile
 
-# Run the client
+# 클라이언트 실행
 ./mvnw exec:java -Dexec.mainClass="com.microsoft.mcp.sample.client.SDKClient"
 ```
 
-Alternatively, you can run the complete client project provided in the solution folder `03-GettingStarted\02-client\solution\java`:
+또는 솔루션 폴더 `03-GettingStarted\02-client\solution\java`에 제공된 전체 클라이언트 프로젝트를 실행할 수 있습니다.
 
 ```bash
-# Navigate to the solution directory
+# 솔루션 디렉토리로 이동
 cd 03-GettingStarted/02-client/solution/java
 
-# Build and run the JAR
+# JAR 빌드 및 실행
 ./mvnw clean package
 java -jar target/calculator-client-0.0.1-SNAPSHOT.jar
 ```
 
 </details>
 
-## Assignment
+## 과제
 
-In this assignment, you'll use what you've learned in creating a client but create a client of your own.
+이 과제에서는 클라이언트를 만드는 데 배운 내용을 사용하여 자신만의 클라이언트를 만듭니다.
 
-Here's a server you can use that you need to call via your client code, see if you can add more features to the server to make it more interesting.
+다음은 클라이언트 코드를 통해 호출해야 하는 서버입니다. 서버에 더 많은 기능을 추가하여 더 흥미롭게 만들 수 있는지 확인하십시오.
 
 <details>
 <summary>TypeScript</summary>
@@ -634,13 +634,13 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-// Create an MCP server
+// MCP 서버 만들기
 const server = new McpServer({
   name: "Demo",
   version: "1.0.0"
 });
 
-// Add an addition tool
+// 추가 도구 추가
 server.tool("add",
   { a: z.number(), b: z.number() },
   async ({ a, b }) => ({
@@ -648,19 +648,19 @@ server.tool("add",
   })
 );
 
-// Add a dynamic greeting resource
+// 동적 인사말 리소스 추가
 server.resource(
   "greeting",
   new ResourceTemplate("greeting://{name}", { list: undefined }),
   async (uri, { name }) => ({
     contents: [{
       uri: uri.href,
-      text: `Hello, ${name}!`
+      text: `안녕하세요, ${name}님!`
     }]
   })
 );
 
-// Start receiving messages on stdin and sending messages on stdout
+// stdin에서 메시지 수신 시작 및 stdout에서 메시지 전송 시작
 
 async function main() {
   const transport = new StdioServerTransport();
@@ -669,7 +669,7 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error("Fatal error: ", error);
+  console.error("치명적인 오류: ", error);
   process.exit(1);
 });
 ```
@@ -683,22 +683,22 @@ main().catch((error) => {
 # server.py
 from mcp.server.fastmcp import FastMCP
 
-# Create an MCP server
+# MCP 서버 만들기
 mcp = FastMCP("Demo")
 
 
-# Add an addition tool
+# 추가 도구 추가
 @mcp.tool()
 def add(a: int, b: int) -> int:
-    """Add two numbers"""
+    """두 숫자 더하기"""
     return a + b
 
 
-# Add a dynamic greeting resource
+# 동적 인사말 리소스 추가
 @mcp.resource("greeting://{name}")
 def get_greeting(name: str) -> str:
-    """Get a personalized greeting"""
-    return f"Hello, {name}!"
+    """개인화된 인사말 받기"""
+    return f"안녕하세요, {name}님!"
 
 ```
 
@@ -717,7 +717,7 @@ using System.ComponentModel;
 var builder = Host.CreateApplicationBuilder(args);
 builder.Logging.AddConsole(consoleLogOptions =>
 {
-    // Configure all logs to go to stderr
+    // 모든 로그를 stderr로 보내도록 구성
     consoleLogOptions.LogToStandardErrorThreshold = LogLevel.Trace;
 });
 
@@ -730,43 +730,42 @@ await builder.Build().RunAsync();
 [McpServerToolType]
 public static class CalculatorTool
 {
-    [McpServerTool, Description("Adds two numbers")]
-    public static string Add(int a, int b) => $"Sum {a + b}";
+    [McpServerTool, Description("두 숫자를 더합니다")]
+    public static string Add(int a, int b) => $"합계 {a + b}";
 }
 ```
 
-See this project to see how you can [add prompts and resources](https://github.com/modelcontextprotocol/csharp-sdk/blob/main/samples/EverythingServer/Program.cs).
+이 프로젝트를 참조하여 [프롬프트 및 리소스 추가 방법](https://github.com/modelcontextprotocol/csharp-sdk/blob/main/samples/EverythingServer/Program.cs)을 확인하십시오.
 
-Also, check this link for how to invoke [prompts and resources](https://github.com/modelcontextprotocol/csharp-sdk/blob/main/src/ModelContextProtocol/Client/).
+또한 [프롬프트 및 리소스 호출 방법](https://github.com/modelcontextprotocol/csharp-sdk/blob/main/src/ModelContextProtocol/Client/)에 대한 이 링크를 확인하십시오.
 
 </details>
 
 
-## Solution
+## 해결책
 
-[Solution](./solution/README.md)
+[해결책](./solution/README.md)
 
-## Key Takeaways
+## 주요 내용
 
-The key takeaways for this chapter is the following about clients:
+이 장의 주요 내용은 클라이언트에 대한 다음과 같습니다.
 
-- Can be used to both discover and invoke features on the server.
-- Can start a server while it starts itself (like in this chapter) but clients can connect to running servers as well.
-- Is a great way to test out server capabilities next to alternatives like the Inspector as was described in the previous chapter.
+- 서버의 기능을 검색하고 호출하는 데 사용할 수 있습니다.
+- 이 장에서와 같이 자체적으로 시작하는 동안 서버를 시작할 수 있지만 클라이언트는 실행 중인 서버에도 연결할 수 있습니다.
+- 이전 장에서 설명한 Inspector와 같은 대안 옆에 서버 기능을 테스트하는 좋은 방법입니다.
 
-## Additional Resources
+## 추가 리소스
 
-- [Building clients in MCP](https://modelcontextprotocol.io/quickstart/client)
+- [MCP에서 클라이언트 구축](https://modelcontextprotocol.io/quickstart/client)
 
-## Samples 
+## 샘플
 
-- [Java Calculator](../samples/java/calculator/README.md)
-- [.Net Calculator](../samples/csharp/)
-- [JavaScript Calculator](../samples/javascript/README.md)
-- [TypeScript Calculator](../samples/typescript/README.md)
-- [Python Calculator](../samples/python/) 
+- [Java 계산기](../samples/java/calculator/README.md)
+- [.Net 계산기](../samples/csharp/)
+- [JavaScript 계산기](../samples/javascript/README.md)
+- [TypeScript 계산기](../samples/typescript/README.md)
+- [Python 계산기](../samples/python/) 
 
-## What's Next
+## 다음 내용
 
-- Next: [Creating a client with an LLM](../03-llm-client/README.md)
-
+- 다음: [LLM으로 클라이언트 만들기](../03-llm-client/README.md)

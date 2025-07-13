@@ -1,134 +1,134 @@
-# Scalability and High-Performance MCP
+# 확장성 및 고성능 MCP
 
-For enterprise deployments, MCP implementations often need to handle high volumes of requests with minimal latency.
+엔터프라이즈 배포의 경우 MCP 구현은 최소한의 지연 시간으로 대량의 요청을 처리해야 하는 경우가 많습니다.
 
-## Introduction
+## 소개
 
-In this lesson, we will explore strategies for scaling MCP servers to handle large workloads efficiently. We will cover horizontal and vertical scaling, resource optimization, and distributed architectures.
+이 단원에서는 대규모 워크로드를 효율적으로 처리하기 위한 MCP 서버 확장 전략을 살펴보겠습니다. 수평 및 수직 확장, 리소스 최적화, 분산 아키텍처를 다룰 것입니다.
 
-## Learning Objectives
+## 학습 목표
 
-By the end of this lesson, you will be able to:
+이 단원을 마치면 다음을 수행할 수 있습니다:
 
-- Implement horizontal scaling using load balancing and distributed caching.
-- Optimize MCP servers for vertical scaling and resource management.
-- Design distributed MCP architectures for high availability and fault tolerance.
-- Utilize advanced tools and techniques for performance monitoring and optimization.
-- Apply best practices for scaling MCP servers in production environments.
+- 로드 밸런싱 및 분산 캐싱을 사용하여 수평 확장 구현
+- 수직 확장 및 리소스 관리를 위해 MCP 서버 최적화
+- 고가용성 및 내결함성을 위한 분산 MCP 아키텍처 설계
+- 성능 모니터링 및 최적화를 위한 고급 도구 및 기술 활용
+- 프로덕션 환경에서 MCP 서버 확장을 위한 모범 사례 적용
 
-## Scalability Strategies
+## 확장성 전략
 
-There are several strategies to scale MCP servers effectively:
+MCP 서버를 효과적으로 확장하기 위한 몇 가지 전략이 있습니다:
 
-- **Horizontal Scaling**: Deploy multiple instances of MCP servers behind a load balancer to distribute incoming requests evenly.
-- **Vertical Scaling**: Optimize a single MCP server instance to handle more requests by increasing resources (CPU, memory) and fine-tuning configurations.
-- **Resource Optimization**: Use efficient algorithms, caching, and asynchronous processing to reduce resource consumption and improve response times.
-- **Distributed Architecture**: Implement a distributed system where multiple MCP nodes work together, sharing the load and providing redundancy.
+- **수평 확장**: 로드 밸런서 뒤에 여러 MCP 서버 인스턴스를 배포하여 들어오는 요청을 균등하게 분산합니다.
+- **수직 확장**: 리소스(CPU, 메모리)를 늘리고 구성을 미세 조정하여 단일 MCP 서버 인스턴스가 더 많은 요청을 효율적으로 처리하도록 최적화합니다.
+- **리소스 최적화**: 효율적인 알고리즘, 캐싱 및 비동기 처리를 사용하여 리소스 소비를 줄이고 응답 시간을 개선합니다.
+- **분산 아키텍처**: 여러 MCP 노드가 함께 작동하여 로드를 공유하고 중복성을 제공하는 분산 시스템을 구현합니다.
 
-## Horizontal Scaling
+## 수평 확장
 
-Horizontal scaling involves deploying multiple instances of MCP servers and using a load balancer to distribute incoming requests. This approach allows you to handle more requests simultaneously and provides fault tolerance.
+수평 확장은 여러 MCP 서버 인스턴스를 배포하고 로드 밸런서를 사용하여 들어오는 요청을 분산하는 것을 포함합니다. 이 접근 방식을 사용하면 더 많은 요청을 동시에 처리하고 내결함성을 제공할 수 있습니다.
 
-Let's look at an example of how to configure horizontal scaling and MCP.
+수평 확장 및 MCP를 구성하는 방법을 예시를 통해 살펴보겠습니다.
 
 <details>
 <summary>.NET</summary>
 
 ```csharp
-// ASP.NET Core MCP load balancing configuration
+// ASP.NET Core MCP 로드 밸런싱 구성
 public class McpLoadBalancedStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        // Configure distributed cache for session state
+        // 세션 상태를 위한 분산 캐시 구성
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = Configuration.GetConnectionString("RedisConnection");
             options.InstanceName = "MCP_";
         });
         
-        // Configure MCP with distributed caching
+        // 분산 캐싱을 사용하여 MCP 구성
         services.AddMcpServer(options =>
         {
-            options.ServerName = "Scalable MCP Server";
+            options.ServerName = "확장 가능한 MCP 서버";
             options.ServerVersion = "1.0.0";
             options.EnableDistributedCaching = true;
             options.CacheExpirationMinutes = 60;
         });
         
-        // Register tools
+        // 도구 등록
         services.AddMcpTool<HighPerformanceTool>();
     }
 }
 ```
 
-In the preceding code we've:
+위 코드에서 다음을 수행했습니다:
 
-- Configured a distributed cache using Redis to store session state and tool data.
-- Enabled distributed caching in the MCP server configuration.
-- Registered a high-performance tool that can be used across multiple MCP instances.
+- Redis를 사용하여 세션 상태 및 도구 데이터를 저장하도록 분산 캐시를 구성했습니다.
+- MCP 서버 구성에서 분산 캐싱을 활성화했습니다.
+- 여러 MCP 인스턴스에서 사용할 수 있는 고성능 도구를 등록했습니다.
 
 </details>
 
-## Vertical Scaling and Resource Optimization
+## 수직 확장 및 리소스 최적화
 
-Vertical scaling focuses on optimizing a single MCP server instance to handle more requests efficiently. This can be achieved by fine-tuning configurations, using efficient algorithms, and managing resources effectively. For example, you can adjust thread pools, request timeouts, and memory limits to improve performance.
+수직 확장은 단일 MCP 서버 인스턴스가 요청을 효율적으로 처리하도록 최적화하는 데 중점을 둡니다. 이는 구성을 미세 조정하고, 효율적인 알고리즘을 사용하고, 리소스를 효과적으로 관리하여 달성할 수 있습니다. 예를 들어, 스레드 풀, 요청 시간 초과 및 메모리 제한을 조정하여 성능을 향상시킬 수 있습니다.
 
-Let's look at an example of how to optimize an MCP server for vertical scaling and resource management.
+수직 확장 및 리소스 관리를 위해 MCP 서버를 최적화하는 방법을 예시를 통해 살펴보겠습니다.
 
 <details>
 <summary>Java</summary>
 
 ```java
-// Java MCP server with resource optimization
+// 리소스 최적화를 사용한 Java MCP 서버
 public class OptimizedMcpServer {
     public static McpServer createOptimizedServer() {
-        // Configure thread pool for optimal performance
+        // 최적의 성능을 위한 스레드 풀 구성
         int processors = Runtime.getRuntime().availableProcessors();
-        int optimalThreads = processors * 2; // Common heuristic for I/O-bound tasks
+        int optimalThreads = processors * 2; // I/O 바운드 작업에 대한 일반적인 휴리스틱
         
         ExecutorService executorService = new ThreadPoolExecutor(
-            processors,       // Core pool size
-            optimalThreads,   // Maximum pool size 
-            60L,              // Keep-alive time
+            processors,       // 코어 풀 크기
+            optimalThreads,   // 최대 풀 크기 
+            60L,              // Keep-alive 시간
             TimeUnit.SECONDS,
-            new ArrayBlockingQueue<>(1000), // Request queue size
-            new ThreadPoolExecutor.CallerRunsPolicy() // Backpressure strategy
+            new ArrayBlockingQueue<>(1000), // 요청 큐 크기
+            new ThreadPoolExecutor.CallerRunsPolicy() // 역압력 전략
         );
         
-        // Configure and build MCP server with resource constraints
+        // 리소스 제약 조건을 사용하여 MCP 서버 구성 및 구축
         return new McpServer.Builder()
-            .setName("High-Performance MCP Server")
+            .setName("고성능 MCP 서버")
             .setVersion("1.0.0")
             .setPort(5000)
             .setExecutor(executorService)
             .setMaxRequestSize(1024 * 1024) // 1MB
             .setMaxConcurrentRequests(100)
-            .setRequestTimeoutMs(5000) // 5 seconds
+            .setRequestTimeoutMs(5000) // 5초
             .build();
     }
 }
 ```
 
-In the preceding code, we have:
+위 코드에서 다음을 수행했습니다:
 
-- Configured a thread pool with an optimal number of threads based on the number of available processors.
-- Set resource constraints such as maximum request size, maximum concurrent requests, and request timeout.
-- Used a backpressure strategy to handle overload situations gracefully.
+- 사용 가능한 프로세서 수에 따라 최적의 스레드 수를 가진 스레드 풀을 구성했습니다.
+- 최대 요청 크기, 최대 동시 요청 및 요청 시간 초과와 같은 리소스 제약 조건을 설정했습니다.
+- 과부하 상황을 우아하게 처리하기 위해 역압력 전략을 사용했습니다.
 
 </details>
 
-## Distributed Architecture
+## 분산 아키텍처
 
-Distributed architectures involve multiple MCP nodes working together to handle requests, share resources, and provide redundancy. This approach enhances scalability and fault tolerance by allowing nodes to communicate and coordinate through a distributed system.
+분산 아키텍처는 여러 MCP 노드가 함께 작동하여 요청을 처리하고, 리소스를 공유하고, 중복성을 제공하는 것을 포함합니다. 이 접근 방식은 노드가 분산 시스템을 통해 통신하고 조정할 수 있도록 하여 확장성 및 내결함성을 향상시킵니다.
 
-Let's look at an example of how to implement a distributed MCP server architecture using Redis for coordination.
+조정을 위해 Redis를 사용하여 분산 MCP 서버 아키텍처를 구현하는 방법을 예시를 통해 살펴보겠습니다.
 
 <details>
 <summary>Python</summary>
 
 ```python
-# Python MCP server in distributed architecture
+# 분산 아키텍처의 Python MCP 서버
 from mcp_server import AsyncMcpServer
 import asyncio
 import aioredis
@@ -141,41 +141,41 @@ class DistributedMcpServer:
         self.server = None
     
     async def initialize(self):
-        # Connect to Redis for coordination
+        # 조정을 위해 Redis에 연결
         self.redis = await aioredis.create_redis_pool("redis://redis-master:6379")
         
-        # Register this node with the cluster
+        # 이 노드를 클러스터에 등록
         await self.redis.sadd("mcp:nodes", self.node_id)
         await self.redis.hset(f"mcp:node:{self.node_id}", "status", "starting")
         
-        # Create the MCP server
+        # MCP 서버 생성
         self.server = AsyncMcpServer(
-            name=f"MCP Node {self.node_id[:8]}",
+            name=f"MCP 노드 {self.node_id[:8]}",
             version="1.0.0",
             port=5000,
             max_concurrent_requests=50
         )
         
-        # Register tools - each node might specialize in certain tools
+        # 도구 등록 - 각 노드는 특정 도구에 특화될 수 있음
         self.register_tools()
         
-        # Start heartbeat mechanism
+        # 하트비트 메커니즘 시작
         asyncio.create_task(self._heartbeat())
         
-        # Start server
+        # 서버 시작
         await self.server.start()
         
-        # Update node status
+        # 노드 상태 업데이트
         await self.redis.hset(f"mcp:node:{self.node_id}", "status", "running")
-        print(f"MCP Node {self.node_id[:8]} running on port 5000")
+        print(f"MCP 노드 {self.node_id[:8]} 포트 5000에서 실행 중")
     
     def register_tools(self):
-        # Register common tools across all nodes
+        # 모든 노드에 공통 도구 등록
         self.server.register_tool(CommonTool1())
         self.server.register_tool(CommonTool2())
         
-        # Register specialized tools for this node (could be based on node_id or config)
-        if int(self.node_id[-1], 16) % 3 == 0:  # Simple way to distribute specialized tools
+        # 이 노드에 대한 특수 도구 등록 (node_id 또는 구성에 기반할 수 있음)
+        if int(self.node_id[-1], 16) % 3 == 0:  # 특수 도구를 분산하는 간단한 방법
             self.server.register_tool(SpecializedTool1())
         elif int(self.node_id[-1], 16) % 3 == 1:
             self.server.register_tool(SpecializedTool2())
@@ -183,7 +183,7 @@ class DistributedMcpServer:
             self.server.register_tool(SpecializedTool3())
     
     async def _heartbeat(self):
-        """Periodic heartbeat to indicate node health"""
+        """노드 상태를 나타내는 주기적인 하트비트"""
         while True:
             try:
                 await self.redis.hset(
@@ -194,9 +194,9 @@ class DistributedMcpServer:
                         "maxLoad": self.server.max_concurrent_requests
                     }
                 )
-                await asyncio.sleep(5)  # Heartbeat every 5 seconds
+                await asyncio.sleep(5)  # 5초마다 하트비트
             except Exception as e:
-                print(f"Heartbeat error: {e}")
+                print(f"하트비트 오류: {e}")
                 await asyncio.sleep(1)
     
     async def shutdown(self):
@@ -208,18 +208,18 @@ class DistributedMcpServer:
         await self.redis.wait_closed()
 ```
 
-In the preceding code, we have:
+위 코드에서 다음을 수행했습니다:
 
-- Created a distributed MCP server that registers itself with a Redis instance for coordination.
-- Implemented a heartbeat mechanism to update the node's status and load in Redis.
-- Registered tools that can be specialized based on the node's ID, allowing for load distribution across nodes.
-- Provided a shutdown method to clean up resources and deregister the node from the cluster.
-- Used asynchronous programming to handle requests efficiently and maintain responsiveness.
-- Utilized Redis for coordination and state management across distributed nodes.
+- 조정을 위해 Redis 인스턴스에 자신을 등록하는 분산 MCP 서버를 생성했습니다.
+- Redis에서 노드의 상태 및 로드를 업데이트하기 위한 하트비트 메커니즘을 구현했습니다.
+- 노드의 ID를 기반으로 특화될 수 있는 도구를 등록하여 노드 간 로드 분산을 허용했습니다.
+- 리소스를 정리하고 클러스터에서 노드를 등록 해제하는 종료 메서드를 제공했습니다.
+- 요청을 효율적으로 처리하고 응답성을 유지하기 위해 비동기 프로그래밍을 사용했습니다.
+- 분산 노드 간의 조정 및 상태 관리를 위해 Redis를 활용했습니다.
 
 </details>
 
 
-## What's next
+## 다음 단계
 
-- [5.8 Security](../mcp-security/README.md)
+- [5.8 보안](../mcp-security/README.md)

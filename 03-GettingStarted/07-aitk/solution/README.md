@@ -1,18 +1,17 @@
 
-# 📘 Assignment Solution: Extending Your Calculator MCP Server with a Square Root Tool
+# 📘 과제 해결: 계산기 MCP 서버에 제곱근 도구 확장
 
-## Overview
-In this assignment, you enhanced your calculator MCP server by adding a new tool that calculates the square root of a number. This addition allows your AI agent to handle more advanced mathematical queries, such as "What is the square root of 16?" or "Calculate √49," using natural language prompts.
+## 개요
+이 과제에서는 숫자의 제곱근을 계산하는 새로운 도구를 추가하여 계산기 MCP 서버를 향상시켰습니다. 이 추가 기능을 통해 AI 에이전트는 "16의 제곱근은 무엇입니까?" 또는 "√49를 계산하세요"와 같은 더 고급 수학적 쿼리를 자연어 프롬프트를 사용하여 처리할 수 있습니다.
 
-## 🛠️ Implementing the Square Root Tool
-To add this functionality, you defined a new tool function in your server.py file. Here's the implementation:
+## 🛠️ 제곱근 도구 구현
+이 기능을 추가하기 위해 server.py 파일에 새로운 도구 함수를 정의했습니다. 다음은 구현입니다:
 
 ```python
 """
-Sample MCP Calculator Server implementation in Python.
+Python으로 구현된 샘플 MCP 계산기 서버.
 
-This module demonstrates how to create a simple MCP server with calculator tools
-that can perform basic arithmetic operations (add, subtract, multiply, divide).
+이 모듈은 기본적인 산술 연산(덧셈, 뺄셈, 곱셈, 나눗셈)을 수행할 수 있는 계산기 도구를 사용하여 간단한 MCP 서버를 생성하는 방법을 보여줍니다.
 """
 
 from mcp.server.fastmcp import FastMCP
@@ -22,70 +21,70 @@ server = FastMCP("calculator")
 
 @server.tool()
 def add(a: float, b: float) -> float:
-    """Add two numbers together and return the result."""
+    """두 숫자를 더하고 결과를 반환합니다."""
     return a + b
 
 @server.tool()
 def subtract(a: float, b: float) -> float:
-    """Subtract b from a and return the result."""
+    """a에서 b를 빼고 결과를 반환합니다."""
     return a - b
 
 @server.tool()
 def multiply(a: float, b: float) -> float:
-    """Multiply two numbers together and return the result."""
+    """두 숫자를 곱하고 결과를 반환합니다."""
     return a * b
 
 @server.tool()
 def divide(a: float, b: float) -> float:
     """
-    Divide a by b and return the result.
+    a를 b로 나누고 결과를 반환합니다.
     
-    Raises:
-        ValueError: If b is zero
+    예외:
+        ValueError: b가 0인 경우
     """
     if b == 0:
-        raise ValueError("Cannot divide by zero")
+        raise ValueError("0으로 나눌 수 없습니다")
     return a / b
 
 @server.tool()
 def sqrt(a: float) -> float:
     """
-    Return the square root of a.
+    a의 제곱근을 반환합니다.
 
-    Raises:
-        ValueError: If a is negative.
+    예외:
+        ValueError: a가 음수인 경우.
     """
     if a < 0:
-        raise ValueError("Cannot compute the square root of a negative number.")
+        raise ValueError("음수의 제곱근은 계산할 수 없습니다.")
     return math.sqrt(a)
 ```
 
-## 🔍 How It Works
+## 🔍 작동 방식
 
-- **Import the `math` module**: To perform mathematical operations beyond basic arithmetic, Python provides the built-in `math` module. This module includes a variety of mathematical functions and constants. By importing it using `import math`, you gain access to functions like `math.sqrt()`, which computes the square root of a number.
-- **Function Definition**: The `@server.tool()` decorator registers the `sqrt` function as a tool accessible by your AI agent.
-- **Input Parameter**: The function accepts a single argument `a` of type `float`.
-- **Error Handling**: If `a` is negative, the function raises a `ValueError` to prevent computing the square root of a negative number, which is not supported by the `math.sqrt()` function.
-- **Return Value**: For non-negative inputs, the function returns the square root of `a` using Python's built-in `math.sqrt()` method.
+- **`math` 모듈 가져오기**: 기본적인 산술 연산을 넘어선 수학적 연산을 수행하기 위해 Python은 내장 `math` 모듈을 제공합니다. 이 모듈에는 다양한 수학 함수와 상수가 포함되어 있습니다. `import math`를 사용하여 가져오면 숫자의 제곱근을 계산하는 `math.sqrt()`와 같은 함수에 액세스할 수 있습니다.
+- **함수 정의**: `@server.tool()` 데코레이터는 `sqrt` 함수를 AI 에이전트가 액세스할 수 있는 도구로 등록합니다.
+- **입력 매개변수**: 이 함수는 `float` 유형의 단일 인수 `a`를 허용합니다.
+- **오류 처리**: `a`가 음수이면 함수는 `ValueError`를 발생시켜 음수의 제곱근 계산을 방지합니다. 이는 `math.sqrt()` 함수에서 지원되지 않습니다.
+- **반환 값**: 음수가 아닌 입력의 경우 함수는 Python의 내장 `math.sqrt()` 메서드를 사용하여 `a`의 제곱근을 반환합니다.
 
-## 🔄 Restarting the Server
-After adding the new `sqrt` tool, it's essential to restart your MCP server to ensure the agent recognizes and can utilize the newly added functionality.
+## 🔄 서버 재시작
+새로운 `sqrt` 도구를 추가한 후에는 에이전트가 새로 추가된 기능을 인식하고 활용할 수 있도록 MCP 서버를 다시 시작하는 것이 중요합니다.
 
-## 💬 Example Prompts to Test the New Tool
-Here are some natural language prompts you can use to test the square root functionality:
+## 💬 새 도구를 테스트하기 위한 예시 프롬프트
+다음은 제곱근 기능을 테스트하는 데 사용할 수 있는 몇 가지 자연어 프롬프트입니다:
 
-- "What is the square root of 25?"
-- "Calculate the square root of 81."
-- "Find the square root of 0."
-- "What is the square root of 2.25?"
+- "25의 제곱근은 무엇입니까?"
+- "81의 제곱근을 계산하세요."
+- "0의 제곱근을 찾으세요."
+- "2.25의 제곱근은 무엇입니까?"
 
-These prompts should trigger the agent to invoke the `sqrt` tool and return the correct results.
+이러한 프롬프트는 에이전트가 `sqrt` 도구를 호출하고 올바른 결과를 반환하도록 트리거해야 합니다.
 
-## ✅ Summary
-By completing this assignment, you've:
+## ✅ 요약
+이 과제를 완료함으로써 다음을 수행했습니다:
 
-- Extended your calculator MCP server with a new `sqrt` tool.
-- Enabled your AI agent to handle square root calculations through natural language prompts.
-- Practiced adding new tools and restarting the server to integrate additional functionalities.
+- 새로운 `sqrt` 도구로 계산기 MCP 서버를 확장했습니다.
+- AI 에이전트가 자연어 프롬프트를 통해 제곱근 계산을 처리할 수 있도록 했습니다.
+- 추가 기능을 통합하기 위해 새로운 도구를 추가하고 서버를 다시 시작하는 연습을 했습니다.
 
-Feel free to experiment further by adding more mathematical tools, such as exponentiation or logarithmic functions, to continue enhancing your agent's capabilities!
+지수 또는 로그 함수와 같은 더 많은 수학 도구를 추가하여 에이전트의 기능을 계속 향상시켜 보세요!

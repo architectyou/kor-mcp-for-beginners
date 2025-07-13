@@ -1,112 +1,111 @@
-# Consuming a server from the AI Toolkit extension for Visual Studio Code
+# Visual Studio Code용 AI Toolkit 확장 프로그램에서 서버 사용하기
 
-When you’re building an AI agent, it’s not just about generating smart responses; it’s also about giving your agent the ability to take action. That’s where the Model Context Protocol (MCP) comes in. MCP makes it easy for agents to access external tools and services in a consistent way. Think of it like plugging your agent into a toolbox it can *actually* use.
+AI 에이전트를 구축할 때, 단순히 스마트한 응답을 생성하는 것만이 아니라 에이전트가 행동을 취할 수 있는 능력을 부여하는 것도 중요합니다. 바로 이 지점에서 MCP(Model Context Protocol)가 등장합니다. MCP는 에이전트가 외부 도구 및 서비스에 일관된 방식으로 쉽게 접근할 수 있도록 합니다. 에이전트를 *실제로* 사용할 수 있는 도구 상자에 연결하는 것과 같다고 생각하면 됩니다.
 
-Let’s say you connect an agent to your calculator MCP server. Suddenly, your agent can perform math operations just by receiving a prompt like “What’s 47 times 89?”—no need to hardcode logic or build custom APIs.
+에이전트를 계산기 MCP 서버에 연결한다고 가정해 봅시다. 갑자기 에이전트는 "47 곱하기 89는 얼마야?"와 같은 프롬프트를 받기만 해도 수학 연산을 수행할 수 있습니다. 로직을 하드코딩하거나 사용자 지정 API를 구축할 필요가 없습니다.
 
-## Overview
+## 개요
 
-This lesson covers how to connect a calculator MCP server to an agent with the [AI Toolkit](https://aka.ms/AIToolkit) extension in Visual Studio Code, enabling your agent to perform math operations such as addition, subtraction, multiplication, and division through natural language.
+이 강의에서는 Visual Studio Code의 [AI Toolkit](https://aka.ms/AIToolkit) 확장 프로그램을 사용하여 계산기 MCP 서버를 에이전트에 연결하여 에이전트가 자연어를 통해 덧셈, 뺄셈, 곱셈, 나눗셈과 같은 수학 연산을 수행할 수 있도록 하는 방법을 다룹니다.
 
-AI Toolkit is a powerful extension for Visual Studio Code that streamlines agent development. AI Engineers can easily build AI applications by developing and testing generative AI models—locally or in the cloud. The extension supports most major generative models available today.
+AI Toolkit은 에이전트 개발을 간소화하는 Visual Studio Code용 강력한 확장 프로그램입니다. AI 엔지니어는 생성형 AI 모델을 로컬 또는 클라우드에서 개발하고 테스트하여 AI 애플리케이션을 쉽게 구축할 수 있습니다. 이 확장 프로그램은 오늘날 사용 가능한 대부분의 주요 생성형 모델을 지원합니다.
 
-*Note*: The AI Toolkit currently supports Python and TypeScript.
+*참고*: AI Toolkit은 현재 Python 및 TypeScript를 지원합니다.
 
-## Learning Objectives
+## 학습 목표
 
-By the end of this lesson, you will be able to:
+이 강의를 마치면 다음을 할 수 있습니다:
 
-- Consume an MCP server via the AI Toolkit.
-- Configure an agent configuration to enable it to discover and utilize tools provided by the MCP server.
-- Utilize MCP tools via natural language.
+- AI Toolkit을 통해 MCP 서버를 사용합니다.
+- MCP 서버가 제공하는 도구를 검색하고 활용할 수 있도록 에이전트 구성을 설정합니다.
+- 자연어를 통해 MCP 도구를 활용합니다.
 
-## Approach
+## 접근 방식
 
-Here's how we need to approach this at a high level:
+다음은 높은 수준에서 접근해야 할 방법입니다:
 
-- Create an agent and define its system prompt.
-- Create a MCP server with calculator tools.
-- Connect the Agent Builder to the MCP server.
-- Test the agent's tool invocation via natural language.
+- 에이전트를 생성하고 시스템 프롬프트를 정의합니다.
+- 계산기 도구가 포함된 MCP 서버를 생성합니다.
+- 에이전트 빌더를 MCP 서버에 연결합니다.
+- 자연어를 통한 에이전트의 도구 호출을 테스트합니다.
 
-Great, now that we understand the flow, let's configure an AI agent to leverage external tools through MCP, enhancing its capabilities!
+좋습니다. 이제 흐름을 이해했으니, MCP를 통해 외부 도구를 활용하도록 AI 에이전트를 구성하여 기능을 향상시켜 봅시다!
 
-## Prerequisites
+## 전제 조건
 
 - [Visual Studio Code](https://code.visualstudio.com/)
-- [AI Toolkit for Visual Studio Code](https://aka.ms/AIToolkit)
+- [Visual Studio Code용 AI Toolkit](https://aka.ms/AIToolkit)
 
-## Exercise: Consuming a server
+## 실습: 서버 사용하기
 
-In this exercise, you will build, run, and enhance an AI agent with tools from a MCP server inside Visual Studio Code using the AI Toolkit.
+이 실습에서는 AI Toolkit을 사용하여 Visual Studio Code 내에서 MCP 서버의 도구로 AI 에이전트를 구축, 실행 및 향상시킵니다.
 
-### -0- Prestep, add the OpenAI GPT-4o model to My Models
+### -0- 사전 단계, OpenAI GPT-4o 모델을 내 모델에 추가
 
-The exercise leverages the **GPT-4o** model. The model should be added to **My Models** before creating the agent.
+이 실습에서는 **GPT-4o** 모델을 활용합니다. 에이전트를 생성하기 전에 모델을 **내 모델**에 추가해야 합니다.
 
-![Screenshot of a model selection interface in Visual Studio Code's AI Toolkit extension. The heading reads "Find the right model for your AI Solution" with a subtitle encouraging users to discover, test, and deploy AI models. Below, under “Popular Models,” six model cards are displayed: DeepSeek-R1 (GitHub-hosted), OpenAI GPT-4o, OpenAI GPT-4.1, OpenAI o1, Phi 4 Mini (CPU - Small, Fast), and DeepSeek-R1 (Ollama-hosted). Each card includes options to “Add” the model or “Try in Playground](./assets/aitk-model-catalog.png)
+![Visual Studio Code의 AI Toolkit 확장 프로그램에 있는 모델 선택 인터페이스 스크린샷. 제목은 "AI 솔루션에 적합한 모델 찾기"이며, 사용자가 AI 모델을 검색, 테스트 및 배포하도록 권장하는 부제가 있습니다. 아래 "인기 모델" 섹션에는 DeepSeek-R1 (GitHub 호스팅), OpenAI GPT-4o, OpenAI GPT-4.1, OpenAI o1, Phi 4 Mini (CPU - 작고 빠름), DeepSeek-R1 (Ollama 호스팅)의 6가지 모델 카드가 표시됩니다. 각 카드에는 모델을 "추가"하거나 "플레이그라운드에서 시도"하는 옵션이 포함되어 있습니다.](./assets/aitk-model-catalog.png)
 
-1. Open the **AI Toolkit** extension from the **Activity Bar**.
-1. In the **Catalog** section, select **Models** to open the **Model Catalog**. Selecting **Models** opens the **Model Catalog** in a new editor tab.
-1. In the **Model Catalog** search bar, enter **OpenAI GPT-4o**.
-1. Click **+ Add** to add the model to your **My Models** list. Ensure that you've selected the model that's **Hosted by GitHub**.
-1. In the **Activity Bar**, confirm that the **OpenAI GPT-4o** model appears in the list.
+1. **활동 표시줄**에서 **AI Toolkit** 확장 프로그램을 엽니다.
+1. **카탈로그** 섹션에서 **모델**을 선택하여 **모델 카탈로그**를 엽니다. **모델**을 선택하면 새 편집기 탭에서 **모델 카탈로그**가 열립니다.
+1. **모델 카탈로그** 검색 창에 **OpenAI GPT-4o**를 입력합니다.
+1. **+ 추가**를 클릭하여 모델을 **내 모델** 목록에 추가합니다. **GitHub에서 호스팅되는** 모델을 선택했는지 확인합니다.
+1. **활동 표시줄**에서 **OpenAI GPT-4o** 모델이 목록에 나타나는지 확인합니다.
 
-### -1- Create an agent
+### -1- 에이전트 생성
 
-The **Agent (Prompt) Builder** enables you to create and customize your own AI-powered agents. In this section, you’ll create a new agent and assign a model to power the conversation.
+**에이전트(프롬프트) 빌더**를 사용하면 자신만의 AI 기반 에이전트를 생성하고 사용자 지정할 수 있습니다. 이 섹션에서는 새 에이전트를 생성하고 대화를 구동할 모델을 할당합니다.
 
-![Screenshot of the "Calculator Agent" builder interface in the AI Toolkit extension for Visual Studio Code. On the left panel, the model selected is "OpenAI GPT-4o (via GitHub)." A system prompt reads "You are a professor in university teaching math," and the user prompt says, "Explain to me the Fourier equation in simple terms." Additional options include buttons for adding tools, enabling MCP Server, and selecting structured output. A blue “Run” button is at the bottom. On the right panel, under "Get Started with Examples," three sample agents are listed: Web Developer (with MCP Server, Second-Grade Simplifier, and Dream Interpreter, each with brief descriptions of their functions.](./assets/aitk-agent-builder.png)
+![Visual Studio Code용 AI Toolkit 확장 프로그램의 "계산기 에이전트" 빌더 인터페이스 스크린샷. 왼쪽 패널에는 "OpenAI GPT-4o (via GitHub)" 모델이 선택되어 있습니다. 시스템 프롬프트는 "당신은 수학을 가르치는 대학교 교수입니다"라고 되어 있고, 사용자 프롬프트는 "푸리에 방정식을 간단한 용어로 설명해 주세요"라고 되어 있습니다. 추가 옵션에는 도구 추가, MCP 서버 활성화, 구조화된 출력 선택 버튼이 있습니다. 하단에는 파란색 "실행" 버튼이 있습니다. 오른쪽 패널의 "예제로 시작하기" 아래에는 웹 개발자(MCP 서버 포함), 2학년 단순화기, 꿈 해석기 등 세 가지 샘플 에이전트가 나열되어 있으며, 각각의 기능에 대한 간략한 설명이 있습니다.](./assets/aitk-agent-builder.png)
 
-1. Open the **AI Toolkit** extension from the **Activity Bar**.
-1. In the **Tools** section, select **Agent (Prompt) Builder**. Selecting **Agent (Prompt) Builder** opens the **Agent (Prompt) Builder** in a new editor tab.
-1. Click the **+ New Agent** button. The extension will launch a setup wizard via the **Command Palette**.
-1. Enter the name **Calculator Agent** and press **Enter**.
-1. In the **Agent (Prompt) Builder**, for the **Model** field, select the **OpenAI GPT-4o (via GitHub)** model.
+1. **활동 표시줄**에서 **AI Toolkit** 확장 프로그램을 엽니다.
+1. **도구** 섹션에서 **에이전트(프롬프트) 빌더**를 선택합니다. **에이전트(프롬프트) 빌더**를 선택하면 새 편집기 탭에서 **에이전트(프롬프트) 빌더**가 열립니다.
+1. **+ 새 에이전트** 버튼을 클릭합니다. 확장 프로그램은 **명령 팔레트**를 통해 설정 마법사를 시작합니다.
+1. **계산기 에이전트** 이름을 입력하고 **Enter**를 누릅니다.
+1. **에이전트(프롬프트) 빌더**에서 **모델** 필드에 **OpenAI GPT-4o (via GitHub)** 모델을 선택합니다.
 
-### -2- Create a system prompt for the agent
+### -2- 에이전트의 시스템 프롬프트 생성
 
-With the agent scaffolded, it’s time to define its personality and purpose. In this section, you’ll use the **Generate system prompt** feature to describe the agent’s intended behavior—in this case, a calculator agent—and have the model write the system prompt for you.
+에이전트가 스캐폴딩되었으므로 이제 에이전트의 개성과 목적을 정의할 차례입니다. 이 섹션에서는 **시스템 프롬프트 생성** 기능을 사용하여 에이전트의 의도된 동작(이 경우 계산기 에이전트)을 설명하고 모델이 시스템 프롬프트를 작성하도록 합니다.
 
-![Screenshot of the "Calculator Agent" interface in the AI Toolkit for Visual Studio Code with a modal window open titled "Generate a prompt." The modal explains that a prompt template can be generated by sharing basic details and includes a text box with the sample system prompt: "You are a helpful and efficient math assistant. When given a problem involving basic arithmetic, you respond with the correct result." Below the text box are "Close" and "Generate" buttons. In the background, part of the agent configuration is visible, including the selected model "OpenAI GPT-4o (via GitHub)" and fields for system and user prompts.](./assets/aitk-generate-prompt.png)
+![Visual Studio Code용 AI Toolkit의 "계산기 에이전트" 인터페이스 스크린샷으로, "프롬프트 생성"이라는 제목의 모달 창이 열려 있습니다. 모달은 기본 세부 정보를 공유하여 프롬프트 템플릿을 생성할 수 있다고 설명하며, 샘플 시스템 프롬프트인 "당신은 유용하고 효율적인 수학 도우미입니다. 기본적인 산술 문제가 주어지면 올바른 결과로 응답합니다."라는 텍스트 상자가 포함되어 있습니다. 텍스트 상자 아래에는 "닫기" 및 "생성" 버튼이 있습니다. 배경에는 선택된 모델 "OpenAI GPT-4o (via GitHub)"와 시스템 및 사용자 프롬프트 필드를 포함한 에이전트 구성의 일부가 보입니다.](./assets/aitk-generate-prompt.png)
 
-1. For the **Prompts** section, click the **Generate system prompt** button. This button opens in the prompt builder which leverages AI to generate a system prompt for the agent.
-1. In the **Generate a prompt** window, enter the following: `You are a helpful and efficient math assistant. When given a problem involving basic arithmetic, you respond with the correct result.`
-1. Click the **Generate** button. A notification will appear in the bottom-right corner confirming that the system prompt is being generated. Once the prompt generation is complete, the prompt will appear in the **System prompt** field of the **Agent (Prompt) Builder**.
-1. Review the **System prompt** and modify if necessary.
+1. **프롬프트** 섹션에서 **시스템 프롬프트 생성** 버튼을 클릭합니다. 이 버튼은 AI를 활용하여 에이전트의 시스템 프롬프트를 생성하는 프롬프트 빌더에서 열립니다.
+1. **프롬프트 생성** 창에 다음을 입력합니다: `당신은 유용하고 효율적인 수학 도우미입니다. 기본적인 산술 문제가 주어지면 올바른 결과로 응답합니다.`
+1. **생성** 버튼을 클릭합니다. 시스템 프롬프트가 생성 중임을 확인하는 알림이 오른쪽 하단에 나타납니다. 프롬프트 생성이 완료되면 프롬프트가 **에이전트(프롬프트) 빌더**의 **시스템 프롬프트** 필드에 나타납니다.
+1. **시스템 프롬프트**를 검토하고 필요한 경우 수정합니다.
 
-### -3- Create a MCP server
+### -3- MCP 서버 생성
 
-Now that you've defined your agent's system prompt—guiding its behavior and responses—it's time to equip the agent with practical capabilities. In this section, you’ll create a calculator MCP server with tools to execute addition, subtraction, multiplication, and division calculations. This server will enable your agent to perform real-time math operations in response to natural language prompts.
+이제 에이전트의 시스템 프롬프트(동작 및 응답을 안내)를 정의했으므로 에이전트에 실용적인 기능을 부여할 차례입니다. 이 섹션에서는 덧셈, 뺄셈, 곱셈, 나눗셈 계산을 실행하는 도구가 포함된 계산기 MCP 서버를 생성합니다. 이 서버를 통해 에이전트는 자연어 프롬프트에 응답하여 실시간 수학 연산을 수행할 수 있습니다.
 
-!["Screenshot of the lower section of the Calculator Agent interface in the AI Toolkit extension for Visual Studio Code. It shows expandable menus for “Tools” and “Structure output,” along with a dropdown menu labeled “Choose output format” set to “text.” To the right, there is a button labeled “+ MCP Server” for adding a Model Context Protocol server. An image icon placeholder is shown above the Tools section.](./assets/aitk-add-mcp-server.png)
+!["Visual Studio Code용 AI Toolkit 확장 프로그램의 계산기 에이전트 인터페이스 하단 섹션 스크린샷. "도구" 및 "구조 출력"에 대한 확장 가능한 메뉴와 "출력 형식 선택"으로 설정된 드롭다운 메뉴가 "텍스트"로 표시됩니다. 오른쪽에는 모델 컨텍스트 프로토콜 서버를 추가하기 위한 "+ MCP 서버"라는 레이블이 붙은 버튼이 있습니다. 도구 섹션 위에는 이미지 아이콘 자리 표시자가 표시됩니다.](./assets/aitk-add-mcp-server.png)
 
-AI Toolkit is equipped with templates for ease of creating your own MCP server. We'll use the Python template for creating the calculator MCP server.
+AI Toolkit에는 자신만의 MCP 서버를 쉽게 생성할 수 있는 템플릿이 있습니다. 계산기 MCP 서버를 생성하기 위해 Python 템플릿을 사용합니다.
 
-*Note*: The AI Toolkit currently supports Python and TypeScript.
+*참고*: AI Toolkit은 현재 Python 및 TypeScript를 지원합니다.
 
-1. In the **Tools** section of the **Agent (Prompt) Builder**, click the **+ MCP Server** button. The extension will launch a setup wizard via the **Command Palette**.
-1. Select **+ Add Server**.
-1. Select **Create a New MCP Server**.
-1. Select **python-weather** as the template.
-1. Select **Default folder** to save the MCP server template.
-1. Enter the following name for the server: **Calculator**
-1. A new Visual Studio Code window will open. Select **Yes, I trust the authors**.
-1. Using the terminal (**Terminal** > **New Terminal**), create a virtual environment: `python -m venv .venv`
-1. Using the terminal, activate the virtual environment:
+1. **에이전트(프롬프트) 빌더**의 **도구** 섹션에서 **+ MCP 서버** 버튼을 클릭합니다. 확장 프로그램은 **명령 팔레트**를 통해 설정 마법사를 시작합니다.
+1. **+ 서버 추가**를 선택합니다.
+1. **새 MCP 서버 생성**을 선택합니다.
+1. 템플릿으로 **python-weather**를 선택합니다.
+1. MCP 서버 템플릿을 저장할 **기본 폴더**를 선택합니다.
+1. 서버 이름을 **Calculator**로 입력합니다.
+1. 새 Visual Studio Code 창이 열립니다. **예, 작성자를 신뢰합니다**를 선택합니다.
+1. 터미널(**터미널** > **새 터미널**)을 사용하여 가상 환경을 생성합니다: `python -m venv .venv`
+1. 터미널을 사용하여 가상 환경을 활성화합니다:
     1. Windows - `.venv\Scripts\activate`
     1. macOS/Linux - `source venv/bin/activate`
-1. Using the terminal, install the dependencies: `pip install -e .[dev]`
-1. In the **Explorer** view of the **Activity Bar**, expand the **src** directory and select **server.py** to open the file in the editor.
-1. Replace the code in the **server.py** file with the following and save:
+1. 터미널을 사용하여 종속성을 설치합니다: `pip install -e .[dev]`
+1. **활동 표시줄**의 **탐색기** 보기에서 **src** 디렉토리를 확장하고 **server.py**를 선택하여 편집기에서 파일을 엽니다.
+1. **server.py** 파일의 코드를 다음으로 바꾸고 저장합니다:
 
     ```python
     """
-    Sample MCP Calculator Server implementation in Python.
+    Python으로 구현된 샘플 MCP 계산기 서버.
 
     
-    This module demonstrates how to create a simple MCP server with calculator tools
-    that can perform basic arithmetic operations (add, subtract, multiply, divide).
+    이 모듈은 기본적인 산술 연산(덧셈, 뺄셈, 곱셈, 나눗셈)을 수행할 수 있는 계산기 도구를 사용하여 간단한 MCP 서버를 생성하는 방법을 보여줍니다.
     """
     
     from mcp.server.fastmcp import FastMCP
@@ -115,72 +114,72 @@ AI Toolkit is equipped with templates for ease of creating your own MCP server. 
     
     @server.tool()
     def add(a: float, b: float) -> float:
-        """Add two numbers together and return the result."""
+        """두 숫자를 더하고 결과를 반환합니다."""
         return a + b
     
     @server.tool()
     def subtract(a: float, b: float) -> float:
-        """Subtract b from a and return the result."""
+        """a에서 b를 빼고 결과를 반환합니다."""
         return a - b
     
     @server.tool()
     def multiply(a: float, b: float) -> float:
-        """Multiply two numbers together and return the result."""
+        """두 숫자를 곱하고 결과를 반환합니다."""
         return a * b
     
     @server.tool()
     def divide(a: float, b: float) -> float:
         """
-        Divide a by b and return the result.
+        a를 b로 나누고 결과를 반환합니다.
         
-        Raises:
-            ValueError: If b is zero
+        예외:
+            ValueError: b가 0인 경우
         """
         if b == 0:
-            raise ValueError("Cannot divide by zero")
+            raise ValueError("0으로 나눌 수 없습니다")
         return a / b
     ```
 
-### -4- Run the agent with the calculator MCP server
+### -4- 계산기 MCP 서버로 에이전트 실행
 
-Now that your agent has tools, it's time to use them! In this section, you'll submit prompts to the agent to test and validate whether the agent leverages the appropriate tool from the calculator MCP server.
+이제 에이전트에 도구가 생겼으니 사용할 차례입니다! 이 섹션에서는 에이전트가 계산기 MCP 서버에서 적절한 도구를 활용하는지 테스트하고 검증하기 위해 에이전트에 프롬프트를 제출합니다.
 
-![Screenshot of the Calculator Agent interface in the AI Toolkit extension for Visual Studio Code. On the left panel, under “Tools,” an MCP server named local-server-calculator_server is added, showing four available tools: add, subtract, multiply, and divide. A badge shows that four tools are active. Below is a collapsed “Structure output” section and a blue “Run” button. On the right panel, under “Model Response,” the agent invokes the multiply and subtract tools with inputs {"a": 3, "b": 25} and {"a": 75, "b": 20} respectively. The final “Tool Response” is shown as 75.0. A “View Code” button appears at the bottom.](./assets/aitk-agent-response-with-tools.png)
+![Visual Studio Code용 AI Toolkit 확장 프로그램의 계산기 에이전트 인터페이스 스크린샷. 왼쪽 패널의 "도구" 아래에 local-server-calculator_server라는 MCP 서버가 추가되어 있으며, add, subtract, multiply, divide의 네 가지 사용 가능한 도구가 표시됩니다. 배지에는 네 가지 도구가 활성화되어 있음을 보여줍니다. 아래에는 축소된 "구조 출력" 섹션과 파란색 "실행" 버튼이 있습니다. 오른쪽 패널의 "모델 응답" 아래에는 에이전트가 {"a": 3, "b": 25} 및 {"a": 75, "b": 20} 입력을 사용하여 곱하기 및 빼기 도구를 호출합니다. 최종 "도구 응답"은 75.0으로 표시됩니다. 하단에 "코드 보기" 버튼이 나타납니다.](./assets/aitk-agent-response-with-tools.png)
 
-You will run the calculator MCP server on your local dev machine via the **Agent Builder** as the MCP client.
+MCP 클라이언트로서 **에이전트 빌더**를 통해 로컬 개발 머신에서 계산기 MCP 서버를 실행합니다.
 
-1. Press `F5` to start debugging the MCP server. The **Agent (Prompt) Builder** will open in a new editor tab. The status of the server is visible in the terminal.
-1. In the **User prompt** field of the **Agent (Prompt) Builder**, enter the following prompt: `I bought 3 items priced at $25 each, and then used a $20 discount. How much did I pay?`
-1. Click the **Run** button to generate the agent's response.
-1. Review the agent output. The model should conclude that you paid **$55**.
-1. Here's a breakdown of what should occur:
-    - The agent selects the **multiply** and **substract** tools to aid in the calculation.
-    - The respective `a` and `b` values are assigned for the **multiply** tool.
-    - The respective `a` and `b` values are assigned for the **subtract** tool.
-    - The response from each tool is provided in the respective **Tool Response**.
-    - The final output from the model is provided in the final **Model Response**.
-1. Submit additional prompts to further test the agent. You can modify the existing prompt in the **User prompt** field by clicking into the field and replacing the existing prompt.
-1. Once you're done testing the agent, you can stop the server via the **terminal** by entering **CTRL/CMD+C** to quit.
+1. `F5`를 눌러 MCP 서버 디버깅을 시작합니다. **에이전트(프롬프트) 빌더**가 새 편집기 탭에서 열립니다. 서버 상태는 터미널에서 볼 수 있습니다.
+1. **에이전트(프롬프트) 빌더**의 **사용자 프롬프트** 필드에 다음 프롬프트를 입력합니다: `개당 $25인 물건 3개를 샀고, $20 할인을 받았습니다. 얼마를 지불했나요?`
+1. **실행** 버튼을 클릭하여 에이전트의 응답을 생성합니다.
+1. 에이전트 출력을 검토합니다. 모델은 **$55**를 지불했다고 결론을 내려야 합니다.
+1. 다음은 발생해야 할 일에 대한 분석입니다:
+    - 에이전트는 계산을 돕기 위해 **곱하기** 및 **빼기** 도구를 선택합니다.
+    - **곱하기** 도구에 대한 각각의 `a` 및 `b` 값이 할당됩니다.
+    - **빼기** 도구에 대한 각각의 `a` 및 `b` 값이 할당됩니다.
+    - 각 도구의 응답은 해당 **도구 응답**에 제공됩니다.
+    - 모델의 최종 출력은 최종 **모델 응답**에 제공됩니다.
+1. 에이전트를 추가로 테스트하기 위해 추가 프롬프트를 제출합니다. **사용자 프롬프트** 필드를 클릭하고 기존 프롬프트를 바꿔서 기존 프롬프트를 수정할 수 있습니다.
+1. 에이전트 테스트가 끝나면 **터미널**에서 **CTRL/CMD+C**를 입력하여 서버를 중지할 수 있습니다.
 
-## Assignment
+## 과제
 
-Try adding an additional tool entry to your **server.py** file (ex: return the square root of a number). Submit additional prompts that would require the agent to leverage your new tool (or existing tools). Be sure to restart the server to load newly added tools.
+**server.py** 파일에 추가 도구 항목(예: 숫자의 제곱근 반환)을 추가해 보세요. 에이전트가 새 도구(또는 기존 도구)를 활용해야 하는 추가 프롬프트를 제출하세요. 새로 추가된 도구를 로드하려면 서버를 다시 시작해야 합니다.
 
-## Solution
+## 해결책
 
-[Solution](./solution/README.md)
+[해결책](./solution/README.md)
 
-## Key Takeaways
+## 핵심 요약
 
-The takeaways from this chapter is the following:
+이 장의 핵심 요약은 다음과 같습니다:
 
-- The AI Toolkit extension is a great client that lets you consume MCP Servers and their tools.
-- You can add new tools to MCP servers, expanding the agent's capabilities to meet evolving requirements.
-- The AI Toolkit includes templates (e.g., Python MCP server templates) to simplify the creation of custom tools.
+- AI Toolkit 확장 프로그램은 MCP 서버와 해당 도구를 사용할 수 있는 훌륭한 클라이언트입니다.
+- MCP 서버에 새 도구를 추가하여 진화하는 요구 사항을 충족하도록 에이전트의 기능을 확장할 수 있습니다.
+- AI Toolkit에는 사용자 지정 도구 생성을 간소화하는 템플릿(예: Python MCP 서버 템플릿)이 포함되어 있습니다.
 
-## Additional Resources
+## 추가 자료
 
-- [AI Toolkit docs](https://aka.ms/AIToolkit/doc)
+- [AI Toolkit 문서](https://aka.ms/AIToolkit/doc)
 
-## What's Next
-- Next: [Testing & Debugging](../08-testing/README.md)
+## 다음 단계
+- 다음: [테스트 및 디버깅](../08-testing/README.md)

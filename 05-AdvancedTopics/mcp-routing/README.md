@@ -1,31 +1,31 @@
-##Routing in Model Context Protocol
+## 모델 컨텍스트 프로토콜의 라우팅
 
-Routing is essential for directing requests to the appropriate models, tools, or services within an MCP ecosystem.
+라우팅은 MCP 생태계 내에서 요청을 적절한 모델, 도구 또는 서비스로 전달하는 데 필수적입니다.
 
-## Introduction
+## 소개
 
-Routing in the Model Context Protocol (MCP) involves directing requests to the most suitable models or services based on various criteria such as content type, user context, and system load. This ensures efficient processing and optimal resource utilization.
+모델 컨텍스트 프로토콜(MCP)의 라우팅은 콘텐츠 유형, 사용자 컨텍스트 및 시스템 로드와 같은 다양한 기준에 따라 요청을 가장 적합한 모델 또는 서비스로 전달하는 것을 포함합니다. 이는 효율적인 처리와 최적의 리소스 활용을 보장합니다.
 
-## Learning Objectives
+## 학습 목표
 
-By the end of this lesson, you will be able to:
+이 단원을 마치면 다음을 수행할 수 있습니다:
 
-- Understand the principles of routing in MCP.
-- Implement content-based routing to direct requests to specialized services.
-- Apply intelligent load balancing strategies to optimize resource utilization.
-- Implement dynamic tool routing based on request context.
+- MCP에서 라우팅의 원리 이해
+- 콘텐츠 기반 라우팅을 구현하여 요청을 전문 서비스로 전달
+- 지능형 로드 밸런싱 전략을 적용하여 리소스 활용 최적화
+- 요청 컨텍스트에 기반한 동적 도구 라우팅 구현
 
-## Content-Based Routing
+## 콘텐츠 기반 라우팅
 
-Content-based routing directs requests to specialized services based on the content of the request. For example, requests related to code generation can be routed to a specialized code model, while creative writing requests can be sent to a creative writing model.
+콘텐츠 기반 라우팅은 요청의 콘텐츠를 기반으로 요청을 전문 서비스로 전달합니다. 예를 들어, 코드 생성과 관련된 요청은 전문 코드 모델로 라우팅될 수 있고, 창의적 글쓰기 요청은 창의적 글쓰기 모델로 전송될 수 있습니다.
 
-Let's look at an example implementation in different programming languages.
+다양한 프로그래밍 언어로 된 구현 예시를 살펴보겠습니다.
 
 <details>
 <summary>.NET</summary>
 
 ```csharp
-// .NET Example: Content-based routing in MCP
+// .NET 예시: MCP의 콘텐츠 기반 라우팅
 public class ContentBasedRouter
 {
     private readonly Dictionary<string, McpClient> _specializedClients;
@@ -33,7 +33,7 @@ public class ContentBasedRouter
     
     public ContentBasedRouter()
     {
-        // Initialize specialized clients for different domains
+        // 다양한 도메인을 위한 전문 클라이언트 초기화
         _specializedClients = new Dictionary<string, McpClient>
         {
             ["code"] = new McpClient("https://code-specialized-mcp.com"),
@@ -42,27 +42,27 @@ public class ContentBasedRouter
             ["general"] = new McpClient("https://general-mcp.com")
         };
         
-        // Initialize content classifier
+        // 콘텐츠 분류기 초기화
         _classifier = new RoutingClassifier();
     }
     
     public async Task<McpResponse> RouteAndProcessAsync(string prompt, IDictionary<string, object> parameters = null)
     {
-        // Classify the prompt to determine the best specialized service
+        // 최상의 전문 서비스를 결정하기 위해 프롬프트 분류
         string category = await _classifier.ClassifyPromptAsync(prompt);
         
-        // Get the appropriate client or fall back to general
+        // 적절한 클라이언트 가져오기 또는 일반 클라이언트로 폴백
         var client = _specializedClients.ContainsKey(category) 
             ? _specializedClients[category] 
             : _specializedClients["general"];
             
-        Console.WriteLine($"Routing request to {category} specialized service");
+        Console.WriteLine($"요청을 {category} 전문 서비스로 라우팅 중");
         
-        // Send request to the selected service
+        // 선택한 서비스로 요청 전송
         return await client.SendPromptAsync(prompt, parameters);
     }
     
-    // Simple classifier for routing decisions
+    // 라우팅 결정을 위한 간단한 분류기
     private class RoutingClassifier
     {
         public Task<string> ClassifyPromptAsync(string prompt)
@@ -93,35 +93,35 @@ public class ContentBasedRouter
 }
 ```
 
-In the preceding code, we've:
+위 코드에서 다음을 수행했습니다:
 
-- Created a `ContentBasedRouter` class that routes requests based on the content of the prompt.
-- Initialized specialized clients for different domains (code, creative, scientific, general).
-- Implemented a simple classifier that determines the category of the prompt and routes it to the appropriate specialized service.
-- Used a fallback mechanism to route requests to a general service if no specialized service is available.
-- Implemented asynchronous processing to handle requests efficiently.
-- Used a dictionary to map content categories to specialized MCP clients.
-- Implemented a simple classifier that analyzes the prompt and returns the appropriate category.
-- Used the specialized client to send the request and receive a response.
-- Handled cases where the prompt does not match any specialized category by routing to a general service.
+- 프롬프트의 콘텐츠를 기반으로 요청을 라우팅하는 `ContentBasedRouter` 클래스를 생성했습니다.
+- 다양한 도메인(코드, 창의적, 과학적, 일반)을 위한 전문 클라이언트를 초기화했습니다.
+- 프롬프트의 범주를 결정하고 적절한 전문 서비스로 라우팅하는 간단한 분류기를 구현했습니다.
+- 전문 서비스가 없는 경우 요청을 일반 서비스로 라우팅하는 폴백 메커니즘을 사용했습니다.
+- 요청을 효율적으로 처리하기 위해 비동기 처리를 구현했습니다.
+- 콘텐츠 범주를 전문 MCP 클라이언트에 매핑하는 사전을 사용했습니다.
+- 프롬프트를 분석하고 적절한 범주를 반환하는 간단한 분류기를 구현했습니다.
+- 전문 클라이언트를 사용하여 요청을 전송하고 응답을 수신했습니다.
+- 프롬프트가 전문 범주와 일치하지 않는 경우 일반 서비스로 라우팅하여 처리했습니다.
 
 </details>
 
-## Intelligent Load Balancing
+## 지능형 로드 밸런싱
 
-Load balancing optimizes resource utilization and ensures high availability for MCP services. There are different ways to implement load balancing, such as round-robin, weighted response time, or content-aware strategies.
+로드 밸런싱은 리소스 활용을 최적화하고 MCP 서비스의 고가용성을 보장합니다. 라운드 로빈, 가중 응답 시간 또는 콘텐츠 인식 전략과 같은 다양한 방식으로 로드 밸런싱을 구현할 수 있습니다.
 
-Let's look at below example implementation that uses the following strategies:
+다음 전략을 사용하는 아래 구현 예시를 살펴보겠습니다:
 
-- **Round Robin**: Distributes requests evenly across available servers.
-- **Weighted Response Time**: Routes requests to servers based on their average response time.
-- **Content-Aware**: Routes requests to specialized servers based on the content of the request.
+- **라운드 로빈**: 사용 가능한 서버에 요청을 균등하게 분산합니다.
+- **가중 응답 시간**: 평균 응답 시간을 기반으로 서버에 요청을 라우팅합니다.
+- **콘텐츠 인식**: 요청의 콘텐츠를 기반으로 전문 서버에 요청을 라우팅합니다.
 
 <details>
 <summary>Java</summary>
 
 ```java
-// Java Example: Intelligent load balancing for MCP servers
+// Java 예시: MCP 서버를 위한 지능형 로드 밸런싱
 public class McpLoadBalancer {
     private final List<McpServerNode> serverNodes;
     private final LoadBalancingStrategy strategy;
@@ -132,20 +132,20 @@ public class McpLoadBalancer {
     }
     
     public McpResponse processRequest(McpRequest request) {
-        // Select the best server based on strategy
+        // 전략에 따라 최상의 서버 선택
         McpServerNode selectedNode = strategy.selectNode(serverNodes, request);
         
         try {
-            // Route the request to the selected node
+            // 선택한 노드로 요청 라우팅
             return selectedNode.processRequest(request);
         } catch (Exception e) {
-            // Handle failure - implement retry or fallback logic
-            System.err.println("Error processing request on node " + selectedNode.getId() + ": " + e.getMessage());
+            // 실패 처리 - 재시도 또는 폴백 논리 구현
+            System.err.println("노드 " + selectedNode.getId() + "에서 요청 처리 오류: " + e.getMessage());
             
-            // Mark node as potentially unhealthy
+            // 노드를 잠재적으로 비정상으로 표시
             selectedNode.recordFailure();
             
-            // Try next best node as fallback
+            // 폴백으로 다음 최상의 노드 시도
             List<McpServerNode> remainingNodes = new ArrayList<>(serverNodes);
             remainingNodes.remove(selectedNode);
             
@@ -153,34 +153,34 @@ public class McpLoadBalancer {
                 McpServerNode fallbackNode = strategy.selectNode(remainingNodes, request);
                 return fallbackNode.processRequest(request);
             } else {
-                throw new RuntimeException("All MCP server nodes failed to process the request");
+                throw new RuntimeException("모든 MCP 서버 노드가 요청을 처리하지 못했습니다.");
             }
         }
     }
     
-    // Node health check task
+    // 노드 상태 확인 작업
     public void startHealthChecks(Duration interval) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             for (McpServerNode node : serverNodes) {
                 try {
                     boolean isHealthy = node.checkHealth();
-                    System.out.println("Node " + node.getId() + " health status: " + 
-                                      (isHealthy ? "HEALTHY" : "UNHEALTHY"));
+                    System.out.println("노드 " + node.getId() + " 상태: " + 
+                                      (isHealthy ? "정상" : "비정상"));
                 } catch (Exception e) {
-                    System.err.println("Health check failed for node " + node.getId());
+                    System.err.println("노드 " + node.getId() + "에 대한 상태 확인 실패");
                     node.setHealthy(false);
                 }
             }
         }, 0, interval.toMillis(), TimeUnit.MILLISECONDS);
     }
     
-    // Interface for load balancing strategies
+    // 로드 밸런싱 전략을 위한 인터페이스
     public interface LoadBalancingStrategy {
         McpServerNode selectNode(List<McpServerNode> nodes, McpRequest request);
     }
     
-    // Round-robin strategy
+    // 라운드 로빈 전략
     public static class RoundRobinStrategy implements LoadBalancingStrategy {
         private AtomicInteger counter = new AtomicInteger(0);
         
@@ -191,7 +191,7 @@ public class McpLoadBalancer {
                 .collect(Collectors.toList());
             
             if (healthyNodes.isEmpty()) {
-                throw new RuntimeException("No healthy nodes available");
+                throw new RuntimeException("사용 가능한 정상 노드가 없습니다.");
             }
             
             int index = counter.getAndIncrement() % healthyNodes.size();
@@ -199,29 +199,29 @@ public class McpLoadBalancer {
         }
     }
     
-    // Weighted response time strategy
+    // 가중 응답 시간 전략
     public static class ResponseTimeStrategy implements LoadBalancingStrategy {
         @Override
         public McpServerNode selectNode(List<McpServerNode> nodes, McpRequest request) {
             return nodes.stream()
                 .filter(McpServerNode::isHealthy)
                 .min(Comparator.comparing(McpServerNode::getAverageResponseTime))
-                .orElseThrow(() -> new RuntimeException("No healthy nodes available"));
+                .orElseThrow(() -> new RuntimeException("사용 가능한 정상 노드가 없습니다."));
         }
     }
     
-    // Content-aware strategy
+    // 콘텐츠 인식 전략
     public static class ContentAwareStrategy implements LoadBalancingStrategy {
         @Override
         public McpServerNode selectNode(List<McpServerNode> nodes, McpRequest request) {
-            // Determine request characteristics
+            // 요청 특성 결정
             boolean isCodeRequest = request.getPrompt().contains("code") || 
                                    request.getAllowedTools().contains("codeInterpreter");
             
             boolean isCreativeRequest = request.getPrompt().contains("creative") || 
                                        request.getPrompt().contains("story");
             
-            // Find specialized nodes
+            // 전문 노드 찾기
             Optional<McpServerNode> specializedNode = nodes.stream()
                 .filter(McpServerNode::isHealthy)
                 .filter(node -> {
@@ -235,45 +235,45 @@ public class McpLoadBalancer {
                 })
                 .findFirst();
             
-            // Return specialized node or least loaded node
+            // 전문 노드 또는 가장 적게 로드된 노드 반환
             return specializedNode.orElse(
                 nodes.stream()
                     .filter(McpServerNode::isHealthy)
                     .min(Comparator.comparing(McpServerNode::getCurrentLoad))
-                    .orElseThrow(() -> new RuntimeException("No healthy nodes available"))
+                    .orElseThrow(() -> new RuntimeException("사용 가능한 정상 노드가 없습니다."))
             );
         }
     }
 }
 ```
 
-In the preceding code, we've:
+위 코드에서 다음을 수행했습니다:
 
-- Created a `McpLoadBalancer` class that manages a list of MCP server nodes and routes requests based on the selected load balancing strategy.
-- Implemented different load balancing strategies: `RoundRobinStrategy`, `ResponseTimeStrategy`, and `ContentAwareStrategy`.
-- Used a `ScheduledExecutorService` to periodically check the health of server nodes.
-- Implemented a health check mechanism that marks nodes as healthy or unhealthy based on their response to health checks.
-- Handled request processing with error handling and fallback logic to ensure high availability.
-- Used a `McpServerNode` class to represent individual MCP server nodes, including their health status, average response time, and current load.
-- Implemented a `McpRequest` class to encapsulate request details such as the prompt and allowed tools.
-- Used Java Streams to filter and select nodes based on health status and specialization.
+- MCP 서버 노드 목록을 관리하고 선택한 로드 밸런싱 전략에 따라 요청을 라우팅하는 `McpLoadBalancer` 클래스를 생성했습니다.
+- `RoundRobinStrategy`, `ResponseTimeStrategy`, `ContentAwareStrategy`와 같은 다양한 로드 밸런싱 전략을 구현했습니다.
+- `ScheduledExecutorService`를 사용하여 서버 노드의 상태를 주기적으로 확인했습니다.
+- 상태 확인 응답을 기반으로 노드를 정상 또는 비정상으로 표시하는 상태 확인 메커니즘을 구현했습니다.
+- 고가용성을 보장하기 위해 오류 처리 및 폴백 논리를 사용하여 요청 처리를 처리했습니다.
+- `McpServerNode` 클래스를 사용하여 개별 MCP 서버 노드를 나타냈으며, 여기에는 상태, 평균 응답 시간 및 현재 로드가 포함됩니다.
+- 프롬프트 및 허용된 도구와 같은 요청 세부 정보를 캡슐화하는 `McpRequest` 클래스를 구현했습니다.
+- Java 스트림을 사용하여 상태 및 전문화에 따라 노드를 필터링하고 선택했습니다.
 
 </details>
 
-## Dynamic Tool Routing
+## 동적 도구 라우팅
 
-Tool routing ensures that tool calls are directed to the most appropriate service based on context. For example, a weather tool call may need to be routed to a regional endpoint based on the user's location, or a calculator tool may need to use a specific version of the API.
+도구 라우팅은 컨텍스트에 따라 도구 호출이 가장 적절한 서비스로 전달되도록 합니다. 예를 들어, 날씨 도구 호출은 사용자 위치에 따라 지역 엔드포인트로 라우팅되어야 할 수 있으며, 계산기 도구는 특정 버전의 API를 사용해야 할 수 있습니다.
 
-Let's have a look at an example implementation that demonstrates dynamic tool routing based on request analysis, regional endpoints, and versioning support.
+요청 분석, 지역 엔드포인트 및 버전 관리 지원을 기반으로 동적 도구 라우팅을 시연하는 구현 예시를 살펴보겠습니다.
 
 <details>
 <summary>Python</summary>
 
 ```python
-# Python Example: Dynamic tool routing based on request analysis
+# Python 예시: 요청 분석에 기반한 동적 도구 라우팅
 class McpToolRouter:
     def __init__(self):
-        # Register available tool endpoints
+        # 사용 가능한 도구 엔드포인트 등록
         self.tool_endpoints = {
             "weatherTool": "https://weather-service.example.com/api",
             "calculatorTool": "https://calculator-service.example.com/compute",
@@ -281,7 +281,7 @@ class McpToolRouter:
             "searchTool": "https://search-service.example.com/search"
         }
         
-        # Regional endpoints for global distribution
+        # 전역 배포를 위한 지역 엔드포인트
         self.regional_endpoints = {
             "us": {
                 "weatherTool": "https://us-west.weather-service.example.com/api",
@@ -297,7 +297,7 @@ class McpToolRouter:
             }
         }
         
-        # Tool versioning support
+        # 도구 버전 관리 지원
         self.tool_versions = {
             "weatherTool": {
                 "default": "v2",
@@ -308,33 +308,33 @@ class McpToolRouter:
         }
     
     async def route_tool_request(self, tool_name, parameters, user_context=None):
-        """Route a tool request to the appropriate endpoint based on context"""
+        """컨텍스트에 따라 적절한 엔드포인트로 도구 요청 라우팅"""
         endpoint = self._select_endpoint(tool_name, parameters, user_context)
         
         if not endpoint:
-            raise ValueError(f"No endpoint available for tool: {tool_name}")
+            raise ValueError(f"도구에 사용할 수 있는 엔드포인트가 없습니다: {tool_name}")
         
-        # Perform the actual request to the selected endpoint
+        # 선택한 엔드포인트로 실제 요청 수행
         return await self._execute_tool_request(endpoint, tool_name, parameters)
     
     def _select_endpoint(self, tool_name, parameters, user_context=None):
-        """Select the most appropriate endpoint based on context"""
-        # Base endpoint from registry
+        """컨텍스트에 따라 가장 적절한 엔드포인트 선택"""
+        # 레지스트리에서 기본 엔드포인트
         if tool_name not in self.tool_endpoints:
             return None
             
         base_endpoint = self.tool_endpoints[tool_name]
         
-        # Check if we need to use a specific tool version
+        # 특정 도구 버전을 사용해야 하는지 확인
         if tool_name in self.tool_versions:
             version_info = self.tool_versions[tool_name]
             
-            # Use specified version or default
+            # 지정된 버전 또는 기본값 사용
             requested_version = parameters.get("_version", version_info["default"])
             if requested_version in version_info:
                 base_endpoint = version_info[requested_version]
         
-        # Check for regional routing if user region is known
+        # 사용자 지역이 알려진 경우 지역 라우팅 확인
         if user_context and "region" in user_context:
             user_region = user_context["region"]
             
@@ -342,23 +342,23 @@ class McpToolRouter:
                 regional_tools = self.regional_endpoints[user_region]
                 
                 if tool_name in regional_tools:
-                    # Use region-specific endpoint
+                    # 지역별 엔드포인트 사용
                     return regional_tools[tool_name]
         
-        # Check for data residency requirements
+        # 데이터 상주 요구 사항 확인
         if user_context and "data_residency" in user_context:
-            # This would implement logic to ensure data remains in specified jurisdiction
+            # 데이터가 지정된 관할 구역에 남아 있도록 하는 논리 구현
             pass
         
-        # Check for latency-based routing
+        # 지연 시간 기반 라우팅 확인
         if user_context and "latency_sensitive" in user_context and user_context["latency_sensitive"]:
-            # This would implement logic to select lowest-latency endpoint
+            # 가장 낮은 지연 시간 엔드포인트를 선택하는 논리 구현
             pass
             
         return base_endpoint
         
     async def _execute_tool_request(self, endpoint, tool_name, parameters):
-        """Execute the actual tool request to the selected endpoint"""
+        """선택한 엔드포인트로 실제 도구 요청 실행"""
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
@@ -371,86 +371,86 @@ class McpToolRouter:
                         return result
                     else:
                         error_text = await response.text()
-                        raise Exception(f"Tool execution failed: {error_text}")
+                        raise Exception(f"도구 실행 실패: {error_text}")
         except Exception as e:
-            # Implement retry logic or fallback strategy
-            print(f"Error executing tool {tool_name} at {endpoint}: {str(e)}")
+            # 재시도 논리 또는 폴백 전략 구현
+            print(f"도구 {tool_name} 실행 중 오류 발생 {endpoint}: {str(e)}")
             raise
 ```
 
-In the preceding code, we've:
+위 코드에서 다음을 수행했습니다:
 
-- Created a `McpToolRouter` class that manages tool routing based on request analysis, regional endpoints, and versioning support.
-- Registered available tool endpoints and regional endpoints for global distribution.
-- Implemented dynamic routing logic that selects the appropriate endpoint based on user context, such as region and data residency requirements.
-- Implemented versioning support for tools, allowing users to specify which version of a tool they want to use.
-- Used asynchronous HTTP requests to execute tool calls and handle responses.
+- 요청 분석, 지역 엔드포인트 및 버전 관리 지원을 기반으로 도구 라우팅을 관리하는 `McpToolRouter` 클래스를 생성했습니다.
+- 사용 가능한 도구 엔드포인트 및 전역 배포를 위한 지역 엔드포인트를 등록했습니다.
+- 지역 및 데이터 상주 요구 사항과 같은 사용자 컨텍스트를 기반으로 적절한 엔드포인트를 선택하는 동적 라우팅 논리를 구현했습니다.
+- 도구에 대한 버전 관리 지원을 구현하여 사용자가 사용하려는 도구 버전을 지정할 수 있도록 했습니다.
+- 비동기 HTTP 요청을 사용하여 도구 호출을 실행하고 응답을 처리했습니다.
 
 </details>
 
-## Sampling and Routing Architecture in MCP
+## MCP의 샘플링 및 라우팅 아키텍처
 
-Sampling is a critical component of the Model Context Protocol (MCP) that allows for efficient request processing and routing. It involves analyzing incoming requests to determine the most appropriate model or service to handle them, based on various criteria such as content type, user context, and system load.
+샘플링은 효율적인 요청 처리 및 라우팅을 허용하는 모델 컨텍스트 프로토콜(MCP)의 중요한 구성 요소입니다. 콘텐츠 유형, 사용자 컨텍스트 및 시스템 로드와 같은 다양한 기준에 따라 들어오는 요청을 처리할 가장 적절한 모델 또는 서비스를 결정하기 위해 들어오는 요청을 분석하는 것을 포함합니다.
 
-Sampling and routing can be combined to create a robust architecture that optimizes resource utilization and ensures high availability. The sampling process can be used to classify requests, while routing directs them to the appropriate models or services.
+샘플링 및 라우팅은 리소스 활용을 최적화하고 고가용성을 보장하는 강력한 아키텍처를 생성하기 위해 결합될 수 있습니다. 샘플링 프로세스는 요청을 분류하는 데 사용될 수 있으며, 라우팅은 요청을 적절한 모델 또는 서비스로 전달합니다.
 
-The diagram below illustrates how sampling and routing work together in a comprehensive MCP architecture:
+아래 다이어그램은 포괄적인 MCP 아키텍처에서 샘플링 및 라우팅이 함께 작동하는 방식을 보여줍니다:
 
 ```mermaid
 flowchart TB
-    Client([MCP Client])
+    Client([MCP 클라이언트])
     
-    subgraph "Request Processing"
-        Router{Request Router}
-        Analyzer[Content Analyzer]
-        Sampler[Sampling Configurator]
+    subgraph "요청 처리"
+        Router{요청 라우터}
+        Analyzer[콘텐츠 분석기]
+        Sampler[샘플링 구성기]
     end
     
-    subgraph "Server Selection"
-        LoadBalancer{Load Balancer}
-        ModelSelector[Model Selector]
-        ServerPool[(Server Pool)]
+    subgraph "서버 선택"
+        LoadBalancer{로드 밸런서}
+        ModelSelector[모델 선택기]
+        ServerPool[(서버 풀)]
     end
     
-    subgraph "Model Processing"
-        ModelA[Specialized Model A]
-        ModelB[Specialized Model B]
-        ModelC[General Model]
+    subgraph "모델 처리"
+        ModelA[전문 모델 A]
+        ModelB[전문 모델 B]
+        ModelC[일반 모델]
     end
     
-    subgraph "Tool Execution"
-        ToolRouter{Tool Router}
-        ToolRegistryA[(Primary Tools)]
-        ToolRegistryB[(Regional Tools)]
+    subgraph "도구 실행"
+        ToolRouter{도구 라우터}
+        ToolRegistryA[(기본 도구)]
+        ToolRegistryB[(지역 도구)]
     end
     
-    Client -->|Request| Router
-    Router -->|Analyze| Analyzer
-    Analyzer -->|Configure| Sampler
-    Router -->|Route Request| LoadBalancer
+    Client -->|요청| Router
+    Router -->|분석| Analyzer
+    Analyzer -->|구성| Sampler
+    Router -->|요청 라우팅| LoadBalancer
     LoadBalancer --> ServerPool
     ServerPool --> ModelSelector
     ModelSelector --> ModelA
     ModelSelector --> ModelB
     ModelSelector --> ModelC
     
-    ModelA -->|Tool Calls| ToolRouter
-    ModelB -->|Tool Calls| ToolRouter
-    ModelC -->|Tool Calls| ToolRouter
+    ModelA -->|도구 호출| ToolRouter
+    ModelB -->|도구 호출| ToolRouter
+    ModelC -->|도구 호출| ToolRouter
     
     ToolRouter --> ToolRegistryA
     ToolRouter --> ToolRegistryB
     
-    ToolRegistryA -->|Results| ModelA
-    ToolRegistryA -->|Results| ModelB
-    ToolRegistryA -->|Results| ModelC
-    ToolRegistryB -->|Results| ModelA
-    ToolRegistryB -->|Results| ModelB
-    ToolRegistryB -->|Results| ModelC
+    ToolRegistryA -->|결과| ModelA
+    ToolRegistryA -->|결과| ModelB
+    ToolRegistryA -->|결과| ModelC
+    ToolRegistryB -->|결과| ModelA
+    ToolRegistryB -->|결과| ModelB
+    ToolRegistryB -->|결과| ModelC
     
-    ModelA -->|Response| Client
-    ModelB -->|Response| Client
-    ModelC -->|Response| Client
+    ModelA -->|응답| Client
+    ModelB -->|응답| Client
+    ModelC -->|응답| Client
     
     style Client fill:#d5e8f9,stroke:#333
     style Router fill:#f9d5e5,stroke:#333
@@ -461,6 +461,6 @@ flowchart TB
     style ModelC fill:#c2f0c2,stroke:#333
 ```
 
-## What's next
+## 다음 단계
 
-- [5.6 Sampling](../mcp-sampling/README.md)
+- [5.6 샘플링](../mcp-sampling/README.md)

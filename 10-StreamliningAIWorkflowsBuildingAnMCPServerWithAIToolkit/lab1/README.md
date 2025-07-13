@@ -1,273 +1,272 @@
-# 🚀 Module 1: AI Toolkit Fundamentals
+# 🚀 모듈 1: AI 툴킷 기본 사항
 
 [![Duration](https://img.shields.io/badge/Duration-15%20minutes-blue.svg)]()
 [![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green.svg)]()
 [![Prerequisites](https://img.shields.io/badge/Prerequisites-VS%20Code-orange.svg)]()
 
-## 📋 Learning Objectives
+## 📋 학습 목표
 
-By the end of this module, you will be able to:
-- ✅ Install and configure AI Toolkit for Visual Studio Code
-- ✅ Navigate the Model Catalog and understand different model sources
-- ✅ Use the Playground for model testing and experimentation
-- ✅ Create custom AI agents using Agent Builder
-- ✅ Compare model performance across different providers
-- ✅ Apply best practices for prompt engineering
+이 모듈을 마치면 다음을 할 수 있습니다:
+- ✅ Visual Studio Code용 AI 툴킷 설치 및 구성
+- ✅ 모델 카탈로그 탐색 및 다양한 모델 소스 이해
+- ✅ 모델 테스트 및 실험을 위한 플레이그라운드 사용
+- ✅ 에이전트 빌더를 사용하여 사용자 지정 AI 에이전트 생성
+- ✅ 다양한 공급자의 모델 성능 비교
+- ✅ 프롬프트 엔지니어링 모범 사례 적용
 
-## 🧠 Introduction to AI Toolkit (AITK)
+## 🧠 AI 툴킷(AITK) 소개
 
-The **AI Toolkit for Visual Studio Code** is Microsoft's flagship extension that transforms VS Code into a comprehensive AI development environment. It bridges the gap between AI research and practical application development, making generative AI accessible to developers of all skill levels.
+**Visual Studio Code용 AI 툴킷**은 VS Code를 포괄적인 AI 개발 환경으로 전환하는 Microsoft의 대표적인 확장 프로그램입니다. 이는 AI 연구와 실제 애플리케이션 개발 간의 격차를 해소하여 모든 기술 수준의 개발자가 생성형 AI에 접근할 수 있도록 합니다.
 
-### 🌟 Key Capabilities
+### 🌟 주요 기능
 
-| Feature | Description | Use Case |
+| 기능 | 설명 | 사용 사례 |
 |---------|-------------|----------|
-| **🗂️ Model Catalog** | Access 100+ models from GitHub, ONNX, OpenAI, Anthropic, Google | Model discovery and selection |
-| **🔌 BYOM Support** | Integrate your own models (local/remote) | Custom model deployment |
-| **🎮 Interactive Playground** | Real-time model testing with chat interface | Rapid prototyping and testing |
-| **📎 Multi-Modal Support** | Handle text, images, and attachments | Complex AI applications |
-| **⚡ Batch Processing** | Run multiple prompts simultaneously | Efficient testing workflows |
-| **📊 Model Evaluation** | Built-in metrics (F1, relevance, similarity, coherence) | Performance assessment |
+| **🗂️ 모델 카탈로그** | GitHub, ONNX, OpenAI, Anthropic, Google의 100개 이상의 모델에 액세스 | 모델 검색 및 선택 |
+| **🔌 BYOM 지원** | 자체 모델 통합(로컬/원격) | 사용자 지정 모델 배포 |
+| **🎮 대화형 플레이그라운드** | 채팅 인터페이스를 통한 실시간 모델 테스트 | 신속한 프로토타이핑 및 테스트 |
+| **📎 다중 모드 지원** | 텍스트, 이미지 및 첨부 파일 처리 | 복잡한 AI 애플리케이션 |
+| **⚡ 배치 처리** | 여러 프롬프트 동시 실행 | 효율적인 테스트 워크플로우 |
+| **📊 모델 평가** | 내장 메트릭(F1, 관련성, 유사성, 일관성) | 성능 평가 |
 
-### 🎯 Why AI Toolkit Matters
+### 🎯 AI 툴킷이 중요한 이유
 
-- **🚀 Accelerated Development**: From idea to prototype in minutes
-- **🔄 Unified Workflow**: One interface for multiple AI providers
-- **🧪 Easy Experimentation**: Compare models without complex setup
-- **📈 Production Ready**: Seamless transition from prototype to deployment
+- **🚀 개발 가속화**: 아이디어에서 프로토타입까지 몇 분 안에
+- **🔄 통합 워크플로우**: 여러 AI 공급자를 위한 단일 인터페이스
+- **🧪 쉬운 실험**: 복잡한 설정 없이 모델 비교
+- **📈 프로덕션 준비 완료**: 프로토타입에서 배포까지 원활한 전환
 
-## 🛠️ Prerequisites & Setup
+## 🛠️ 필수 구성 요소 및 설정
 
-### 📦 Install AI Toolkit Extension
+### 📦 AI 툴킷 확장 설치
 
-**Step 1: Access Extensions Marketplace**
-1. Open Visual Studio Code
-2. Navigate to the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`)
-3. Search for "AI Toolkit"
+**1단계: 확장 마켓플레이스 액세스**
+1. Visual Studio Code 열기
+2. 확장 보기로 이동 (`Ctrl+Shift+X` 또는 `Cmd+Shift+X`)
+3. "AI Toolkit" 검색
 
-**Step 2: Choose Your Version**
-- **🟢 Release**: Recommended for production use
-- **🔶 Pre-release**: Early access to cutting-edge features
+**2단계: 버전 선택**
+- **🟢 릴리스**: 프로덕션 사용 권장
+- **🔶 미리 보기**: 최첨단 기능에 대한 조기 액세스
 
-**Step 3: Install and Activate**
+**3단계: 설치 및 활성화**
 
 ![AI Toolkit Extension](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/aitkext.png)
 
-### ✅ Verification Checklist
-- [ ] AI Toolkit icon appears in the VS Code sidebar
-- [ ] Extension is enabled and activated
-- [ ] No installation errors in the output panel
+### ✅ 확인 체크리스트
+- [ ] VS Code 사이드바에 AI 툴킷 아이콘이 나타남
+- [ ] 확장이 활성화되고 활성화됨
+- [ ] 출력 패널에 설치 오류 없음
 
-## 🧪 Hands-on Exercise 1: Exploring GitHub Models
+## 🧪 실습 1: GitHub 모델 탐색
 
-**🎯 Objective**: Master the Model Catalog and test your first AI model
+**🎯 목표**: 모델 카탈로그를 마스터하고 첫 번째 AI 모델 테스트
 
-### 📊 Step 1: Navigate the Model Catalog
+### 📊 1단계: 모델 카탈로그 탐색
 
-The Model Catalog is your gateway to the AI ecosystem. It aggregates models from multiple providers, making it easy to discover and compare options.
+모델 카탈로그는 AI 생태계로 가는 관문입니다. 여러 공급자의 모델을 통합하여 옵션을 쉽게 검색하고 비교할 수 있습니다.
 
-**🔍 Navigation Guide:**
+**🔍 탐색 가이드:**
 
-Click on **MODELS - Catalog** in the AI Toolkit sidebar
+AI 툴킷 사이드바에서 **MODELS - Catalog**를 클릭합니다.
 
 ![Model Catalog](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/aimodel.png)
 
-**💡 Pro Tip**: Look for models with specific capabilities that match your use case (e.g., code generation, creative writing, analysis).
+**💡 전문가 팁**: 사용 사례에 맞는 특정 기능(예: 코드 생성, 창의적 글쓰기, 분석)을 가진 모델을 찾으세요.
 
-**⚠️ Note**: GitHub-hosted models (i.e. GitHub Models) are free to use but are subject to rate limits on requests and tokens. If you want to access non-GitHub models (that is, external models hosted via Azure AI or other endpoints), you'll need to supply the appropriate API key or authentication.
+**⚠️ 참고**: GitHub에서 호스팅되는 모델(즉, GitHub 모델)은 무료로 사용할 수 있지만 요청 및 토큰에 대한 속도 제한이 적용됩니다. GitHub 모델이 아닌 모델(즉, Azure AI 또는 기타 엔드포인트를 통해 호스팅되는 외부 모델)에 액세스하려면 적절한 API 키 또는 인증을 제공해야 합니다.
 
-### 🚀 Step 2: Add and Configure Your First Model
+### 🚀 2단계: 첫 번째 모델 추가 및 구성
 
-**Model Selection Strategy:**
-- **GPT-4.1**: Best for complex reasoning and analysis
-- **Phi-4-mini**: Lightweight, fast responses for simple tasks
+**모델 선택 전략:**
+- **GPT-4.1**: 복잡한 추론 및 분석에 가장 적합
+- **Phi-4-mini**: 간단한 작업에 대한 가볍고 빠른 응답
 
-**🔧 Configuration Process:**
-1. Select **OpenAI GPT-4.1** from the catalog
-2. Click **Add to My Models** - this registers the model for use
-3. Choose **Try in Playground** to launch the testing environment
-4. Wait for model initialization (first-time setup may take a moment)
+**🔧 구성 프로세스:**
+1. 카탈로그에서 **OpenAI GPT-4.1** 선택
+2. **내 모델에 추가** 클릭 - 모델을 사용하도록 등록
+3. 테스트 환경을 시작하려면 **플레이그라운드에서 시도** 선택
+4. 모델 초기화 대기 (첫 설정은 시간이 걸릴 수 있음)
 
 ![Playground Setup](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/playground.png)
 
-**⚙️ Understanding Model Parameters:**
-- **Temperature**: Controls creativity (0 = deterministic, 1 = creative)
-- **Max Tokens**: Maximum response length
-- **Top-p**: Nucleus sampling for response diversity
+**⚙️ 모델 매개변수 이해:**
+- **온도(Temperature)**: 창의성 제어 (0 = 결정론적, 1 = 창의적)
+- **최대 토큰(Max Tokens)**: 최대 응답 길이
+- **Top-p**: 응답 다양성을 위한 핵 샘플링
 
-### 🎯 Step 3: Master the Playground Interface
+### 🎯 3단계: 플레이그라운드 인터페이스 마스터하기
 
-The Playground is your AI experimentation lab. Here's how to maximize its potential:
+플레이그라운드는 AI 실험실입니다. 잠재력을 극대화하는 방법은 다음과 같습니다.
 
-**🎨 Prompt Engineering Best Practices:**
-1. **Be Specific**: Clear, detailed instructions yield better results
-2. **Provide Context**: Include relevant background information
-3. **Use Examples**: Show the model what you want with examples
-4. **Iterate**: Refine prompts based on initial results
+**🎨 프롬프트 엔지니어링 모범 사례:**
+1. **구체적으로**: 명확하고 상세한 지침은 더 나은 결과를 낳습니다.
+2. **컨텍스트 제공**: 관련 배경 정보 포함
+3. **예시 사용**: 예시를 통해 모델에 원하는 것을 보여줍니다.
+4. **반복**: 초기 결과를 기반으로 프롬프트 개선
 
-**🧪 Testing Scenarios:**
+**🧪 테스트 시나리오:**
 ```markdown
-# Example 1: Code Generation
-"Write a Python function that calculates the factorial of a number using recursion. Include error handling and docstrings."
+# 예시 1: 코드 생성
+"재귀를 사용하여 숫자의 팩토리얼을 계산하는 Python 함수를 작성하세요. 오류 처리 및 독스트링을 포함하세요."
 
-# Example 2: Creative Writing
-"Write a professional email to a client explaining a project delay, maintaining a positive tone while being transparent about challenges."
+# 예시 2: 창의적 글쓰기
+"프로젝트 지연을 설명하는 고객에게 전문적인 이메일을 작성하되, 문제에 대해 투명하게 밝히면서 긍정적인 어조를 유지하세요."
 
-# Example 3: Data Analysis
-"Analyze this sales data and provide insights: [paste your data]. Focus on trends, anomalies, and actionable recommendations."
+# 예시 3: 데이터 분석
+"이 판매 데이터를 분석하고 통찰력을 제공하세요: [데이터 붙여넣기]. 추세, 이상 징후 및 실행 가능한 권장 사항에 중점을 둡니다."
 ```
 
 ![Testing Results](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/result.png)
 
-### 🏆 Challenge Exercise: Model Performance Comparison
+### 🏆 도전 과제: 모델 성능 비교
 
-**🎯 Goal**: Compare different models using identical prompts to understand their strengths
+**🎯 목표**: 동일한 프롬프트를 사용하여 다른 모델을 비교하여 강점 이해
 
-**📋 Instructions:**
-1. Add **Phi-4-mini** to your workspace
-2. Use the same prompt for both GPT-4.1 and Phi-4-mini
+**📋 지침:**
+1. 작업 공간에 **Phi-4-mini** 추가
+2. GPT-4.1과 Phi-4-mini에 동일한 프롬프트 사용
 
 ![set](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/set.png)
 
-3. Compare response quality, speed, and accuracy
-4. Document your findings in the results section
+3. 응답 품질, 속도 및 정확도 비교
+4. 결과 섹션에 발견 사항 문서화
 
 ![Model Comparison](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/compare.png)
 
-**💡 Key Insights to Discover:**
-- When to use LLM vs SLM
-- Cost vs. performance trade-offs
-- Specialized capabilities of different models
+**💡 발견할 주요 통찰력:**
+- LLM과 SLM을 언제 사용해야 하는지
+- 비용 대 성능 트레이드오프
+- 다양한 모델의 특수 기능
 
-## 🤖 Hands-on Exercise 2: Building Custom Agents with Agent Builder
+## 🤖 실습 2: 에이전트 빌더로 사용자 지정 에이전트 구축
 
-**🎯 Objective**: Create specialized AI agents tailored for specific tasks and workflows
+**🎯 목표**: 특정 작업 및 워크플로우에 맞게 특수 AI 에이전트 생성
 
-### 🏗️ Step 1: Understanding Agent Builder
+### 🏗️ 1단계: 에이전트 빌더 이해
 
-Agent Builder is where AI Toolkit truly shines. It allows you to create purpose-built AI assistants that combine the power of large language models with custom instructions, specific parameters, and specialized knowledge.
+에이전트 빌더는 AI 툴킷이 진정으로 빛을 발하는 곳입니다. 이를 통해 대규모 언어 모델의 강력한 기능과 사용자 지정 지침, 특정 매개변수 및 전문 지식을 결합한 목적에 맞는 AI 비서를 만들 수 있습니다.
 
-**🧠 Agent Architecture Components:**
-- **Core Model**: The foundation LLM (GPT-4, Groks, Phi, etc.)
-- **System Prompt**: Defines agent personality and behavior
-- **Parameters**: Fine-tuned settings for optimal performance
-- **Tools Integration**: Connect to external APIs and MCP services
-- **Memory**: Conversation context and session persistence
+**🧠 에이전트 아키텍처 구성 요소:**
+- **코어 모델**: 기본 LLM (GPT-4, Groks, Phi 등)
+- **시스템 프롬프트**: 에이전트의 성격 및 동작 정의
+- **매개변수**: 최적의 성능을 위한 미세 조정 설정
+- **도구 통합**: 외부 API 및 MCP 서비스에 연결
+- **메모리**: 대화 컨텍스트 및 세션 지속성
 
 ![Agent Builder Interface](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/agentbuilder.png)
 
-### ⚙️ Step 2: Agent Configuration Deep Dive
+### ⚙️ 2단계: 에이전트 구성 심층 분석
 
-**🎨 Creating Effective System Prompts:**
+**🎨 효과적인 시스템 프롬프트 생성:**
 ```markdown
-# Template Structure:
-## Role Definition
-You are a [specific role] with expertise in [domain].
+# 템플릿 구조:
+## 역할 정의
+당신은 [도메인]에 대한 전문 지식을 가진 [특정 역할]입니다.
 
-## Capabilities
-- List specific abilities
-- Define scope of knowledge
-- Clarify limitations
+## 기능
+- 특정 능력 나열
+- 지식 범위 정의
+- 제한 사항 명확화
 
-## Behavior Guidelines
-- Response style (formal, casual, technical)
-- Output format preferences
-- Error handling approach
+## 행동 지침
+- 응답 스타일 (공식적, 비공식적, 기술적)
+- 출력 형식 선호도
+- 오류 처리 방식
 
-## Examples
-Provide 2-3 examples of ideal interactions
+## 예시
+이상적인 상호 작용의 2-3가지 예시 제공
 ```
 
-*Of course, you can also use Generate System Prompt to use AI to help you generate and optimize prompts*
+*물론, AI를 사용하여 프롬프트를 생성하고 최적화하는 데 도움이 되도록 시스템 프롬프트 생성(Generate System Prompt)을 사용할 수도 있습니다.*
 
-**🔧 Parameter Optimization:**
-| Parameter | Recommended Range | Use Case |
+**🔧 매개변수 최적화:**
+| 매개변수 | 권장 범위 | 사용 사례 |
 |-----------|------------------|----------|
-| **Temperature** | 0.1-0.3 | Technical/factual responses |
-| **Temperature** | 0.7-0.9 | Creative/brainstorming tasks |
-| **Max Tokens** | 500-1000 | Concise responses |
-| **Max Tokens** | 2000-4000 | Detailed explanations |
+| **온도(Temperature)** | 0.1-0.3 | 기술/사실적 응답 |
+| **온도(Temperature)** | 0.7-0.9 | 창의적/브레인스토밍 작업 |
+| **최대 토큰(Max Tokens)** | 500-1000 | 간결한 응답 |
+| **최대 토큰(Max Tokens)** | 2000-4000 | 상세한 설명 |
 
-### 🐍 Step 3: Practical Exercise - Python Programming Agent
+### 🐍 3단계: 실습 - Python 프로그래밍 에이전트
 
-**🎯 Mission**: Create a specialized Python coding assistant
+**🎯 미션**: 특수 Python 코딩 도우미 생성
 
-**📋 Configuration Steps:**
+**📋 구성 단계:**
 
-1. **Model Selection**: Choose **Claude 3.5 Sonnet** (excellent for code)
+1. **모델 선택**: **Claude 3.5 Sonnet** 선택 (코드에 탁월)
 
-2. **System Prompt Design**:
+2. **시스템 프롬프트 디자인**:
 ```markdown
-# Python Programming Expert Agent
+# Python 프로그래밍 전문가 에이전트
 
-## Role
-You are a senior Python developer with 10+ years of experience. You excel at writing clean, efficient, and well-documented Python code.
+## 역할
+당신은 10년 이상의 경험을 가진 선임 Python 개발자입니다. 깨끗하고 효율적이며 잘 문서화된 Python 코드를 작성하는 데 탁월합니다.
 
-## Capabilities
-- Write production-ready Python code
-- Debug complex issues
-- Explain code concepts clearly
-- Suggest best practices and optimizations
-- Provide complete working examples
+## 기능
+- 프로덕션 준비된 Python 코드 작성
+- 복잡한 문제 디버깅
+- 코드 개념 명확하게 설명
+- 모범 사례 및 최적화 제안
+- 완전한 작동 예시 제공
 
-## Response Format
-- Always include docstrings
-- Add inline comments for complex logic
-- Suggest testing approaches
-- Mention relevant libraries when applicable
+## 응답 형식
+- 항상 독스트링 포함
+- 복잡한 로직에 대한 인라인 주석 추가
+- 테스트 접근 방식 제안
+- 해당되는 경우 관련 라이브러리 언급
 
-## Code Quality Standards
-- Follow PEP 8 style guidelines
-- Use type hints where appropriate
-- Handle exceptions gracefully
-- Write readable, maintainable code
+## 코드 품질 표준
+- PEP 8 스타일 가이드라인 준수
+- 적절한 경우 타입 힌트 사용
+- 예외를 우아하게 처리
+- 읽기 쉽고 유지 관리 가능한 코드 작성
 ```
 
-3. **Parameter Configuration**:
-   - Temperature: 0.2 (for consistent, reliable code)
-   - Max Tokens: 2000 (detailed explanations)
-   - Top-p: 0.9 (balanced creativity)
+3. **매개변수 구성**:
+   - 온도(Temperature): 0.2 (일관되고 신뢰할 수 있는 코드용)
+   - 최대 토큰(Max Tokens): 2000 (상세한 설명용)
+   - Top-p: 0.9 (균형 잡힌 창의성)
 
 ![Python Agent Configuration](../../images/10-StreamliningAIWorkflowsBuildingAnMCPServerWithAIToolkit/lab1/pythonagent.png)
 
-### 🧪 Step 4: Testing Your Python Agent
+### 🧪 4단계: Python 에이전트 테스트
 
-**Test Scenarios:**
-1. **Basic Function**: "Create a function to find prime numbers"
-2. **Complex Algorithm**: "Implement a binary search tree with insert, delete, and search methods"
-3. **Real-world Problem**: "Build a web scraper that handles rate limiting and retries"
-4. **Debugging**: "Fix this code [paste buggy code]"
+**테스트 시나리오:**
+1. **기본 함수**: "소수를 찾는 함수 생성"
+2. **복잡한 알고리즘**: "삽입, 삭제 및 검색 메서드를 사용하여 이진 검색 트리 구현"
+3. **실제 문제**: "속도 제한 및 재시도를 처리하는 웹 스크래퍼 구축"
+4. **디버깅**: "이 코드 수정 [버그 있는 코드 붙여넣기]"
 
-**🏆 Success Criteria:**
-- ✅ Code runs without errors
-- ✅ Includes proper documentation
-- ✅ Follows Python best practices
-- ✅ Provides clear explanations
-- ✅ Suggests improvements
+**🏆 성공 기준:**
+- ✅ 코드 오류 없이 실행
+- ✅ 적절한 문서 포함
+- ✅ Python 모범 사례 준수
+- ✅ 명확한 설명 제공
+- ✅ 개선 사항 제안
 
-## 🎓 Module 1 Wrap-Up & Next Steps
+## 🎓 모듈 1 마무리 및 다음 단계
 
-### 📊 Knowledge Check
+### 📊 지식 확인
 
-Test your understanding:
-- [ ] Can you explain the difference between models in the catalog?
-- [ ] Have you successfully created and tested a custom agent?
-- [ ] Do you understand how to optimize parameters for different use cases?
-- [ ] Can you design effective system prompts?
+이해도를 테스트합니다:
+- [ ] 카탈로그의 모델 간 차이점을 설명할 수 있습니까?
+- [ ] 사용자 지정 에이전트를 성공적으로 생성하고 테스트했습니까?
+- [ ] 다양한 사용 사례에 맞게 매개변수를 최적화하는 방법을 이해하고 있습니까?
+- [ ] 효과적인 시스템 프롬프트를 설계할 수 있습니까?
 
-### 📚 Additional Resources
+### 📚 추가 자료
 
-- **AI Toolkit Documentation**: [Official Microsoft Docs](https://github.com/microsoft/vscode-ai-toolkit)
-- **Prompt Engineering Guide**: [Best Practices](https://platform.openai.com/docs/guides/prompt-engineering)
-- **Models in AI Toolkit**: [Models in Develpment](https://github.com/microsoft/vscode-ai-toolkit/blob/main/doc/models.md)
+- **AI 툴킷 문서**: [공식 Microsoft 문서](https://github.com/microsoft/vscode-ai-toolkit)
+- **프롬프트 엔지니어링 가이드**: [모범 사례](https://platform.openai.com/docs/guides/prompt-engineering)
+- **AI 툴킷의 모델**: [개발 중인 모델](https://github.com/microsoft/vscode-ai-toolkit/blob/main/doc/models.md)
 
-**🎉 Congratulations!** You've mastered the fundamentals of AI Toolkit and are ready to build more advanced AI applications!
+**🎉 축하합니다!** AI 툴킷의 기본 사항을 마스터했으며 이제 더 고급 AI 애플리케이션을 구축할 준비가 되었습니다!
 
-### 🔜 Continue to Next Module
+### 🔜 다음 모듈로 계속
 
-Ready for more advanced capabilities? Continue to **[Module 2: MCP with AI Toolkit Fundamentals](../lab2/README.md)** where you'll learn how to:
-- Connect your agents to external tools using Model Context Protocol (MCP)
-- Build browser automation agents with Playwright
-- Integrate MCP servers with your AI Toolkit agents
-- Supercharge your agents with external data and capabilities
-
+더 고급 기능에 대한 준비가 되셨습니까? **[모듈 2: AI 툴킷 기본 사항을 사용한 MCP](../lab2/README.md)**로 계속 진행하여 다음을 배웁니다:
+- 모델 컨텍스트 프로토콜(MCP)을 사용하여 에이전트를 외부 도구에 연결
+- Playwright로 브라우저 자동화 에이전트 구축
+- MCP 서버를 AI 툴킷 에이전트와 통합
+- 외부 데이터 및 기능으로 에이전트 강화

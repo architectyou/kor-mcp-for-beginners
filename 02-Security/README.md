@@ -1,180 +1,180 @@
-# Security Best Practices
+# 보안 모범 사례
 
-Adopting the Model Context Protocol (MCP) brings powerful new capabilities to AI-driven applications, but also introduces unique security challenges that extend beyond traditional software risks. In addition to established concerns like secure coding, least privilege, and supply chain security, MCP and AI workloads face new threats such as prompt injection, tool poisoning, and dynamic tool modification. These risks can lead to data exfiltration, privacy breaches, and unintended system behavior if not properly managed.
+모델 컨텍스트 프로토콜(MCP)을 채택하면 AI 기반 애플리케이션에 강력한 새로운 기능이 제공되지만, 기존 소프트웨어 위험을 넘어서는 고유한 보안 문제도 발생합니다. 보안 코딩, 최소 권한, 공급망 보안과 같은 기존 문제 외에도 MCP 및 AI 워크로드는 프롬프트 주입, 도구 중독, 동적 도구 수정과 같은 새로운 위협에 직면합니다. 이러한 위험은 제대로 관리되지 않으면 데이터 유출, 개인 정보 침해, 의도하지 않은 시스템 동작으로 이어질 수 있습니다.
 
-This lesson explores the most relevant security risks associated with MCP—including authentication, authorization, excessive permissions, indirect prompt injection, and supply chain vulnerabilities—and provides actionable controls and best practices to mitigate them. You’ll also learn how to leverage Microsoft solutions like Prompt Shields, Azure Content Safety, and GitHub Advanced Security to strengthen your MCP implementation. By understanding and applying these controls, you can significantly reduce the likelihood of a security breach and ensure your AI systems remain robust and trustworthy.
+이 단원에서는 인증, 권한 부여, 과도한 권한, 간접 프롬프트 주입, 공급망 취약점을 포함하여 MCP와 관련된 가장 관련성 높은 보안 위험을 살펴보고 이를 완화하기 위한 실행 가능한 제어 및 모범 사례를 제공합니다. 또한 프롬프트 쉴드, Azure 콘텐츠 안전 및 GitHub 고급 보안과 같은 Microsoft 솔루션을 활용하여 MCP 구현을 강화하는 방법을 배웁니다. 이러한 제어를 이해하고 적용하면 보안 침해 가능성을 크게 줄이고 AI 시스템이 강력하고 신뢰할 수 있도록 보장할 수 있습니다.
 
-# Learning Objectives
+# 학습 목표
 
-By the end of this lesson, you will be able to:
+이 단원을 마치면 다음을 수행할 수 있습니다.
 
-- Identify and explain the unique security risks introduced by the Model Context Protocol (MCP), including prompt injection, tool poisoning, excessive permissions, and supply chain vulnerabilities.
-- Describe and apply effective mitigating controls for MCP security risks, such as robust authentication, least privilege, secure token management, and supply chain verification.
-- Understand and leverage Microsoft solutions like Prompt Shields, Azure Content Safety, and GitHub Advanced Security to protect MCP and AI workloads.
-- Recognize the importance of validating tool metadata, monitoring for dynamic changes, and defending against indirect prompt injection attacks.
-- Integrate established security best practices—such as secure coding, server hardening, and zero trust architecture—into your MCP implementation to reduce the likelihood and impact of security breaches.
+- 프롬프트 주입, 도구 중독, 과도한 권한 및 공급망 취약점을 포함하여 모델 컨텍스트 프로토콜(MCP)에 의해 도입된 고유한 보안 위험을 식별하고 설명합니다.
+- 강력한 인증, 최소 권한, 보안 토큰 관리 및 공급망 확인과 같은 MCP 보안 위험에 대한 효과적인 완화 제어를 설명하고 적용합니다.
+- 프롬프트 쉴드, Azure 콘텐츠 안전 및 GitHub 고급 보안과 같은 Microsoft 솔루션을 이해하고 활용하여 MCP 및 AI 워크로드를 보호합니다.
+- 도구 메타데이터 유효성 검사, 동적 변경 모니터링, 간접 프롬프트 주입 공격 방어의 중요성을 인식합니다.
+- 보안 코딩, 서버 강화, 제로 트러스트 아키텍처와 같은 기존 보안 모범 사례를 MCP 구현에 통합하여 보안 침해의 가능성과 영향을 줄입니다.
 
-# MCP security controls
+# MCP 보안 제어
 
-Any system which has access to important resources has implied security challenges. Security challenges can generally be addressed through correct application of fundamental security controls and concepts.  As MCP is only newly defined, the specification is changing very rapidly and as the protocol evolves. Eventually the security controls within it will mature, enabling a better integration with enterprise and established security architectures and best practices.
+중요한 리소스에 액세스할 수 있는 모든 시스템에는 암묵적인 보안 문제가 있습니다. 보안 문제는 일반적으로 기본 보안 제어 및 개념의 올바른 적용을 통해 해결할 수 있습니다. MCP는 이제 막 정의되었으므로 사양이 매우 빠르게 변경되고 프로토콜이 발전함에 따라 그 안에 있는 보안 제어가 성숙하여 엔터프라이즈 및 기존 보안 아키텍처 및 모범 사례와 더 나은 통합이 가능해질 것입니다.
 
-Research published in the [Microsoft Digital Defense Report](https://aka.ms/mddr) states that 98% of reported breaches would be prevented by robust security hygiene and the best protection against any kind of breach is to get your baseline security hygiene, secure coding best practices and supply chain security right -- those tried and tested practices that we already know about still make the most impact in reducing security risk.
+[Microsoft 디지털 방어 보고서](https://aka.ms/mddr)에 발표된 연구에 따르면 보고된 침해의 98%는 강력한 보안 위생으로 예방할 수 있으며 모든 종류의 침해에 대한 최상의 보호는 기본 보안 위생, 보안 코딩 모범 사례 및 공급망 보안을 올바르게 수행하는 것입니다. 우리가 이미 알고 있는 이러한 시도되고 테스트된 관행은 여전히 보안 위험을 줄이는 데 가장 큰 영향을 미칩니다.
 
-Let's look at some of the ways that you can start to address security risks when adopting MCP.
+MCP를 채택할 때 보안 위험을 해결하기 시작할 수 있는 몇 가지 방법을 살펴보겠습니다.
 
-> **Note:** The following information is correct as of **29th May 2025**. The MCP protocol is continually evolving, and future implementations may introduce new authentication patterns and controls. For the latest updates and guidance, always refer to the [MCP Specification](https://spec.modelcontextprotocol.io/) and the official [MCP GitHub repository](https://github.com/modelcontextprotocol) and [security best practice page](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices).
+> **참고:** 다음 정보는 **2025년 5월 29일**을 기준으로 정확합니다. MCP 프로토콜은 지속적으로 발전하고 있으며 향후 구현에서는 새로운 인증 패턴 및 제어가 도입될 수 있습니다. 최신 업데이트 및 지침은 항상 [MCP 사양](https://spec.modelcontextprotocol.io/) 및 공식 [MCP GitHub 저장소](https://github.com/modelcontextprotocol) 및 [보안 모범 사례 페이지](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)를 참조하십시오.
 
-### Problem statement 
-The original MCP specification assumed that developers would write their own authentication server. This required knowledge of OAuth and related security constraints. MCP servers acted as OAuth 2.0 Authorization Servers, managing the required user authentication directly rather than delegating it to an external service such as Microsoft Entra ID. As of **26 April 2025**, an update to the MCP specification allows for MCP servers to delegate user authentication to an external service.
+### 문제 설명
+원래 MCP 사양은 개발자가 자체 인증 서버를 작성할 것으로 가정했습니다. 이를 위해서는 OAuth 및 관련 보안 제약 조건에 대한 지식이 필요했습니다. MCP 서버는 OAuth 2.0 인증 서버 역할을 하여 Microsoft Entra ID와 같은 외부 서비스에 위임하는 대신 필요한 사용자 인증을 직접 관리했습니다. **2025년 4월 26일**부터 MCP 사양 업데이트를 통해 MCP 서버는 사용자 인증을 외부 서비스에 위임할 수 있습니다.
 
-### Risks
-- Misconfigured authorization logic in the MCP server can lead to sensitive data exposure and incorrectly applied access controls.
-- OAuth token theft on the local MCP server. If stolen, the token can then be used to impersonate the MCP server and access resources and data from the service that the OAuth token is for.
+### 위험
+- MCP 서버의 잘못 구성된 권한 부여 논리는 민감한 데이터 노출 및 잘못 적용된 액세스 제어로 이어질 수 있습니다.
+- 로컬 MCP 서버에서 OAuth 토큰 도난. 도난당한 경우 토큰을 사용하여 MCP 서버를 가장하고 OAuth 토큰이 있는 서비스에서 리소스 및 데이터에 액세스할 수 있습니다.
 
-#### Token Passthrough
-Token passthrough is explicitly forbidden in the authorization specification as it introduces a number of security risks, that include:
+#### 토큰 통과
+토큰 통과는 다음과 같은 여러 보안 위험을 초래하므로 권한 부여 사양에서 명시적으로 금지됩니다.
 
-#### Security Control Circumvention
-The MCP Server or downstream APIs might implement important security controls like rate limiting, request validation, or traffic monitoring, that depend on the token audience or other credential constraints. If clients can obtain and use tokens directly with the downstream APIs without the MCP server validating them properly or ensuring that the tokens are issued for the right service, they bypass these controls.
+#### 보안 제어 우회
+MCP 서버 또는 다운스트림 API는 토큰 대상 또는 기타 자격 증명 제약 조건에 따라 속도 제한, 요청 유효성 검사 또는 트래픽 모니터링과 같은 중요한 보안 제어를 구현할 수 있습니다. 클라이언트가 MCP 서버가 토큰을 올바르게 확인하거나 토큰이 올바른 서비스에 대해 발급되었는지 확인하지 않고 다운스트림 API와 직접 토큰을 얻고 사용할 수 있는 경우 이러한 제어를 우회합니다.
 
-#### Accountability and Audit Trail Issues
-The MCP Server will be unable to identify or distinguish between MCP Clients when clients are calling with an upstream-issued access token which may be opaque to the MCP Server.
-The downstream Resource Server’s logs may show requests that appear to come from a different source with a different identity, rather than the MCP server that is actually forwarding the tokens.
-Both factors make incident investigation, controls, and auditing more difficult.
-If the MCP Server passes tokens without validating their claims (e.g., roles, privileges, or audience) or other metadata, a malicious actor in possession of a stolen token can use the server as a proxy for data exfiltration.
+#### 책임 및 감사 추적 문제
+클라이언트가 MCP 서버에 불투명할 수 있는 업스트림 발급 액세스 토큰으로 호출할 때 MCP 서버는 MCP 클라이언트를 식별하거나 구별할 수 없습니다.
+다운스트림 리소스 서버의 로그에는 실제로 토큰을 전달하는 MCP 서버가 아닌 다른 ID를 가진 다른 소스에서 온 것으로 보이는 요청이 표시될 수 있습니다.
+두 가지 요인 모두 사고 조사, 제어 및 감사를 더 어렵게 만듭니다.
+MCP 서버가 클레임(예: 역할, 권한 또는 대상) 또는 기타 메타데이터를 확인하지 않고 토큰을 전달하는 경우 도난당한 토큰을 소유한 악의적인 행위자는 서버를 데이터 유출을 위한 프록시로 사용할 수 있습니다.
 
-#### Trust Boundary Issues
-The downstream Resource Server grants trust to specific entities. This trust might include assumptions about origin or client behavior patterns. Breaking this trust boundary could lead to unexpected issues.
-If the token is accepted by multiple services without proper validation, an attacker compromising one service can use the token to access other connected services.
+#### 신뢰 경계 문제
+다운스트림 리소스 서버는 특정 엔터티에 신뢰를 부여합니다. 이 신뢰에는 원본 또는 클라이언트 동작 패턴에 대한 가정이 포함될 수 있습니다. 이 신뢰 경계를 깨면 예기치 않은 문제가 발생할 수 있습니다.
+토큰이 적절한 유효성 검사 없이 여러 서비스에서 수락되면 한 서비스를 손상시키는 공격자는 토큰을 사용하여 다른 연결된 서비스에 액세스할 수 있습니다.
 
-#### Future Compatibility Risk
-Even if an MCP Server starts as a “pure proxy” today, it might need to add security controls later. Starting with proper token audience separation makes it easier to evolve the security model.
+#### 향후 호환성 위험
+MCP 서버가 오늘날 "순수 프록시"로 시작하더라도 나중에 보안 제어를 추가해야 할 수 있습니다. 적절한 토큰 대상 분리로 시작하면 보안 모델을 더 쉽게 발전시킬 수 있습니다.
 
-### Mitigating controls
+### 완화 제어
 
-**MCP servers MUST NOT accept any tokens that were not explicitly issued for the MCP server**
+**MCP 서버는 MCP 서버에 대해 명시적으로 발급되지 않은 토큰을 수락해서는 안 됩니다.**
 
-- **Review and Harden Authorization Logic:** Carefully audit your MCP server’s authorization implementation to ensure only intended users and clients can access sensitive resources. For practical guidance, see [Azure API Management Your Auth Gateway For MCP Servers | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-api-management-your-auth-gateway-for-mcp-servers/4402690) and [Using Microsoft Entra ID To Authenticate With MCP Servers Via Sessions - Den Delimarsky](https://den.dev/blog/mcp-server-auth-entra-id-session/).
-- **Enforce Secure Token Practices:** Follow [Microsoft’s best practices for token validation and lifetime](https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens) to prevent misuse of access tokens and reduce the risk of token replay or theft.
-- **Protect Token Storage:** Always store tokens securely and use encryption to safeguard them at rest and in transit. For implementation tips, see [Use secure token storage and encrypt tokens](https://youtu.be/uRdX37EcCwg?si=6fSChs1G4glwXRy2).
-
-
-# Excessive permissions for MCP servers
-
-### Problem statement
-MCP servers may have been granted excessive permissions to the service/resource they are accessing. For example, an MCP server that is part of an AI sales application connecting to an enterprise data store should have access scoped to the sales data and not allowed to access all the files in the store. Referencing back to the principle of least privilege (one of the oldest security principles), no resource should have permissions in excess of what is required for it to execute the tasks it was intended for. AI presents an increased challenge in this space because to enable it to be flexible, it can be challenging to define the exact permissions required.
-
-### Risks 
-- Granting excessive permissions can allow for exfiltration or amending data that the MCP server was not intended to be able to access. This could also be a privacy issue if the data is personally identifiable information (PII).
-
-### Mitigating controls
-- **Apply the Principle of Least Privilege:** Grant the MCP server only the minimum permissions necessary to perform its required tasks. Regularly review and update these permissions to ensure they do not exceed what is needed. For detailed guidance, see [Secure least-privileged access](https://learn.microsoft.com/entra/identity-platform/secure-least-privileged-access).
-- **Use Role-Based Access Control (RBAC):** Assign roles to the MCP server that are tightly scoped to specific resources and actions, avoiding broad or unnecessary permissions.
-- **Monitor and Audit Permissions:** Continuously monitor permission usage and audit access logs to detect and remediate excessive or unused privileges promptly.
-
-# Indirect prompt injection attacks
-
-### Problem statement
-
-Malicious or compromised MCP servers can introduce significant risks by exposing customer data or enabling unintended actions. These risks are especially relevant in AI and MCP-based workloads, where:
-
-- **Prompt Injection Attacks**: Attackers embed malicious instructions in prompts or external content, causing the AI system to perform unintended actions or leak sensitive data. Learn more: [Prompt Injection](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)
-- **Tool Poisoning**: Attackers manipulate tool metadata (such as descriptions or parameters) to influence the AI’s behavior, potentially bypassing security controls or exfiltrating data. Details: [Tool Poisoning](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)
-- **Cross-Domain Prompt Injection**: Malicious instructions are embedded in documents, web pages, or emails, which are then processed by the AI, leading to data leakage or manipulation.
-- **Dynamic Tool Modification (Rug Pulls)**: Tool definitions can be changed after user approval, introducing new malicious behaviors without user awareness.
-
-These vulnerabilities highlight the need for robust validation, monitoring, and security controls when integrating MCP servers and tools into your environment. For a deeper dive, see the linked references above.
-
-![prompt-injection-lg-2048x1034](../images/02-Security/prompt-injection.png)
-
-**Indirect Prompt Injection** (also known as cross-domain prompt injection or XPIA) is a critical vulnerability in generative AI systems, including those using the Model Context Protocol (MCP). In this attack, malicious instructions are hidden within external content—such as documents, web pages, or emails. When the AI system processes this content, it may interpret the embedded instructions as legitimate user commands, resulting in unintended actions like data leakage, generation of harmful content, or manipulation of user interactions. For a detailed explanation and real-world examples, see [Prompt Injection](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/).
-
-A particularly dangerous form of this attack is **Tool Poisoning**. Here, attackers inject malicious instructions into the metadata of MCP tools (such as tool descriptions or parameters). Since large language models (LLMs) rely on this metadata to decide which tools to invoke, compromised descriptions can trick the model into executing unauthorized tool calls or bypassing security controls. These manipulations are often invisible to end users but can be interpreted and acted upon by the AI system. This risk is heightened in hosted MCP server environments, where tool definitions can be updated after user approval—a scenario sometimes referred to as a "[rug pull](https://www.wiz.io/blog/mcp-security-research-briefing#remote-servers-22)". In such cases, a tool that was previously safe may later be modified to perform malicious actions, such as exfiltrating data or altering system behavior, without the user's knowledge. For more on this attack vector, see [Tool Poisoning](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks).
+- **권한 부여 논리 검토 및 강화:** MCP 서버의 권한 부여 구현을 신중하게 감사하여 의도된 사용자 및 클라이언트만 민감한 리소스에 액세스할 수 있도록 합니다. 실용적인 지침은 [Azure API Management Your Auth Gateway For MCP Servers | Microsoft Community Hub](https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-api-management-your-auth-gateway-for-mcp-servers/4402690) 및 [Using Microsoft Entra ID To Authenticate With MCP Servers Via Sessions - Den Delimarsky](https://den.dev/blog/mcp-server-auth-entra-id-session/)를 참조하십시오.
+- **보안 토큰 관행 시행:** 액세스 토큰의 오용을 방지하고 토큰 재생 또는 도난 위험을 줄이려면 [Microsoft의 토큰 유효성 검사 및 수명에 대한 모범 사례](https://learn.microsoft.com/en-us/entra/identity-platform/access-tokens)를 따르십시오.
+- **토큰 저장소 보호:** 항상 토큰을 안전하게 저장하고 암호화를 사용하여 휴지 상태 및 전송 중에 토큰을 보호하십시오. 구현 팁은 [보안 토큰 저장소 사용 및 토큰 암호화](https://youtu.be/uRdX37EcCwg?si=6fSChs1G4glwXRy2)를 참조하십시오.
 
 
-![tool-injection-lg-2048x1239 (1)](../images/02-Security/tool-injection.png)
+# MCP 서버에 대한 과도한 권한
+
+### 문제 설명
+MCP 서버에 액세스하는 서비스/리소스에 대한 과도한 권한이 부여되었을 수 있습니다. 예를 들어, 엔터프라이즈 데이터 저장소에 연결하는 AI 영업 애플리케이션의 일부인 MCP 서버는 영업 데이터에 대한 액세스 범위가 지정되어야 하며 저장소의 모든 파일에 액세스할 수 없어야 합니다. 최소 권한 원칙(가장 오래된 보안 원칙 중 하나)을 다시 참조하면, 어떤 리소스도 의도된 작업을 실행하는 데 필요한 것 이상의 권한을 가져서는 안 됩니다. AI는 유연성을 가능하게 하기 위해 필요한 정확한 권한을 정의하기 어려울 수 있기 때문에 이 분야에서 더 큰 과제를 제시합니다.
+
+### 위험
+- 과도한 권한을 부여하면 MCP 서버가 액세스할 수 없도록 의도된 데이터를 유출하거나 수정할 수 있습니다. 데이터가 개인 식별 정보(PII)인 경우 개인 정보 보호 문제가 될 수도 있습니다.
+
+### 완화 제어
+- **최소 권한 원칙 적용:** MCP 서버에 필요한 작업을 수행하는 데 필요한 최소한의 권한만 부여합니다. 이러한 권한을 정기적으로 검토하고 업데이트하여 필요한 것 이상을 초과하지 않도록 합니다. 자세한 지침은 [최소 권한 액세스 보안](https://learn.microsoft.com/entra/identity-platform/secure-least-privileged-access)을 참조하십시오.
+- **역할 기반 액세스 제어(RBAC) 사용:** 광범위하거나 불필요한 권한을 피하고 특정 리소스 및 작업에 엄격하게 범위가 지정된 역할을 MCP 서버에 할당합니다.
+- **권한 모니터링 및 감사:** 권한 사용을 지속적으로 모니터링하고 액세스 로그를 감사하여 과도하거나 사용되지 않는 권한을 신속하게 감지하고 수정합니다.
+
+# 간접 프롬프트 주입 공격
+
+### 문제 설명
+
+악의적이거나 손상된 MCP 서버는 고객 데이터를 노출하거나 의도하지 않은 작업을 가능하게 하여 상당한 위험을 초래할 수 있습니다. 이러한 위험은 다음과 같은 AI 및 MCP 기반 워크로드에서 특히 관련이 있습니다.
+
+- **프롬프트 주입 공격**: 공격자는 프롬프트나 외부 콘텐츠에 악의적인 지침을 포함시켜 AI 시스템이 의도하지 않은 작업을 수행하거나 민감한 데이터를 유출하도록 합니다. 자세히 알아보기: [프롬프트 주입](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)
+- **도구 중독**: 공격자는 도구 메타데이터(설명이나 매개변수 등)를 조작하여 AI의 동작에 영향을 미치고 잠재적으로 보안 제어를 우회하거나 데이터를 유출합니다. 세부 정보: [도구 중독](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)
+- **교차 도메인 프롬프트 주입**: 악의적인 지침이 문서, 웹 페이지 또는 이메일에 포함된 다음 AI에서 처리되어 데이터 유출 또는 조작으로 이어집니다.
+- **동적 도구 수정(러그 풀)**: 도구 정의는 사용자 승인 후 변경될 수 있으며 사용자 인식 없이 새로운 악의적인 동작을 도입합니다.
+
+이러한 취약점은 MCP 서버와 도구를 환경에 통합할 때 강력한 유효성 검사, 모니터링 및 보안 제어의 필요성을 강조합니다. 자세한 내용은 위의 링크된 참조를 참조하십시오.
+
+![프롬프트 주입-lg-2048x1034](../images/02-Security/prompt-injection.png)
+
+**간접 프롬프트 주입**(교차 도메인 프롬프트 주입 또는 XPIA라고도 함)은 모델 컨텍스트 프로토콜(MCP)을 사용하는 시스템을 포함하여 생성 AI 시스템의 중요한 취약점입니다. 이 공격에서 악의적인 지침은 문서, 웹 페이지 또는 이메일과 같은 외부 콘텐츠 내에 숨겨져 있습니다. AI 시스템이 이 콘텐츠를 처리할 때 포함된 지침을 합법적인 사용자 명령으로 해석하여 데이터 유출, 유해한 콘텐츠 생성 또는 사용자 상호 작용 조작과 같은 의도하지 않은 작업이 발생할 수 있습니다. 자세한 설명과 실제 예는 [프롬프트 주입](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)을 참조하십시오.
+
+이 공격의 특히 위험한 형태는 **도구 중독**입니다. 여기서 공격자는 MCP 도구의 메타데이터(예: 도구 설명 또는 매개변수)에 악의적인 지침을 주입합니다. 대규모 언어 모델(LLM)은 이 메타데이터를 사용하여 호출할 도구를 결정하므로 손상된 설명은 모델을 속여 무단 도구 호출을 실행하거나 보안 제어를 우회하도록 할 수 있습니다. 이러한 조작은 최종 사용자에게는 보이지 않지만 AI 시스템에서 해석하고 조치를 취할 수 있습니다. 이 위험은 도구 정의가 사용자 승인 후 업데이트될 수 있는 호스팅된 MCP 서버 환경에서 높아집니다. 이 시나리오는 때때로 "[러그 풀](https://www.wiz.io/blog/mcp-security-research-briefing#remote-servers-22)"이라고도 합니다. 이러한 경우 이전에 안전했던 도구가 나중에 사용자 모르게 데이터 유출이나 시스템 동작 변경과 같은 악의적인 작업을 수행하도록 수정될 수 있습니다. 이 공격 벡터에 대한 자세한 내용은 [도구 중독](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)을 참조하십시오.
 
 
-## Risks
-Unintended AI actions present a variety of security risks that include data exfiltration and privacy breaches.
+![도구 주입-lg-2048x1239 (1)](../images/02-Security/tool-injection.png)
 
-### Mitigating controls
-### Using prompt shields to protect against Indirect Prompt Injection attacks
+
+## 위험
+의도하지 않은 AI 작업은 데이터 유출 및 개인 정보 침해를 포함한 다양한 보안 위험을 초래합니다.
+
+### 완화 제어
+### 간접 프롬프트 주입 공격으로부터 보호하기 위해 프롬프트 쉴드 사용
 -----------------------------------------------------------------------------
 
-**AI Prompt Shields** are a solution developed by Microsoft to defend against both direct and indirect prompt injection attacks. They help through:
+**AI 프롬프트 쉴드**는 직접 및 간접 프롬프트 주입 공격을 모두 방어하기 위해 Microsoft에서 개발한 솔루션입니다. 다음과 같은 방법으로 도움이 됩니다.
 
-1.  **Detection and Filtering**: Prompt Shields use advanced machine learning algorithms and natural language processing to detect and filter out malicious instructions embedded in external content, such as documents, web pages, or emails.
-    
-2.  **Spotlighting**: This technique helps the AI system distinguish between valid system instructions and potentially untrustworthy external inputs. By transforming the input text in a way that makes it more relevant to the model, Spotlighting ensures that the AI can better identify and ignore malicious instructions.
-    
-3.  **Delimiters and Datamarking**: Including delimiters in the system message explicitly outlines the location of the input text, helping the AI system recognize and separate user inputs from potentially harmful external content. Datamarking extends this concept by using special markers to highlight the boundaries of trusted and untrusted data.
-    
-4.  **Continuous Monitoring and Updates**: Microsoft continuously monitors and updates Prompt Shields to address new and evolving threats. This proactive approach ensures that the defenses remain effective against the latest attack techniques.
-    
-5. **Integration with Azure Content Safety:** Prompt Shields are part of the broader Azure AI Content Safety suite, which provides additional tools for detecting jailbreak attempts, harmful content, and other security risks in AI applications.
+1.  **탐지 및 필터링**: 프롬프트 쉴드는 고급 기계 학습 알고리즘과 자연어 처리를 사용하여 문서, 웹 페이지 또는 이메일과 같은 외부 콘텐츠에 포함된 악의적인 지침을 탐지하고 필터링합니다.
 
-You can read more about AI prompt shields in the [Prompt Shields documentation](https://learn.microsoft.com/azure/ai-services/content-safety/concepts/jailbreak-detection).
+2.  **스포트라이팅**: 이 기술은 AI 시스템이 유효한 시스템 지침과 잠재적으로 신뢰할 수 없는 외부 입력을 구별하는 데 도움이 됩니다. 입력 텍스트를 모델에 더 관련성 있게 만드는 방식으로 변환함으로써 스포트라이팅은 AI가 악의적인 지침을 더 잘 식별하고 무시할 수 있도록 보장합니다.
 
-![prompt-shield-lg-2048x1328](../images/02-Security/prompt-shield.png)
+3.  **구분 기호 및 데이터 마킹**: 시스템 메시지에 구분 기호를 포함하면 입력 텍스트의 위치를 명시적으로 설명하여 AI 시스템이 사용자 입력을 잠재적으로 유해한 외부 콘텐츠와 인식하고 분리하는 데 도움이 됩니다. 데이터 마킹은 신뢰할 수 있는 데이터와 신뢰할 수 없는 데이터의 경계를 강조하기 위해 특수 마커를 사용하여 이 개념을 확장합니다.
 
+4.  **지속적인 모니터링 및 업데이트**: Microsoft는 새롭고 진화하는 위협에 대처하기 위해 프롬프트 쉴드를 지속적으로 모니터링하고 업데이트합니다. 이 사전 예방적 접근 방식은 최신 공격 기술에 대해 방어가 효과적으로 유지되도록 보장합니다.
 
-### Supply chain security
+5. **Azure 콘텐츠 안전과의 통합:** 프롬프트 쉴드는 더 넓은 Azure AI 콘텐츠 안전 제품군의 일부이며, 이는 탈옥 시도, 유해한 콘텐츠 및 AI 애플리케이션의 기타 보안 위험을 탐지하기 위한 추가 도구를 제공합니다.
 
-Supply chain security remains fundamental in the AI era, but the scope of what constitutes your supply chain has expanded. In addition to traditional code packages, you must now rigorously verify and monitor all AI-related components, including foundation models, embeddings services, context providers, and third-party APIs. Each of these can introduce vulnerabilities or risks if not properly managed.
+AI 프롬프트 쉴드에 대한 자세한 내용은 [프롬프트 쉴드 설명서](https://learn.microsoft.com/azure/ai-services/content-safety/concepts/jailbreak-detection)에서 확인할 수 있습니다.
 
-**Key supply chain security practices for AI and MCP:**
-- **Verify all components before integration:** This includes not just open-source libraries, but also AI models, data sources, and external APIs. Always check for provenance, licensing, and known vulnerabilities.
-- **Maintain secure deployment pipelines:** Use automated CI/CD pipelines with integrated security scanning to catch issues early. Ensure that only trusted artifacts are deployed to production.
-- **Continuously monitor and audit:** Implement ongoing monitoring for all dependencies, including models and data services, to detect new vulnerabilities or supply chain attacks.
-- **Apply least privilege and access controls:** Restrict access to models, data, and services to only what is necessary for your MCP server to function.
-- **Respond quickly to threats:** Have a process in place for patching or replacing compromised components, and for rotating secrets or credentials if a breach is detected.
-
-[GitHub Advanced Security](https://github.com/security/advanced-security) provides features such as secret scanning, dependency scanning, and CodeQL analysis. These tools integrate with [Azure DevOps](https://azure.microsoft.com/en-us/products/devops) and [Azure Repos](https://azure.microsoft.com/en-us/products/devops/repos/) to help teams identify and mitigate vulnerabilities across both code and AI supply chain components.
-
-Microsoft also implements extensive supply chain security practices internally for all products. Learn more in [The Journey to Secure the Software Supply Chain at Microsoft](https://devblogs.microsoft.com/engineering-at-microsoft/the-journey-to-secure-the-software-supply-chain-at-microsoft/).
+![프롬프트 쉴드-lg-2048x1328](../images/02-Security/prompt-shield.png)
 
 
-# Established security best practices that will uplift your MCP implementation's security posture
+### 공급망 보안
 
-Any MCP implementation inherits the existing security posture of your organization's environment that it is built upon, so when considering the security of MCP as a component of your overall AI systems it is recommended that you look at uplifting your overall existing security posture. The following established security controls are especially pertinent:
+공급망 보안은 AI 시대에도 여전히 기본이지만, 공급망을 구성하는 범위는 확장되었습니다. 기존 코드 패키지 외에도 이제 기초 모델, 임베딩 서비스, 컨텍스트 공급자 및 타사 API를 포함한 모든 AI 관련 구성 요소를 엄격하게 확인하고 모니터링해야 합니다. 이러한 각 구성 요소는 제대로 관리되지 않으면 취약점이나 위험을 초래할 수 있습니다.
 
--   Secure coding best practices in your AI application - protect against [the OWASP Top 10](https://owasp.org/www-project-top-ten/), the [OWASP Top 10 for LLMs](https://genai.owasp.org/download/43299/?tmstv=1731900559), use of secure vaults for secrets and tokens, implementing end-to-end secure communications between all application components, etc.
--   Server hardening -- use MFA where possible, keep patching up to date, integrate the server with a third party identity provider for access, etc.
--   Keep devices, infrastructure and applications up to date with patches
--   Security monitoring -- implementing logging and monitoring of an AI application (including the MCP client/servers) and sending those logs to a central SIEM for detection of anomalous activities
--   Zero trust architecture -- isolating components via network and identity controls in a logical manner to minimize lateral movement if an AI application were compromised.
+**AI 및 MCP를 위한 주요 공급망 보안 관행:**
+- **통합 전 모든 구성 요소 확인:** 여기에는 오픈 소스 라이브러리뿐만 아니라 AI 모델, 데이터 소스 및 외부 API도 포함됩니다. 항상 출처, 라이선스 및 알려진 취약점을 확인하십시오.
+- **보안 배포 파이프라인 유지:** 통합 보안 스캔 기능이 있는 자동화된 CI/CD 파이프라인을 사용하여 문제를 조기에 발견하십시오. 신뢰할 수 있는 아티팩트만 프로덕션에 배포되도록 하십시오.
+- **지속적인 모니터링 및 감사:** 모델 및 데이터 서비스를 포함한 모든 종속성에 대한 지속적인 모니터링을 구현하여 새로운 취약점이나 공급망 공격을 탐지하십시오.
+- **최소 권한 및 액세스 제어 적용:** 모델, 데이터 및 서비스에 대한 액세스를 MCP 서버가 작동하는 데 필요한 만큼만으로 제한하십시오.
+- **위협에 신속하게 대응:** 손상된 구성 요소를 패치하거나 교체하고, 침해가 감지되면 비밀 또는 자격 증명을 순환하는 프로세스를 마련하십시오.
 
-# Key Takeaways
+[GitHub 고급 보안](https://github.com/security/advanced-security)은 비밀 스캔, 종속성 스캔 및 CodeQL 분석과 같은 기능을 제공합니다. 이러한 도구는 [Azure DevOps](https://azure.microsoft.com/en-us/products/devops) 및 [Azure Repos](https://azure.microsoft.com/en-us/products/devops/repos/)와 통합되어 팀이 코드 및 AI 공급망 구성 요소 모두에서 취약점을 식별하고 완화하는 데 도움이 됩니다.
 
-- Security fundamentals remain critical: Secure coding, least privilege, supply chain verification, and continuous monitoring are essential for MCP and AI workloads.
-- MCP introduces new risks—such as prompt injection, tool poisoning, and excessive permissions—that require both traditional and AI-specific controls.
-- Use robust authentication, authorization, and token management practices, leveraging external identity providers like Microsoft Entra ID where possible.
-- Protect against indirect prompt injection and tool poisoning by validating tool metadata, monitoring for dynamic changes, and using solutions like Microsoft Prompt Shields.
-- Treat all components in your AI supply chain—including models, embeddings, and context providers—with the same rigor as code dependencies.
-- Stay current with evolving MCP specifications and contribute to the community to help shape secure standards.
+Microsoft는 또한 모든 제품에 대해 내부적으로 광범위한 공급망 보안 관행을 구현합니다. 자세한 내용은 [Microsoft의 소프트웨어 공급망 보안 여정](https://devblogs.microsoft.com/engineering-at-microsoft/the-journey-to-secure-the-software-supply-chain-at-microsoft/)에서 확인하십시오.
 
-# Additional Resources
 
-- [Microsoft Digital Defense Report](https://aka.ms/mddr)
-- [MCP Specification](https://spec.modelcontextprotocol.io/)
-- [Prompt Injection in MCP (Simon Willison)](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)
-- [Tool Poisoning Attacks (Invariant Labs)](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)
-- [Rug Pulls in MCP (Wiz Security)](https://www.wiz.io/blog/mcp-security-research-briefing#remote-servers-22)
-- [Prompt Shields Documentation (Microsoft)](https://learn.microsoft.com/azure/ai-services/content-safety/concepts/jailbreak-detection)
+# MCP 구현의 보안 상태를 향상시키는 기존 보안 모범 사례
+
+모든 MCP 구현은 구축된 조직 환경의 기존 보안 상태를 상속하므로 전체 AI 시스템의 구성 요소로서 MCP의 보안을 고려할 때 전체 기존 보안 상태를 향상시키는 것이 좋습니다. 다음과 같은 기존 보안 제어는 특히 관련이 있습니다.
+
+-   AI 애플리케이션의 보안 코딩 모범 사례 - [OWASP Top 10](https://owasp.org/www-project-top-ten/), [LLM용 OWASP Top 10](https://genai.owasp.org/download/43299/?tmstv=1731900559)으로부터 보호, 비밀 및 토큰에 대한 보안 저장소 사용, 모든 애플리케이션 구성 요소 간의 종단 간 보안 통신 구현 등
+-   서버 강화 -- 가능한 경우 MFA 사용, 패치 최신 상태 유지, 액세스를 위해 서버를 타사 ID 공급자와 통합 등
+-   장치, 인프라 및 애플리케이션을 패치로 최신 상태로 유지
+-   보안 모니터링 -- AI 애플리케이션(MCP 클라이언트/서버 포함)의 로깅 및 모니터링을 구현하고 해당 로그를 중앙 SIEM으로 전송하여 비정상적인 활동 탐지
+-   제로 트러스트 아키텍처 -- AI 애플리케이션이 손상된 경우 측면 이동을 최소화하기 위해 네트워크 및 ID 제어를 통해 구성 요소를 논리적으로 격리합니다.
+
+# 주요 내용
+
+- 보안 기본 사항은 여전히 중요합니다. 보안 코딩, 최소 권한, 공급망 확인 및 지속적인 모니터링은 MCP 및 AI 워크로드에 필수적입니다.
+- MCP는 프롬프트 주입, 도구 중독 및 과도한 권한과 같은 새로운 위험을 도입하며, 이는 기존 및 AI 관련 제어가 모두 필요합니다.
+- 가능한 경우 Microsoft Entra ID와 같은 외부 ID 공급자를 활용하여 강력한 인증, 권한 부여 및 토큰 관리 관행을 사용합니다.
+- 도구 메타데이터 유효성 검사, 동적 변경 모니터링 및 Microsoft 프롬프트 쉴드와 같은 솔루션을 사용하여 간접 프롬프트 주입 및 도구 중독으로부터 보호합니다.
+- 모델, 임베딩 및 컨텍스트 공급자를 포함한 AI 공급망의 모든 구성 요소를 코드 종속성과 동일한 엄격함으로 처리합니다.
+- 진화하는 MCP 사양을 최신 상태로 유지하고 커뮤니티에 기여하여 보안 표준을 형성하는 데 도움을 줍니다.
+
+# 추가 리소스
+
+- [Microsoft 디지털 방어 보고서](https://aka.ms/mddr)
+- [MCP 사양](https://spec.modelcontextprotocol.io/)
+- [MCP의 프롬프트 주입(Simon Willison)](https://simonwillison.net/2025/Apr/9/mcp-prompt-injection/)
+- [도구 중독 공격(Invariant Labs)](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)
+- [MCP의 러그 풀(Wiz Security)](https://www.wiz.io/blog/mcp-security-research-briefing#remote-servers-22)
+- [프롬프트 쉴드 설명서(Microsoft)](https://learn.microsoft.com/azure/ai-services/content-safety/concepts/jailbreak-detection)
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [OWASP Top 10 for LLMs](https://genai.owasp.org/download/43299/?tmstv=1731900559)
-- [GitHub Advanced Security](https://github.com/security/advanced-security)
+- [LLM용 OWASP Top 10](https://genai.owasp.org/download/43299/?tmstv=1731900559)
+- [GitHub 고급 보안](https://github.com/security/advanced-security)
 - [Azure DevOps](https://azure.microsoft.com/products/devops)
 - [Azure Repos](https://azure.microsoft.com/products/devops/repos/)
-- [The Journey to Secure the Software Supply Chain at Microsoft](https://devblogs.microsoft.com/engineering-at-microsoft/the-journey-to-secure-the-software-supply-chain-at-microsoft/)
-- [Secure Least-Privileged Access (Microsoft)](https://learn.microsoft.com/entra/identity-platform/secure-least-privileged-access)
-- [Best Practices for Token Validation and Lifetime](https://learn.microsoft.com/entra/identity-platform/access-tokens)
-- [Use Secure Token Storage and Encrypt Tokens (YouTube)](https://youtu.be/uRdX37EcCwg?si=6fSChs1G4glwXRy2)
-- [Azure API Management as Auth Gateway for MCP](https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-api-management-your-auth-gateway-for-mcp-servers/4402690)
-- [MCP Security Best Practice](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)
-- [Using Microsoft Entra ID to Authenticate with MCP Servers](https://den.dev/blog/mcp-server-auth-entra-id-session/)
+- [Microsoft의 소프트웨어 공급망 보안 여정](https://devblogs.microsoft.com/engineering-at-microsoft/the-journey-to-secure-the-software-supply-chain-at-microsoft/)
+- [최소 권한 액세스 보안(Microsoft)](https://learn.microsoft.com/entra/identity-platform/secure-least-privileged-access)
+- [토큰 유효성 검사 및 수명에 대한 모범 사례](https://learn.microsoft.com/entra/identity-platform/access-tokens)
+- [보안 토큰 저장소 사용 및 토큰 암호화(YouTube)](https://youtu.be/uRdX37EcCwg?si=6fSChs1G4glwXRy2)
+- [MCP용 Auth 게이트웨이로서의 Azure API Management](https://techcommunity.microsoft.com/blog/integrationsonazureblog/azure-api-management-your-auth-gateway-for-mcp-servers/4402690)
+- [MCP 보안 모범 사례](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)
+- [Microsoft Entra ID를 사용하여 MCP 서버로 인증](https://den.dev/blog/mcp-server-auth-entra-id-session/)
 
-### Next 
+### 다음
 
-Next: [Chapter 3: Getting Started](../03-GettingStarted/README.md)
+다음: [3장: 시작하기](../03-GettingStarted/README.md)

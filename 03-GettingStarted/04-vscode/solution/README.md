@@ -1,14 +1,14 @@
-# Running the sample
+# 샘플 실행
 
-Here we assume you already have a working server code. Please locate a server from one of the earlier chapters.
+여기서는 이미 작동하는 서버 코드가 있다고 가정합니다. 이전 장의 서버를 찾으십시오.
 
-## Set up mcp.json
+## mcp.json 설정
 
-Here's a file you use for reference, [mcp.json](./mcp.json).
+참조용으로 사용할 파일은 [mcp.json](./mcp.json)입니다.
 
-Change the server entry as needed to point out the absolute path to your server including the needed full command to run.
+필요에 따라 서버 항목을 변경하여 서버의 절대 경로와 실행에 필요한 전체 명령을 가리키도록 합니다.
 
-In the example file referred above the server entry looks like so:
+위에 언급된 예제 파일에서 서버 항목은 다음과 같습니다.
 
 <details>
 <summary>node.js</summary>
@@ -25,7 +25,7 @@ In the example file referred above the server entry looks like so:
 <details>
 <summary>.NET</summary>
 
-You might have to enter the GitHub repository root, which can be fetched from the command, `git rev-parse --show-toplevel`.
+`git rev-parse --show-toplevel` 명령으로 가져올 수 있는 GitHub 리포지토리 루트를 입력해야 할 수 있습니다.
 
 ```jsonc
 {
@@ -33,7 +33,7 @@ You might have to enter the GitHub repository root, which can be fetched from th
     {
       "type": "promptString",
       "id": "repository-root",
-      "description": "The absolute path to the repository root"
+      "description": "리포지토리 루트의 절대 경로"
     }
   ],
   "servers": {
@@ -52,22 +52,22 @@ You might have to enter the GitHub repository root, which can be fetched from th
 
 </details>
 
-This corresponds to running a command like so: `node build/index.js`.
+이는 `node build/index.js`와 같은 명령을 실행하는 것과 일치합니다.
 
-- Change this server entry to fit where your server file is located or to what's needed to startup your server depending on your chosen runtime and server location.
+- 이 서버 항목을 변경하여 선택한 런타임 및 서버 위치에 따라 서버 파일이 있는 위치 또는 서버를 시작하는 데 필요한 항목에 맞게 조정합니다.
 
-## Consume the features in the server
+## 서버의 기능 사용
 
-- Click the `play` icon, once you've added *mcp.json* to *./vscode* folder,
+- *mcp.json*을 *./vscode* 폴더에 추가한 후 `재생` 아이콘을 클릭합니다.
 
-    Observe the tooling icon change to increase the number of available tools. Tooling icon is located right above the chat field in GitHub Copilot.
+    도구 아이콘이 사용 가능한 도구 수를 늘리는 것을 확인하십시오. 도구 아이콘은 GitHub Copilot의 채팅 필드 바로 위에 있습니다.
 
-## Run a tool
+## 도구 실행
 
-- Type a prompt in your chat window that matches the description of your tool. For example to trigger the tool `add` type something like "add 3 to 20".
+- 채팅 창에 도구 설명과 일치하는 프롬프트를 입력합니다. 예를 들어 `add` 도구를 트리거하려면 "3에 20을 더하세요"와 같은 것을 입력합니다.
 
-    You should see a tool being presented above the chat text box indicating for you to select to run the tool like in this visual:
+    다음과 같이 도구를 실행하도록 선택하라는 메시지가 표시되는 채팅 텍스트 상자 위에 도구 아이콘이 표시됩니다.
 
-    ![VS Code indicating it wanting to run a tool](../assets/vscode-agent.png)
+    ![VS Code가 도구를 실행하려고 함을 나타냄](../assets/vscode-agent.png)
 
-    Selecting the tool should produce a numeric result saying "23" if your prompt was like we mentioned previously.
+    이전에 언급한 것과 같은 프롬프트였다면 도구를 선택하면 "23"이라는 숫자 결과가 생성됩니다.

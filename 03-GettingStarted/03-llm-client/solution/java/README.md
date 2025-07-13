@@ -1,137 +1,140 @@
-# Calculator LLM Client
+# 계산기 LLM 클라이언트
 
-A Java application that demonstrates how to use LangChain4j to connect to an MCP (Model Context Protocol) calculator service with GitHub Models integration.
+LangChain4j를 사용하여 MCP(모델 컨텍스트 프로토콜) 계산기 서비스와 GitHub 모델 통합에 연결하는 방법을 보여주는 Java 애플리케이션입니다.
 
-## Prerequisites
+## 사전 요구 사항
 
-- Java 21 or higher
-- Maven 3.6+ (or use the included Maven wrapper)
-- A GitHub account with access to GitHub Models
-- An MCP calculator service running on `http://localhost:8080`
+- Java 21 이상
+- Maven 3.6 이상(또는 포함된 Maven 래퍼 사용)
+- GitHub 모델에 액세스할 수 있는 GitHub 계정
+- `http://localhost:8080`에서 실행 중인 MCP 계산기 서비스
 
-## Getting the GitHub Token
+## GitHub 토큰 가져오기
 
-This application uses GitHub Models which requires a GitHub personal access token. Follow these steps to get your token:
+이 애플리케이션은 GitHub 개인용 액세스 토큰이 필요한 GitHub 모델을 사용합니다. 토큰을 가져오려면 다음 단계를 따르십시오.
 
-### 1. Access GitHub Models
-1. Go to [GitHub Models](https://github.com/marketplace/models)
-2. Sign in with your GitHub account
-3. Request access to GitHub Models if you haven't already
+### 1. GitHub 모델 액세스
+1. [GitHub 모델](https://github.com/marketplace/models)로 이동합니다.
+2. GitHub 계정으로 로그인합니다.
+3. 아직 액세스하지 않은 경우 GitHub 모델에 대한 액세스를 요청합니다.
 
-### 2. Create a Personal Access Token
-1. Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens)
-2. Click "Generate new token" → "Generate new token (classic)"
-3. Give your token a descriptive name (e.g., "MCP Calculator Client")
-4. Set expiration as needed
-5. Select the following scopes:
-   - `repo` (if accessing private repositories)
+### 2. 개인용 액세스 토큰 만들기
+1. [GitHub 설정 → 개발자 설정 → 개인용 액세스 토큰 → 토큰(클래식)](https://github.com/settings/tokens)으로 이동합니다.
+2. "새 토큰 생성" → "새 토큰 생성(클래식)"을 클릭합니다.
+3. 토큰에 설명적인 이름(예: "MCP 계산기 클라이언트")을 지정합니다.
+4. 필요에 따라 만료를 설정합니다.
+5. 다음 범위를 선택합니다.
+   - `repo`(개인 리포지토리에 액세스하는 경우)
    - `user:email`
-6. Click "Generate token"
-7. **Important**: Copy the token immediately - you won't be able to see it again!
+6. "토큰 생성"을 클릭합니다.
+7. **중요**: 토큰을 즉시 복사하십시오. 다시 볼 수 없습니다!
 
-### 3. Set the Environment Variable
+### 3. 환경 변수 설정
 
-#### On Windows (Command Prompt):
+#### Windows(명령 프롬프트):
 ```cmd
 set GITHUB_TOKEN=your_github_token_here
 ```
 
-#### On Windows (PowerShell):
+#### Windows(PowerShell):
 ```powershell
 $env:GITHUB_TOKEN="your_github_token_here"
 ```
 
-#### On macOS/Linux:
+#### macOS/Linux:
 ```bash
 export GITHUB_TOKEN=your_github_token_here
 ```
 
-## Setup and Installation
+## 설정 및 설치
 
-1. **Clone or navigate to the project directory**
+1. **프로젝트 디렉토리 복제 또는 탐색**
 
-2. **Install dependencies**:
+2. **필요한 종속성 설치**:
    ```cmd
    mvnw clean install
    ```
-   Or if you have Maven installed globally:
+   또는 Maven이 전역적으로 설치된 경우:
    ```cmd
    mvn clean install
    ```
 
-3. **Set up the environment variable** (see "Getting the GitHub Token" section above)
+3. **환경 변수 설정**(위의 "GitHub 토큰 가져오기" 섹션 참조)
 
-4. **Start the MCP Calculator Service**:
-   Make sure you have chapter 1's MCP calculator service running on `http://localhost:8080/sse`. This should be running before you start the client.
+4. **MCP 계산기 서비스 시작**:
+   1장의 MCP 계산기 서비스가 `http://localhost:8080`에서 실행 중인지 확인하십시오. 클라이언트를 시작하기 전에 실행 중이어야 합니다.
 
-## Running the Application
+## 애플리케이션 실행
 
 ```cmd
 mvnw clean package
 java -jar target\calculator-llm-client-0.0.1-SNAPSHOT.jar
 ```
 
-## What the Application Does
+## 애플리케이션이 하는 일
 
-The application demonstrates three main interactions with the calculator service:
+애플리케이션을 실행하면 다음을 수행합니다.
 
-1. **Addition**: Calculates the sum of 24.5 and 17.3
-2. **Square Root**: Calculates the square root of 144
-3. **Help**: Shows available calculator functions
+1. **계산기 서비스에 연결**: `http://localhost:8080`
+2. **도구 나열** - 사용 가능한 모든 계산기 작업을 표시합니다.
+3. **계산 수행**:
+   - 덧셈: 24.5 + 17.3
+   - 제곱근: 144의 제곱근
+   - 도움말: 사용 가능한 계산기 함수를 표시합니다.
 
-## Expected Output
+## 예상 출력
 
-When running successfully, you should see output similar to:
+성공적으로 실행되면 다음과 유사한 출력이 표시되어야 합니다.
 
 ```
-The sum of 24.5 and 17.3 is 41.8.
-The square root of 144 is 12.
-The calculator service provides the following functions: add, subtract, multiply, divide, sqrt, power...
+24.5와 17.3의 합은 41.8입니다.
+144의 제곱근은 12입니다.
+계산기 서비스는 다음 함수를 제공합니다: add, subtract, multiply, divide, sqrt, power...
 ```
 
-## Troubleshooting
+## 문제 해결
 
-### Common Issues
+### 일반적인 문제
 
-1. **"GITHUB_TOKEN environment variable not set"**
-   - Make sure you've set the `GITHUB_TOKEN` environment variable
-   - Restart your terminal/command prompt after setting the variable
+1. **"GITHUB_TOKEN 환경 변수가 설정되지 않았습니다"**
+   - `GITHUB_TOKEN` 환경 변수를 설정했는지 확인하십시오.
+   - 변수를 설정한 후 터미널/명령 프롬프트를 다시 시작하십시오.
 
-2. **"Connection refused to localhost:8080"**
-   - Ensure the MCP calculator service is running on port 8080
-   - Check if another service is using port 8080
+2. **"localhost:8080에 대한 연결 거부됨"**
+   - MCP 계산기 서비스가 포트 8080에서 실행 중인지 확인하십시오.
+   - 다른 서비스가 포트 8080을 사용하고 있는지 확인하십시오.
 
-3. **"Authentication failed"**
-   - Verify your GitHub token is valid and has the correct permissions
-   - Check if you have access to GitHub Models
+3. **"인증 실패"**
+   - GitHub 토큰이 유효하고 올바른 권한을 가지고 있는지 확인하십시오.
+   - GitHub 모델에 대한 액세스 권한이 있는지 확인하십시오.
 
-4. **Maven build errors**
-   - Ensure you're using Java 21 or higher: `java -version`
-   - Try cleaning the build: `mvnw clean`
+4. **Maven 빌드 오류**
+   - Java 21 이상을 사용하고 있는지 확인하십시오. `java -version`
+   - 빌드를 정리해 보십시오. `mvnw clean`
 
-### Debugging
+### 디버깅
 
-To enable debug logging, add the following JVM argument when running:
+디버그 로깅을 활성화하려면 실행 시 다음 JVM 인수를 추가하십시오.
 ```cmd
 java -Dlogging.level.dev.langchain4j=DEBUG -jar target\calculator-llm-client-0.0.1-SNAPSHOT.jar
 ```
 
-## Configuration
+## 구성
 
-The application is configured to:
-- Use GitHub Models with the `gpt-4.1-nano` model
-- Connect to MCP service at `http://localhost:8080/sse`
-- Use a 60-second timeout for requests
-- Enable request/response logging for debugging
+애플리케이션은 다음으로 구성됩니다.
+- `gpt-4.1-nano` 모델을 사용하는 GitHub 모델
+- `http://localhost:8080/sse`의 MCP 서비스에 연결
+- 요청에 대한 60초 시간 초과 사용
+- 디버깅을 위한 요청/응답 로깅 활성화
 
-## Dependencies
+## 종속성
 
-Key dependencies used in this project:
-- **LangChain4j**: For AI integration and tool management
-- **LangChain4j MCP**: For Model Context Protocol support
-- **LangChain4j GitHub Models**: For GitHub Models integration
-- **Spring Boot**: For application framework and dependency injection
+이 프로젝트에서 사용되는 주요 종속성은 다음과 같습니다.
+- **LangChain4j**: AI 통합 및 도구 관리를 위해
+- **LangChain4j MCP**: 모델 컨텍스트 프로토콜 지원을 위해
+- **LangChain4j GitHub 모델**: GitHub 모델 통합을 위해
+- **Spring Boot**: 애플리케이션 프레임워크 및 종속성 주입을 위해
 
-## License
+## 라이선스
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+이 프로젝트는 Apache License 2.0에 따라 라이선스가 부여됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하십시오.
